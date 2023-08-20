@@ -102,6 +102,15 @@ editor["echasnovski/mini.surround"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-surround"),
 }
+editor["smoka7/multicursors.nvim"] = {
+	event = "VeryLazy",
+	cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
+		"smoka7/hydra.nvim",
+	},
+	config = require("editor.multicursors"),
+}
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --

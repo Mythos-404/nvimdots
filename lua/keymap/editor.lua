@@ -126,6 +126,12 @@ local plug_map = {
 		:with_silent()
 		:with_noremap()
 		:with_desc("edit: Preview all folds"),
+
+	-- Plugin: Multicursors
+	["nv|<leader>m"] = map_cmd("<Cmd>MCstart<CR>")
+		:with_silent()
+		:with_noremap()
+		:with_desc("edit: Create a selection for selected text or word under the cursor"),
 }
 
 bind.nvim_load_mapping(plug_map)
