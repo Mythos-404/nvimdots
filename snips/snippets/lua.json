@@ -1,0 +1,26 @@
+{
+    "modlue template(init)": {
+        "prefix": "mti",
+        "body": [
+            "local M = {}",
+            "",
+            "function M.${1:init}(${2})",
+            "   ${0}",
+            "end",
+            "",
+            "return M"
+        ],
+        "description": "modlue template(init)"
+    },
+    "modlue template": {
+        "prefix": "mt",
+        "body": [
+            "local M = {}",
+            "",
+            "${0}",
+            "",
+            "return M"
+        ],
+        "description": "modlue template"
+    }
+}
