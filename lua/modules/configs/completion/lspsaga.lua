@@ -28,7 +28,7 @@ return function()
 	require("lspsaga").setup({
 		-- Breadcrumbs: https://dev.neovim.pro/lspsaga/breadcrumbs/
 		symbol_in_winbar = {
-			enable = false,
+			enable = not require("core.settings")["open_dropbar"],
 			separator = " " .. icons.ui.Separator,
 			hide_keyword = false,
 			show_file = false,

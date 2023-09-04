@@ -1,4 +1,5 @@
 local tool = {}
+local open_dropbar = require("core.settings")["open_dropbar"]
 
 tool["nvim-tree/nvim-tree.lua"] = {
 	lazy = true,
@@ -11,10 +12,16 @@ tool["nvim-tree/nvim-tree.lua"] = {
 	},
 	config = require("tool.nvim-tree"),
 }
-tool["ibhagwan/smartyank.nvim"] = {
+tool["gbprod/yanky.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
-	config = require("tool.smartyank"),
+	config = require("tool.yanky"),
+	dependencies = { "kkharji/sqlite.lua" },
+}
+tool["gbprod/cutlass.nvim"] = {
+	lazy = true,
+	event = "BufReadPost",
+	config = require("tool.cutlass"),
 }
 tool["monaqa/dial.nvim"] = {
 	lazy = true,
@@ -70,16 +77,23 @@ tool["gelguy/wilder.nvim"] = {
 	config = require("tool.wilder"),
 	dependencies = { "romgrk/fzy-lua-native" },
 }
-tool["Bekaboo/dropbar.nvim"] = {
-	lazy = true,
-	event = { "BufReadPre", "BufNewFile" },
-	config = require("tool.dropbar"),
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-}
+if open_dropbar then
+	tool["Bekaboo/dropbar.nvim"] = {
+		lazy = true,
+		event = { "BufReadPre", "BufNewFile" },
+		config = require("tool.dropbar"),
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	}
+end
 tool["m-demare/hlargs.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
 	config = require("tool.hlargs"),
+}
+tool["kevinhwang91/nvim-hlslens"] = {
+	lazy = true,
+	event = "CmdlineEnter",
+	config = require("tool.hlslens"),
 }
 
 ----------------------------------------------------------------------

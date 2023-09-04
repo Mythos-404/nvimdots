@@ -23,10 +23,11 @@ editor["olimorris/persisted.nvim"] = {
 	},
 	config = require("editor.persisted"),
 }
-editor["m4xshen/autoclose.nvim"] = {
+editor["altermo/ultimate-autopair.nvim"] = {
 	lazy = true,
-	event = "InsertEnter",
-	config = require("editor.autoclose"),
+	branch = "development",
+	event = { "InsertEnter", "CmdlineEnter" },
+	config = require("editor.ultimate-autopair"),
 }
 editor["max397574/better-escape.nvim"] = {
 	lazy = true,

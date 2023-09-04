@@ -21,5 +21,5 @@ return function()
 	-- 		end
 	-- 	end,
 	-- })
-	-- require("hlargs").setup()
+	require("hlargs").setup()
 end

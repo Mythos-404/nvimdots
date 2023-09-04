@@ -19,6 +19,34 @@ local plug_map = {
 		:with_noremap()
 		:with_expr(),
 
+	-- Plugin: yanky
+	["nx|p"] = map_callback(function()
+			return et("<Plug>(YankyPutAfter)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|P"] = map_callback(function()
+			return et("<Plug>(YankyPutBefore)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|gp"] = map_callback(function()
+			return et("<Plug>(YankyGPutAfter)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|gP"] = map_callback(function()
+			return et("<Plug>(YankyGPutBefore)")
+		end)
+		:with_noremap()
+		:with_expr(),
+
+	["nx|y"] = map_callback(function()
+			return et("<Plug>(YankyYank)")
+		end)
+		:with_noremap()
+		:with_expr(),
+
 	-- Plugin: nvim-tree
 	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
 	["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
@@ -213,6 +241,14 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("tool: Dropbar Pick"),
+
+	-- Plugin: hlslens
+	["n|n"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>")
+		:with_noremap()
+		:with_silent(),
+	["n|N"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>")
+		:with_noremap()
+		:with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

@@ -23,6 +23,8 @@ settings["file_groups"] = {
 	{ ".ts", ".js" },
 }
 
+settings["open_dropbar"] = true
+
 -- Set it to one of the values below if you want to change the visible severity level of lsp diagnostics.
 -- Priority: `Error` > `Warning` > `Information` > `Hint`.
 --  > e.g. if you set this option to `Warning`, only lsp warnings and errors will be shown.

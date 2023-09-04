@@ -1,4 +1,4 @@
-return function()
+return function ()
 	local opts = {
 		tools = { -- rust-tools options
 
@@ -154,6 +154,11 @@ return function()
 			standalone = true,
 			settings = {
 				["rust-analyzer"] = {
+					imports = {
+                        granularity = {
+                            group = "module"
+                        },
+                    },
 					check = {
 						command = "clippy",
 					},
