@@ -224,16 +224,16 @@ return function()
 
 		xmake = {
 			function()
-				local xmake = require("xmake").config
-				if xmake.target == "" then
+				local xmake = require("xmake.project_config").info
+				if xmake.target.tg == "" then
 					return ""
 				end
-				return xmake.target .. "(" .. xmake.mode .. ")"
+				return xmake.target.tg .. "(" .. xmake.mode .. ")"
 			end,
 			color = utils.gen_hl("green", true, true),
 			cond = conditionals.has_enough_room,
 			on_click = function()
-				require("xmake.set").setting()
+				require("xmake.project_config._menu").init()
 			end,
 		},
 

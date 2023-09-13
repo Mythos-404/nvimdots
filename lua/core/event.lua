@@ -142,13 +142,6 @@ function autocmd.load_autocmds()
 				"nnoremap <leader>h :ClangdSwitchSourceHeaderVSplit<CR>",
 			},
 		},
-		yank = {
-			{
-				"TextYankPost",
-				"*",
-				[[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]],
-			},
-		},
 	}
 
 	autocmd.nvim_create_augroups(definitions)

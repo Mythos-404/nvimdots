@@ -24,6 +24,11 @@ lang["ellisonleao/glow.nvim"] = {
 	cmd = "Glow",
 	config = true,
 }
+lang["AckslD/nvim-FeMaco.lua"] = {
+	lazy = true,
+	ft = "markdown",
+	config = require("lang.femaco"),
+}
 lang["chrisbra/csv.vim"] = {
 	lazy = true,
 	ft = "csv",

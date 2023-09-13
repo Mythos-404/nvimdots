@@ -38,7 +38,6 @@ return function()
 		close_fold_kinds = { "imports", "comment" },
 		preview = {
 			win_config = {
-				-- border = { "", "─", "", "", "", "─", "", "" },
 				winhighlight = "Normal:Normal",
 				winblend = 0,
 			},
@@ -54,9 +53,11 @@ return function()
 	require("statuscol").setup({
 		relculright = true,
 		segments = {
-			{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-			{ text = { " %s" }, click = "v:lua.ScSa" },
+			{ sign = { name = { "GitSigns.*" }, auto = true, fillchar = "", colwidth = 1 }, click = "v:lua.ScLa" },
+			{ sign = { name = { "Diagnostic" }, auto = true }, click = "v:lua.ScLa" },
+			{ sign = { name = { "Dap.*" }, auto = true }, click = "v:lua.ScLa" },
 			{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+			{ text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
 		},
 	})
 end

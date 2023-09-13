@@ -78,11 +78,12 @@ local leader_map = function()
 end
 
 local neovide_config = function()
-	vim.api.nvim_set_option_value("guifont", "JetBrainsMono Nerd Font:h12", {})
+	vim.api.nvim_set_option_value("guifont", "IosevkaTermMFZF Nerd Font,思源黑体:h13", {})
 	vim.g.neovide_refresh_rate = 150
 	vim.g.neovide_cursor_vfx_mode = "pixiedust"
 	vim.g.neovide_no_idle = true
 	vim.g.neovide_hide_mouse_when_typing = true
+	vim.g.neovide_transparency = 0.85
 	vim.g.neovide_fullscreen = true
 	vim.g.neovide_cursor_animation_length = 0.03
 	vim.g.neovide_cursor_trail_length = 0.05

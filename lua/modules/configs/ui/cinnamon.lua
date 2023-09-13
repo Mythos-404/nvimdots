@@ -3,7 +3,7 @@ return function()
 		extra_keymaps = true,
 		extended_keymaps = true,
 
-		centered = true,
+		centered = false,
 		hide_cursor = true,
 		default_delay = 3,
 	})

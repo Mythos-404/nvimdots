@@ -1,5 +1,6 @@
 local tool = {}
 local open_dropbar = require("core.settings")["open_dropbar"]
+local is_windows = require("core.global").is_windows
 
 tool["nvim-tree/nvim-tree.lua"] = {
 	lazy = true,
@@ -29,14 +30,16 @@ tool["monaqa/dial.nvim"] = {
 	config = require("tool.dial"),
 	dependencies = "nvim-lua/plenary.nvim",
 }
-tool["michaelb/sniprun"] = {
-	lazy = true,
-	-- You need to cd to `~/.local/share/nvim/site/lazy/sniprun/` and execute `bash ./install.sh`,
-	-- if you encountered error about no executable sniprun found.
-	build = "bash ./install.sh",
-	cmd = "SnipRun",
-	config = require("tool.sniprun"),
-}
+if not is_windows then
+	tool["michaelb/sniprun"] = {
+		lazy = true,
+		-- You need to cd to `~/.local/share/nvim/site/lazy/sniprun/` and execute `bash ./install.sh`,
+		-- if you encountered error about no executable sniprun found.
+		build = "bash ./install.sh",
+		cmd = "SnipRun",
+		config = require("tool.sniprun"),
+	}
+end
 tool["akinsho/toggleterm.nvim"] = {
 	lazy = true,
 	cmd = {

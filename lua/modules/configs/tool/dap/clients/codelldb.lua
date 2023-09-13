@@ -5,7 +5,8 @@ return function()
 	local is_windows = require("core.global").is_windows
 
 	local function get_exec_path()
-		return require("xmake.util").get_exec_path() or require("modules.utils.dap").input_exec_path()
+		local x_target_path = require("xmake.project_config").info.target.exec_path
+		return x_target_path ~= "" and x_target_path or require("modules.utils.dap").input_exec_path()
 	end
 
 	dap.adapters.codelldb = {

@@ -42,15 +42,19 @@ ui["zbirenbaum/neodim"] = {
 	event = "LspAttach",
 	config = require("ui.neodim"),
 }
-ui["declancm/cinnamon.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("ui.cinnamon"),
-}
-ui["shaunsingh/nord.nvim"] = {
-	lazy = true,
-	config = require("ui.nord"),
-}
+if not vim.g.neovide then
+	ui["declancm/cinnamon.nvim"] = {
+		lazy = true,
+		event = { "CursorHold", "CursorHoldI" },
+		config = require("ui.cinnamon"),
+	}
+else
+	ui["karb94/neoscroll.nvim"] = {
+		lazy = true,
+		event = { "CursorHold", "CursorHoldI" },
+		config = require("ui.neoscroll"),
+	}
+end
 ui["rcarriga/nvim-notify"] = {
 	lazy = true,
 	event = "VeryLazy",
