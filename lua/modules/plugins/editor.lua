@@ -103,6 +103,12 @@ editor["echasnovski/mini.surround"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-surround"),
 }
+editor["echasnovski/mini.move"] = {
+	lazy = true,
+	version = false,
+	event = "VeryLazy",
+	config = require("editor.mini-move"),
+}
 editor["smoka7/multicursors.nvim"] = {
 	event = "VeryLazy",
 	cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },

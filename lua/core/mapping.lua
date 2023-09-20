@@ -58,11 +58,6 @@ local core_map = {
 	["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]])
 		:with_noremap()
 		:with_desc("edit: Complete path of current file"),
-	-- Visual mode
-	["v|J"] = map_cmd(":m '>+1<CR>gv=gv"):with_desc("edit: Move this line down"),
-	["v|K"] = map_cmd(":m '<-2<CR>gv=gv"):with_desc("edit: Move this line up"),
-	["v|<"] = map_cmd("<gv"):with_desc("edit: Decrease indent"),
-	["v|>"] = map_cmd(">gv"):with_desc("edit: Increase indent"),
 }
 
 bind.nvim_load_mapping(core_map)
