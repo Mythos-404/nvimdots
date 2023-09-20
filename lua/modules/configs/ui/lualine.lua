@@ -222,21 +222,6 @@ return function()
 			cond = conditionals.has_enough_room,
 		},
 
-		xmake = {
-			function()
-				local xmake = require("xmake.project_config").info
-				if xmake.target.tg == "" then
-					return ""
-				end
-				return xmake.target.tg .. "(" .. xmake.mode .. ")"
-			end,
-			color = utils.gen_hl("green", true, true),
-			cond = conditionals.has_enough_room,
-			on_click = function()
-				require("xmake.project_config._menu").init()
-			end,
-		},
-
 		tabwidth = {
 			function()
 				return icons.ui.Tab .. vim.api.nvim_get_option_value("shiftwidth", { scope = "local" })
@@ -349,7 +334,6 @@ return function()
 			lualine_y = {
 				components.separator,
 				components.python_venv,
-				components.xmake,
 				components.cwd,
 			},
 			lualine_z = { components.file_location },
