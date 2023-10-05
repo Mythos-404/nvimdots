@@ -9,10 +9,10 @@ return function()
 			up = "K",
 
 			-- Move current line in Normal mode
-			line_left = "H",
-			line_right = "L",
-			line_down = "J",
-			line_up = "K",
+			line_left = "",
+			line_right = "",
+			line_down = "",
+			line_up = "",
 		},
 	})
 end
