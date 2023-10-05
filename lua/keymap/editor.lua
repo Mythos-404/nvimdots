@@ -74,10 +74,6 @@ local plug_map = {
 	["n|<leader>D"] = map_cr("DiffviewOpen"):with_silent():with_noremap():with_desc("git: Show diff"),
 	["n|<leader><leader>D"] = map_cr("DiffviewClose"):with_silent():with_noremap():with_desc("git: Close diff"),
 
-	-- Plugin: hop
-	["nv|<leader>j"] = map_cmd("<Cmd>HopLineMW<CR>"):with_noremap():with_desc("jump: Goto line"),
-	["nv|<leader>k"] = map_cmd("<Cmd>HopLineMW<CR>"):with_noremap():with_desc("jump: Goto line"),
-
 	-- Plugin: flash
 	["nv|S"] = map_cmd("<Cmd>lua require('flash').jump()<CR>"):with_noremap():with_desc("jump: Goto one char"),
 	["nv|B"] = map_cmd("<Cmd>lua require('flash').treesitter()<CR>"):with_noremap():with_desc("jump: Goto one char"),

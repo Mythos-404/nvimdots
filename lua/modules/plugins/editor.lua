@@ -58,12 +58,6 @@ editor["echasnovski/mini.align"] = {
 	event = "BufReadPost",
 	config = require("editor.mini-aign"),
 }
-editor["smoka7/hop.nvim"] = {
-	lazy = true,
-	version = "*",
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("editor.hop"),
-}
 editor["folke/flash.nvim"] = {
 	lazy = true,
 	event = "VeryLazy",
