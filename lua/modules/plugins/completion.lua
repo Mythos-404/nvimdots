@@ -40,7 +40,7 @@ completion["jose-elias-alvarez/null-ls.nvim"] = {
 }
 completion["hrsh7th/nvim-cmp"] = {
 	lazy = true,
-	event = { "InsertEnter" },
+	event = { "InsertEnter", "CmdlineEnter" },
 	config = require("completion.cmp"),
 	dependencies = {
 		{
@@ -58,6 +58,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-buffer" },
 		{ "kdheepak/cmp-latex-symbols" },
 		{ "ray-x/cmp-treesitter", commit = "c8e3a74" },
+		{ "hrsh7th/cmp-cmdline" },
 	},
 }
 

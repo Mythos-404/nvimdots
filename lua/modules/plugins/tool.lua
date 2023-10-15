@@ -74,12 +74,6 @@ tool["VidocqH/lsp-lens.nvim"] = {
 	event = "LspAttach",
 	config = require("tool.lsp-lens"),
 }
-tool["gelguy/wilder.nvim"] = {
-	lazy = true,
-	event = "CmdlineEnter",
-	config = require("tool.wilder"),
-	dependencies = { "romgrk/fzy-lua-native" },
-}
 if open_dropbar then
 	tool["Bekaboo/dropbar.nvim"] = {
 		lazy = true,
@@ -115,10 +109,8 @@ tool["nvim-telescope/telescope.nvim"] = {
 			event = { "CursorHold", "CursorHoldI" },
 			config = require("tool.project"),
 		},
+		{ "nvim-telescope/telescope-frecency.nvim" },
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		{ "nvim-telescope/telescope-frecency.nvim", dependencies = {
-			{ "kkharji/sqlite.lua" },
-		} },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "nvim-telescope/telescope-live-grep-args.nvim" },
 	},
