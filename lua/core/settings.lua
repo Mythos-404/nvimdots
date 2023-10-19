@@ -8,6 +8,14 @@ settings["use_ssh"] = true
 ---@type boolean
 settings["format_on_save"] = true
 
+-- Set it to true if you prefer formatting ONLY the *changed lines* as defined by your version control system.
+-- NOTE: This entry will only be respected if:
+--  > The buffer to be formatted is under version control (Git or Mercurial);
+--  > Any of the server attached to that buffer supports |DocumentRangeFormattingProvider| server capability.
+-- Otherwise Neovim would fall back to format the whole buffer, and a warning will be issued.
+---@type boolean
+settings["format_modifications_only"] = true
+
 -- Set it to false if the notification after formatting is annoying.
 ---@type boolean
 settings["format_notify"] = false
