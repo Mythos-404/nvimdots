@@ -92,6 +92,11 @@ tool["kevinhwang91/nvim-hlslens"] = {
 	event = "CmdlineEnter",
 	config = require("tool.hlslens"),
 }
+tool["LeonHeidelbach/trailblazer.nvim"] = {
+	lazy = true,
+	event = "BufReadPost",
+	config = require("tool.trailblazer"),
+}
 
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --
