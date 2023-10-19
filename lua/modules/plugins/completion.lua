@@ -59,6 +59,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "kdheepak/cmp-latex-symbols" },
 		{ "ray-x/cmp-treesitter", commit = "c8e3a74" },
 		{ "hrsh7th/cmp-cmdline" },
+		{ "Gelio/cmp-natdat", config = true },
 	},
 }
 
