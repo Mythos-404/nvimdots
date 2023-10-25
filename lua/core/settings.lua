@@ -14,7 +14,7 @@ settings["format_on_save"] = true
 --  > Any of the server attached to that buffer supports |DocumentRangeFormattingProvider| server capability.
 -- Otherwise Neovim would fall back to format the whole buffer, and a warning will be issued.
 ---@type boolean
-settings["format_modifications_only"] = true
+settings["format_modifications_only"] = false
 
 -- Set it to false if the notification after formatting is annoying.
 ---@type boolean
