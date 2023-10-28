@@ -249,7 +249,6 @@ function M.tobool(value)
 	end
 end
 
----
 ---@param max number
 ---@return number
 function M.get_random_num(max)

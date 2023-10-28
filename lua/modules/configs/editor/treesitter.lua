@@ -14,28 +14,7 @@ return vim.schedule_wrap(function()
 	}
 
 	require("nvim-treesitter.configs").setup({
-		ensure_installed = {
-			"bash",
-			"c",
-			"cpp",
-			"css",
-			"go",
-			"gomod",
-			"html",
-			"javascript",
-			"json",
-			"latex",
-			"lua",
-			"make",
-			"markdown",
-			"markdown_inline",
-			"python",
-			"rust",
-			"typescript",
-			"vimdoc",
-			"vue",
-			"yaml",
-		},
+		ensure_installed = require("core.settings").treesitter_deps,
 		highlight = {
 			enable = true,
 			disable = function(ft, bufnr)

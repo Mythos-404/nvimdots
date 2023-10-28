@@ -1,3 +1,4 @@
+local settings = require("core.settings")
 local global = require("core.global")
 
 -- Create cache dir and data dirs
@@ -77,21 +78,14 @@ local leader_map = function()
 	vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
 end
 
+local gui_config = function()
+	vim.api.nvim_set_option_value("guifont", settings.gui_config.font_name .. ":h" .. settings.gui_config.font_size, {})
+end
+
 local neovide_config = function()
-	vim.api.nvim_set_option_value("guifont", "IosevkaTermMFZF Nerd Font,思源黑体:h13", {})
-	vim.g.neovide_refresh_rate = 150
-	vim.g.neovide_cursor_vfx_mode = "pixiedust"
-	vim.g.neovide_no_idle = true
-	vim.g.neovide_hide_mouse_when_typing = true
-	vim.g.neovide_transparency = 0.85
-	vim.g.neovide_fullscreen = true
-	vim.g.neovide_cursor_animation_length = 0.03
-	vim.g.neovide_cursor_trail_length = 0.05
-	vim.g.neovide_cursor_antialiasing = true
-	vim.g.neovide_cursor_vfx_opacity = 200.0
-	vim.g.neovide_cursor_vfx_particle_lifetime = 1.4
-	vim.g.neovide_cursor_vfx_particle_speed = 20.0
-	vim.g.neovide_cursor_vfx_particle_density = 7.0
+	for name, config in pairs(settings.neovide_config) do
+		vim.g["neovide_" .. name] = config
+	end
 end
 
 local clipboard_config = function()
@@ -151,6 +145,7 @@ local load_core = function()
 	disable_distribution_plugins()
 	leader_map()
 
+	gui_config()
 	neovide_config()
 	clipboard_config()
 	shell_config()
@@ -161,10 +156,8 @@ local load_core = function()
 	require("core.event")
 	require("core.pack")
 
-	local colorscheme = require("core.settings").colorscheme
-	local background = require("core.settings").background
-	vim.api.nvim_command("set background=" .. background)
-	vim.api.nvim_command("colorscheme " .. colorscheme)
+	vim.api.nvim_command("set background=" .. settings.background)
+	vim.api.nvim_command("colorscheme " .. settings.colorscheme)
 end
 
 load_core()

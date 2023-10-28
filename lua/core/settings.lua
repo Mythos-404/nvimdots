@@ -31,6 +31,7 @@ settings["file_groups"] = {
 	{ ".ts", ".js" },
 }
 
+-- NOTE: Dropbar nvim version > 0.9
 settings["open_dropbar"] = true
 
 -- Set it to one of the values below if you want to change the visible severity level of lsp diagnostics.
@@ -130,6 +131,62 @@ settings["dap_deps"] = {
 	"codelldb", -- C-Family
 	"delve", -- Go
 	"python", -- Python (debugpy)
+}
+
+-- Set the Treesitter parsers that will be installed during bootstrap here.
+-- Check the below link for all supported languages:
+-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+---@type string[]
+settings["treesitter_deps"] = {
+	"bash",
+	"c",
+	"cpp",
+	"css",
+	"go",
+	"gomod",
+	"html",
+	"javascript",
+	"json",
+	"latex",
+	"lua",
+	"make",
+	"markdown",
+	"markdown_inline",
+	"python",
+	"rust",
+	"typescript",
+	"vimdoc",
+	"vue",
+	"yaml",
+}
+
+-- Set the options for neovim's gui clients like `neovide` and `neovim-qt` here.
+-- NOTE: Currently, only the following options related to the GUI are supported. Other entries will be IGNORED.
+---@type { font_name: string, font_size: number }
+settings["gui_config"] = {
+	font_name = "IosevkaTermMFZF Nerd Font,思源黑体",
+	font_size = 13,
+}
+
+-- Set the options specific to `neovide` here.
+-- NOTE: You should remove the `neovide_` prefix (with trailing underscore) from all your entries below.
+-- Check the below link for all supported entries:
+-- https://neovide.dev/configuration.html
+---@type table<string, boolean|number|string>
+settings["neovide_config"] = {
+	refresh_rate = 150,
+	cursor_vfx_mode = "pixiedust",
+	no_idle = true,
+	hide_mouse_when_typing = true,
+	transparency = 0.85,
+	fullscreen = true,
+	cursor_animation_length = 0.03,
+	cursor_trail_length = 0.05,
+	cursor_antialiasing = true,
+	cursor_vfx_opacity = 200.0,
+	cursor_vfx_particle_lifetime = 1.4,
+	cursor_vfx_particle_speed = 20.0,
+	cursor_vfx_particle_density = 7.0,
 }
 
 return settings
