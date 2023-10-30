@@ -200,13 +200,6 @@ return function()
 					["@keyword.return"] = { fg = cp.pink, style = clear },
 					["@error.c"] = { fg = cp.none, style = clear },
 					["@error.cpp"] = { fg = cp.none, style = clear },
-
-					-- For Flash
-					FlashLabel = {
-						bg = transparent_background and cp.none or cp.base,
-						fg = cp.peach,
-						style = { "bold", "underline" },
-					},
 				}
 			end,
 		},
