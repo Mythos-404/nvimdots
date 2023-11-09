@@ -97,6 +97,10 @@ tool["LeonHeidelbach/trailblazer.nvim"] = {
 	event = "BufReadPost",
 	config = require("tool.trailblazer"),
 }
+tool["wintermute-cell/gitignore.nvim"] = {
+	lazy = true,
+	cmd = "Gitignore",
+}
 
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --
