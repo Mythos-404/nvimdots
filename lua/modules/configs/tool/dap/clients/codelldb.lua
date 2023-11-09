@@ -5,8 +5,11 @@ return function()
 	local is_windows = require("core.global").is_windows
 
 	local function get_exec_path()
-		local x_target_path = require("xmake.project_config").info.target.exec_path
-		return x_target_path ~= "" and x_target_path or require("modules.utils.dap").input_exec_path()
+		if vim.g.loaded_xmake then
+			return require("xmake.project_config").info.target.exec_path
+		else
+			return require("modules.utils.dap").input_exec_path()
+		end
 	end
 
 	dap.adapters.codelldb = {
