@@ -4,15 +4,6 @@ return vim.schedule_wrap(function()
 	vim.api.nvim_set_option_value("foldmethod", "expr", {})
 	vim.api.nvim_set_option_value("foldexpr", "nvim_treesitter#foldexpr()", {})
 
-	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-	parser_config.nim = {
-		install_info = {
-			url = "https://github.com/alaviss/tree-sitter-nim",
-			files = { "src/parser.c", "src/scanner.cc" },
-			branch = "main",
-		},
-	}
-
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = require("core.settings").treesitter_deps,
 		highlight = {
@@ -26,6 +17,13 @@ return vim.schedule_wrap(function()
 				return ok and is_large_file
 			end,
 			additional_vim_regex_highlighting = { "c", "cpp" },
+		},
+		incremental_selection = {
+			enable = true,
+			keymaps = {
+				node_incremental = "v",
+				node_dncremental = "V",
+			},
 		},
 		textobjects = {
 			select = {
