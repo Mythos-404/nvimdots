@@ -38,7 +38,6 @@ lang["Mythos-404/xmake.nvim"] = {
 	event = "BufReadPost xmake.lua",
 	config = require("lang.xmake"),
 	dependencies = { "MunifTanjim/nui.nvim" },
-	dev = true,
 }
 
 return lang
