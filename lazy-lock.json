@@ -106,6 +106,6 @@
   "vim-illuminate": { "branch": "master", "commit": "3bd2ab64b5d63b29e05691e624927e5ebbf0fb86" },
   "vim-matchup": { "branch": "master", "commit": "d30b72d20f01478a8486f15a57c89fe3177373db" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" },
-  "xmake.nvim": { "branch": "v2", "commit": "82768d898aca03cd0b14e04f05ccd66583a62b49" },
+  "xmake.nvim": { "branch": "v2", "commit": "84c66687bc6fa174316180d207f14630175cc5ec" },
   "yanky.nvim": { "branch": "main", "commit": "9268018e92d02650a94e39dd5f5903c542f7ea11" }
 }
