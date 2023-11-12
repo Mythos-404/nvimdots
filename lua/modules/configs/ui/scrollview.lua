@@ -3,7 +3,7 @@ return function()
 
 	require("scrollview").setup({
 		scrollview_mode = "virtual",
-		excluded_filetypes = { "NvimTree", "terminal", "nofile", "Outline" },
+		excluded_filetypes = { "NvimTree", "terminal", "nofile", "aerial" },
 		winblend = 0,
 		signs_on_startup = { "diagnostics", "folds", "marks", "search", "spell" },
 		diagnostics_error_symbol = icons.diagnostics.Error,
