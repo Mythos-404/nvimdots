@@ -1,1 +1,1 @@
-return { "-style=file:/home/mythos_404/.clang-format" }
+return { "-style=file" }
