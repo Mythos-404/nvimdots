@@ -147,10 +147,6 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			config = require("editor.colorizer"),
 		},
 		{
-			"abecodes/tabout.nvim",
-			config = require("editor.tabout"),
-		},
-		{
 			"danymat/neogen",
 			config = require("editor.neogen"),
 		},
