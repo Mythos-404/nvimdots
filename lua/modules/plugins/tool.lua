@@ -1,5 +1,4 @@
 local tool = {}
-local open_dropbar = require("core.settings")["open_dropbar"]
 local is_windows = require("core.global").is_windows
 
 tool["nvim-tree/nvim-tree.lua"] = {
@@ -74,7 +73,7 @@ tool["VidocqH/lsp-lens.nvim"] = {
 	event = "LspAttach",
 	config = require("tool.lsp-lens"),
 }
-if open_dropbar then
+if vim.fn.has("nvim-0.10.0") then
 	tool["Bekaboo/dropbar.nvim"] = {
 		lazy = true,
 		event = { "BufReadPre", "BufNewFile" },

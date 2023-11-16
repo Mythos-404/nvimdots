@@ -31,9 +31,6 @@ settings["file_groups"] = {
 	{ ".ts", ".js" },
 }
 
--- NOTE: Dropbar nvim version > 0.9
-settings["open_dropbar"] = true
-
 -- Set it to one of the values below if you want to change the visible severity level of lsp diagnostics.
 -- Priority: `Error` > `Warning` > `Information` > `Hint`.
 --  > e.g. if you set this option to `Warning`, only lsp warnings and errors will be shown.
@@ -164,7 +161,7 @@ settings["treesitter_deps"] = {
 -- NOTE: Currently, only the following options related to the GUI are supported. Other entries will be IGNORED.
 ---@type { font_name: string, font_size: number }
 settings["gui_config"] = {
-	font_name = "IosevkaTermMFZF Nerd Font,思源黑体",
+	font_name = "IosevkaTermMFZFNerdFont Nerd Font,思源黑体 CN",
 	font_size = 13,
 }
 
@@ -179,7 +176,7 @@ settings["neovide_config"] = {
 	no_idle = true,
 	hide_mouse_when_typing = true,
 	transparency = 0.85,
-	fullscreen = true,
+	fullscreen = false,
 	cursor_animation_length = 0.03,
 	cursor_trail_length = 0.05,
 	cursor_antialiasing = true,
