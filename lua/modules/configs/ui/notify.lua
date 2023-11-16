@@ -19,7 +19,7 @@ return function()
 		---@usage timeout for notifications in ms, default 5000
 		timeout = 2000,
 		-- @usage User render fps value
-		fps = 20,
+		fps = 24,
 		-- Render function for notifications. See notify-render()
 		render = "default",
 		---@usage highlight behind the window for stages that change opacity
@@ -37,6 +37,14 @@ return function()
 			TRACE = icons.ui.Pencil,
 		},
 	})
-
 	vim.notify = notify
+
+	vim.system({ "curl", "-s", "https://vtip.43z.one" }, nil, function(obj)
+		local res = "󰴓 " .. obj.stdout
+		if not obj.code then
+			res = "Error fetching tip: " .. res
+		end
+
+		vim.notify(res, vim.log.levels.INFO, { title = "Tip!" })
+	end)
 end
