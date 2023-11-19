@@ -103,14 +103,10 @@ editor["echasnovski/mini.move"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-move"),
 }
-editor["smoka7/multicursors.nvim"] = {
+editor["brenton-leighton/multiple-cursors.nvim"] = {
+	lazy = true,
 	event = "VeryLazy",
-	cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter",
-		"smoka7/hydra.nvim",
-	},
-	config = require("editor.multicursors"),
+	config = require("editor.multiple-cursors"),
 }
 
 ----------------------------------------------------------------------
@@ -129,7 +125,8 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 		{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		{ "JoosepAlviste/nvim-ts-context-commentstring" },
 		{ "mfussenegger/nvim-treehopper" },
-		{ "andymass/vim-matchup" },
+		{ "chrisgrieser/nvim-puppeteer" },
+		-- { "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
 		{
 			"hiphish/rainbow-delimiters.nvim",
 			config = require("editor.rainbow_delims"),

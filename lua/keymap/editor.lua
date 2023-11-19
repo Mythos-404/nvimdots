@@ -119,11 +119,19 @@ local plug_map = {
 		:with_noremap()
 		:with_desc("edit: Preview all folds"),
 
-	-- Plugin: Multicursors
-	["nv|<leader>m"] = map_cmd("<Cmd>MCstart<CR>")
+	-- Plugin: multi-cursors
+	["ni|<A-Up>"] = map_cmd("<Cmd>MultipleCursorsAddUp<CR>")
 		:with_silent()
 		:with_noremap()
-		:with_desc("edit: Create a selection for selected text or word under the cursor"),
+		:with_desc("edit: Create cursor up"),
+	["ni|<A-Down>"] = map_cmd("<Cmd>MultipleCursorsAddDown<CR>")
+		:with_silent()
+		:with_noremap()
+		:with_desc("edit Create cursor down"),
+	["ni|<A-LeftMouse>"] = map_cmd("<Cmd>MultipleCursorsMouseAddDelete<CR>")
+		:with_silent()
+		:with_noremap()
+		:with_desc("edit: Create cursors with a mouse click"),
 }
 
 bind.nvim_load_mapping(plug_map)
