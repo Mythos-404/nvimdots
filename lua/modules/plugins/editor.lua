@@ -150,6 +150,10 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"danymat/neogen",
 			config = require("editor.neogen"),
 		},
+		{
+			"ThePrimeagen/refactoring.nvim",
+			config = require("editor.refacotring"),
+		},
 	},
 }
 

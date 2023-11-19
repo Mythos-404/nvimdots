@@ -1,3 +1,3 @@
 return function()
-	require("refactoring").setup()
+	require("refactoring").setup({})
 end
