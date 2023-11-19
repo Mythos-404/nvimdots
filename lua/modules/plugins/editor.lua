@@ -116,24 +116,19 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 	lazy = true,
 	build = function()
 		if #vim.api.nvim_list_uis() ~= 0 then
-			vim.api.nvim_command("TSUpdate")
+			vim.api.nvim_command([[ TSUpdate ]])
 		end
 	end,
-	event = "BufReadPost",
+	event = "BufReadPre",
 	config = require("editor.treesitter"),
 	dependencies = {
-		{ "nvim-treesitter/nvim-treesitter-textobjects" },
-		{ "JoosepAlviste/nvim-ts-context-commentstring" },
-		{ "mfussenegger/nvim-treehopper" },
-		{ "chrisgrieser/nvim-puppeteer" },
 		-- { "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
+		{ "chrisgrieser/nvim-puppeteer" },
+		{ "mfussenegger/nvim-treehopper" },
+		{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		{
-			"hiphish/rainbow-delimiters.nvim",
-			config = require("editor.rainbow_delims"),
-		},
-		{
-			"nvim-treesitter/nvim-treesitter-context",
-			config = require("editor.ts-context"),
+			"danymat/neogen",
+			config = require("editor.neogen"),
 		},
 		{
 			"windwp/nvim-ts-autotag",
@@ -144,12 +139,20 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			config = require("editor.colorizer"),
 		},
 		{
-			"danymat/neogen",
-			config = require("editor.neogen"),
-		},
-		{
 			"ThePrimeagen/refactoring.nvim",
 			config = require("editor.refacotring"),
+		},
+		{
+			"hiphish/rainbow-delimiters.nvim",
+			config = require("editor.rainbow_delims"),
+		},
+		{
+			"nvim-treesitter/nvim-treesitter-context",
+			config = require("editor.ts-context"),
+		},
+		{
+			"JoosepAlviste/nvim-ts-context-commentstring",
+			config = require("editor.ts-context-commentstring"),
 		},
 	},
 }
