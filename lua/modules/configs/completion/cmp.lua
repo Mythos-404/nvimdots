@@ -157,28 +157,9 @@ return function()
 		},
 	})
 
-	local cmdline_maps = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {
-		["<Down>"] = {
-			c = function()
-				if cmp.visible() then
-					cmp.select_next_item()
-				else
-					cmp.complete()
-				end
-			end,
-		},
-		["<Up>"] = {
-			c = function()
-				if cmp.visible() then
-					cmp.select_prev_item()
-				else
-					cmp.complete()
-				end
-			end,
-		},
-	})
+	local cmdline_maps = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {})
 	-- `/` cmdline setup.
-	cmp.setup.cmdline("/", {
+	cmp.setup.cmdline({ "/", "?" }, {
 		mapping = cmdline_maps,
 		sources = {
 			{ name = "buffer" },
@@ -187,15 +168,9 @@ return function()
 	-- `:` cmdline setup.
 	cmp.setup.cmdline(":", {
 		mapping = cmdline_maps,
-		sources = cmp.config.sources({
-			{ name = "path" },
-		}, {
-			{
-				name = "cmdline",
-				option = {
-					ignore_cmds = { "Man", "!" },
-				},
-			},
-		}),
+		sources = cmp.config.sources(
+			{ { name = "path" } },
+			{ { name = "cmdline", option = { ignore_cmds = { "Man", "!" } } } }
+		),
 	})
 end
