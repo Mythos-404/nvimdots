@@ -88,7 +88,11 @@ editor["kevinhwang91/nvim-ufo"] = {
 	config = require("editor.ufo"),
 	dependencies = {
 		{ "kevinhwang91/promise-async" },
-		{ "luukvbaal/statuscol.nvim" },
+		{
+			"luukvbaal/statuscol.nvim",
+			branch = "0.10",
+			config = require("editor.statuscol"),
+		},
 	},
 }
 editor["echasnovski/mini.surround"] = {
