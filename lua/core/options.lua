@@ -128,7 +128,7 @@ local function load_options()
 		-- Download the DLLs form https://www.sqlite.org/download.html
 
 		-- My window sqlite3 dll
-		vim.g.sqlite_clib_path = "E:\\xxDownload\\Scoop\\apps\\sqlite\\current\\sqlite3.dll"
+		vim.g.sqlite_clib_path = "E:\\xxDownload\\Scoop\\persist\\sqlite\\sqlite3.dll"
 	end
 end
 
