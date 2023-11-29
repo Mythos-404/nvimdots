@@ -72,7 +72,6 @@ return function()
 					string.format(" %s  %s", lspkind_icons[vim_item.kind] or icons.cmp.undefined, vim_item.kind or "")
 
 				vim_item.menu = setmetatable({
-					cmp_tabnine = "[TN]",
 					buffer = "[BUF]",
 					orgmode = "[ORG]",
 					nvim_lsp = "[LSP]",
@@ -139,9 +138,11 @@ return function()
 		},
 		-- You should specify your *installed* sources.
 		sources = {
+			{ name = "codeium" },
 			{ name = "nvim_lsp", max_item_count = 350 },
 			{ name = "nvim_lua" },
 			{ name = "luasnip" },
+			{ name = "natdat" },
 			{ name = "path" },
 			{ name = "treesitter" },
 			{ name = "spell" },
