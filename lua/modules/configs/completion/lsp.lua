@@ -134,8 +134,7 @@ return function()
 			nvim_lsp[lsp_name].setup(vim.tbl_deep_extend("force", opts, custom_handler))
 		else
 			vim.notify(
-				string.format(
-					"Failed to setup [%s].\n\nServer definition under `completion/servers` must return\neither a fun(opts) or a table (got '%s' instead)",
+				("Failed to setup [%s].\n\nServer definition under `completion/servers` must return\neither a fun(opts) or a table (got '%s' instead)"):format(
 					lsp_name,
 					type(custom_handler)
 				),

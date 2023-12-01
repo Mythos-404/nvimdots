@@ -112,7 +112,7 @@ function M.blend(foreground, background, alpha)
 		return math.floor(math.min(math.max(0, ret), 255) + 0.5)
 	end
 
-	return string.format("#%02x%02x%02x", blendChannel(1), blendChannel(2), blendChannel(3))
+	return ("#%02x%02x%02x"):format(blendChannel(1), blendChannel(2), blendChannel(3))
 end
 
 ---Get RGB highlight by highlight group
@@ -127,9 +127,9 @@ function M.hl_to_rgb(hl_group, use_bg, fallback_hl)
 	if hlexists then
 		local result = vim.api.nvim_get_hl(0, { name = hl_group, link = false })
 		if use_bg then
-			hex = result.bg and string.format("#%06x", result.bg) or "NONE"
+			hex = result.bg and ("#%06x"):format(result.bg) or "NONE"
 		else
-			hex = result.fg and string.format("#%06x", result.fg) or "NONE"
+			hex = result.fg and ("#%06x"):format(result.fg) or "NONE"
 		end
 	end
 

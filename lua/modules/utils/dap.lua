@@ -16,7 +16,7 @@ end
 function M.get_env()
 	local variables = {}
 	for k, v in pairs(vim.fn.environ()) do
-		table.insert(variables, string.format("%s=%s", k, v))
+		table.insert(variables, ("%s=%s"):format(k, v))
 	end
 	return variables
 end

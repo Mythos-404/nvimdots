@@ -68,8 +68,10 @@ return function()
 			format = function(entry, vim_item)
 				local lspkind_icons = vim.tbl_deep_extend("force", icons.kind, icons.type, icons.cmp)
 				-- load lspkind icons
-				vim_item.kind =
-					string.format(" %s  %s", lspkind_icons[vim_item.kind] or icons.cmp.undefined, vim_item.kind or "")
+				vim_item.kind = (" %s  %s"):format(
+					lspkind_icons[vim_item.kind] or icons.cmp.undefined,
+					vim_item.kind or ""
+				)
 
 				vim_item.menu = setmetatable({
 					buffer = "[BUF]",

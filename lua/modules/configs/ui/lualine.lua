@@ -235,8 +235,9 @@ return function()
 				local clients = vim.lsp.get_clients()
 				local lsp_lists = {}
 				local available_servers = {}
+				local conform_status = #require("conform").list_formatters() ~= 0
 				if next(clients) == nil then
-					return icons.misc.NoActiveLsp -- No server available
+					return conform_status and ("<%s>"):format(icons.misc.NoActiveLsp) or icons.misc.NoActiveLsp -- No server available
 				end
 				for _, client in ipairs(clients) do
 					local filetypes = client.config.filetypes
@@ -249,11 +250,11 @@ return function()
 						end
 					end
 				end
-				if require("conform").list_formatters() ~= 0 then
-					table.insert(available_servers, "conform")
-				end
 				return next(available_servers) == nil and icons.misc.NoActiveLsp
-					or string.format("%s[%s]", icons.misc.LspAvailable, table.concat(available_servers, ", "))
+					or (conform_status and "%s<%s>" or "%s[%s]"):format(
+						icons.misc.LspAvailable,
+						table.concat(available_servers, ", ")
+					)
 			end,
 			color = utils.gen_hl("blue", true, true, nil, "bold"),
 			cond = conditionals.has_enough_room,
@@ -317,9 +318,9 @@ return function()
 				elseif cursorline == filelines then
 					position = "Bot"
 				else
-					position = string.format("%2d%%%%", math.floor(cursorline / filelines * 100))
+					position = ("%2d%%%%"):format(math.floor(cursorline / filelines * 100))
 				end
-				return string.format("%s · %3d:%-2d", position, cursorline, cursorcol)
+				return ("%s · %3d:%-2d"):format(position, cursorline, cursorcol)
 			end,
 		},
 	}

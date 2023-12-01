@@ -61,8 +61,7 @@ return function()
 			custom_handler(config)
 		else
 			vim.notify(
-				string.format(
-					"Failed to setup [%s].\n\nClient definition under `tool/dap/clients` must return\na fun(opts) (got '%s' instead)",
+				("Failed to setup [%s].\n\nClient definition under `tool/dap/clients` must return\na fun(opts) (got '%s' instead)"):format(
 					config.name,
 					type(custom_handler)
 				),

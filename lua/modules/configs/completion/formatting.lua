@@ -11,8 +11,7 @@ local function disabled_work_dir(file_dir)
 	for i = 1, #disabled_workspaces do
 		if vim.regex(vim.fs.normalize(disabled_workspaces[i])):match_str(file_dir) ~= nil then
 			vim.notify(
-				string.format(
-					"[LSP] Formatting for all files under [%s] has been disabled.",
+				("[LSP] Formatting for all files under [%s] has been disabled."):format(
 					vim.fs.normalize(disabled_workspaces[i])
 				),
 				vim.log.levels.WARN,
@@ -27,17 +26,13 @@ local function on_format(client_name)
 	return function(err)
 		if format_notify then
 			vim.notify(
-				string.format("[LSP] Format successfully with %s!", client_name),
+				("[LSP] Format successfully with %s!"):format(client_name),
 				vim.log.levels.INFO,
 				{ title = "LSP Format Success" }
 			)
 		end
 		if err then
-			vim.notify(
-				string.format("[LSP][%s] %s", client_name, err),
-				vim.log.levels.ERROR,
-				{ title = "LSP Format Error" }
-			)
+			vim.notify(("[LSP][%s] %s"):format(client_name, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
 		end
 	end
 end
@@ -98,7 +93,7 @@ end
 vim.api.nvim_create_user_command("FormatterToggleFt", function(opts)
 	if block_list[opts.args] == nil then
 		vim.notify(
-			string.format("[LSP] Formatter for [%s] has been recorded in list and disabled.", opts.args),
+			("[LSP] Formatter for [%s] has been recorded in list and disabled."):format(opts.args),
 			vim.log.levels.WARN,
 			{ title = "LSP Formatter Warning" }
 		)
@@ -106,13 +101,12 @@ vim.api.nvim_create_user_command("FormatterToggleFt", function(opts)
 	else
 		block_list[opts.args] = not block_list[opts.args]
 		vim.notify(
-			string.format(
-				"[LSP] Formatter for [%s] has been %s.",
+			("[LSP] Formatter for [%s] has been %s."):format(
 				opts.args,
 				not block_list[opts.args] and "enabled" or "disabled"
 			),
 			not block_list[opts.args] and vim.log.levels.INFO or vim.log.levels.WARN,
-			{ title = string.format("LSP Formatter %s", not block_list[opts.args] and "Info" or "Warning") }
+			{ title = ("LSP Formatter %s"):format(not block_list[opts.args] and "Info" or "Warning") }
 		)
 	end
 end, { nargs = 1, complete = "filetype" })
