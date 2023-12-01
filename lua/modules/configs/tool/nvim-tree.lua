@@ -1,5 +1,5 @@
 local function custom_sorter(nodes)
-	local file_groups = require("core.settings")["file_groups"]
+	local file_groups = require("core.settings").file_groups
 	local function get_group_index(name)
 		for i, group in ipairs(file_groups) do
 			for j, ext in ipairs(group) do
@@ -49,6 +49,11 @@ return function()
 		respect_buf_cwd = false,
 		sort_by = custom_sorter,
 		sync_root_with_cwd = true,
+		ui = {
+			confirm = {
+				default_yes = true,
+			},
+		},
 		view = {
 			adaptive_size = false,
 			centralize_selection = false,
@@ -184,8 +189,7 @@ return function()
 			timeout = 400,
 		},
 		trash = {
-			cmd = "gio trash",
-			require_confirm = true,
+			cmd = "trash put",
 		},
 		live_filter = {
 			prefix = "[FILTER]: ",
