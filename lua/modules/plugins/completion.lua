@@ -30,18 +30,10 @@ completion["stevearc/aerial.nvim"] = {
 	event = "LspAttach",
 	config = require("completion.aerial"),
 }
-completion["joechrisellis/lsp-format-modifications.nvim"] = {
-	lazy = true,
-	event = "LspAttach",
-}
-completion["nvimtools/none-ls.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("completion.null-ls"),
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"jay-babu/mason-null-ls.nvim",
-	},
+completion["stevearc/conform.nvim"] = {
+    lazy = true,
+    event = {"CursorHold", "CursorHoldI"},
+    config = require("completion.conform")
 }
 completion["hrsh7th/nvim-cmp"] = {
 	lazy = true,
