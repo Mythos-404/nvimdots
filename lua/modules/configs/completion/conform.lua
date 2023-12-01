@@ -3,8 +3,8 @@ return function()
 
 	conform.setup({
 		formatters_by_ft = {
-			c = { "clang-format" },
-			cpp = { "clang-format" },
+			c = { "clang_format" },
+			cpp = { "clang_format" },
 
 			zsh = { "beautysh" },
 			sh = { "beautysh" },

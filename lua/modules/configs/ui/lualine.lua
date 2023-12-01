@@ -11,11 +11,17 @@ return function()
 
 	local function custom_theme()
 		vim.api.nvim_create_autocmd("ColorScheme", {
-			group = vim.api.nvim_create_augroup("LualineColorScheme", { clear = true }),
+			group = vim.api.nvim_create_augroup("LualineColorScheme", {
+				clear = true,
+			}),
 			pattern = "*",
 			callback = function()
 				has_catppuccin = vim.g.colors_name:find("catppuccin") ~= nil
-				require("lualine").setup({ options = { theme = custom_theme() } })
+				require("lualine").setup({
+					options = {
+						theme = custom_theme(),
+					},
+				})
 			end,
 		})
 
@@ -24,29 +30,69 @@ return function()
 			local universal_bg = require("core.settings").transparent_background and "NONE" or colors.mantle
 			return {
 				normal = {
-					a = { fg = colors.lavender, bg = colors.surface0, gui = "bold" },
-					b = { fg = colors.text, bg = universal_bg },
-					c = { fg = colors.text, bg = universal_bg },
+					a = {
+						fg = colors.lavender,
+						bg = colors.surface0,
+						gui = "bold",
+					},
+					b = {
+						fg = colors.text,
+						bg = universal_bg,
+					},
+					c = {
+						fg = colors.text,
+						bg = universal_bg,
+					},
 				},
 				command = {
-					a = { fg = colors.peach, bg = colors.surface0, gui = "bold" },
+					a = {
+						fg = colors.peach,
+						bg = colors.surface0,
+						gui = "bold",
+					},
 				},
 				insert = {
-					a = { fg = colors.green, bg = colors.surface0, gui = "bold" },
+					a = {
+						fg = colors.green,
+						bg = colors.surface0,
+						gui = "bold",
+					},
 				},
 				visual = {
-					a = { fg = colors.flamingo, bg = colors.surface0, gui = "bold" },
+					a = {
+						fg = colors.flamingo,
+						bg = colors.surface0,
+						gui = "bold",
+					},
 				},
 				terminal = {
-					a = { fg = colors.teal, bg = colors.surface0, gui = "bold" },
+					a = {
+						fg = colors.teal,
+						bg = colors.surface0,
+						gui = "bold",
+					},
 				},
 				replace = {
-					a = { fg = colors.red, bg = colors.surface0, gui = "bold" },
+					a = {
+						fg = colors.red,
+						bg = colors.surface0,
+						gui = "bold",
+					},
 				},
 				inactive = {
-					a = { fg = colors.subtext0, bg = universal_bg, gui = "bold" },
-					b = { fg = colors.subtext0, bg = universal_bg },
-					c = { fg = colors.subtext0, bg = universal_bg },
+					a = {
+						fg = colors.subtext0,
+						bg = universal_bg,
+						gui = "bold",
+					},
+					b = {
+						fg = colors.subtext0,
+						bg = universal_bg,
+					},
+					c = {
+						fg = colors.subtext0,
+						bg = universal_bg,
+					},
 				},
 			}
 		else
@@ -55,7 +101,9 @@ return function()
 	end
 
 	local mini_sections = {
-		lualine_a = { "filetype" },
+		lualine_a = {
+			"filetype",
+		},
 		lualine_b = {},
 		lualine_c = {},
 		lualine_x = {},
@@ -64,11 +112,15 @@ return function()
 	}
 	local outline = {
 		sections = mini_sections,
-		filetypes = { "aerial" },
+		filetypes = {
+			"aerial",
+		},
 	}
 	local diffview = {
 		sections = mini_sections,
-		filetypes = { "DiffviewFiles" },
+		filetypes = {
+			"DiffviewFiles",
+		},
 	}
 
 	local conditionals = {
@@ -168,13 +220,18 @@ return function()
 				end
 				return #symbols > 0 and table.concat(symbols, "") or ""
 			end,
-			padding = { left = -1, right = 1 },
+			padding = {
+				left = -1,
+				right = 1,
+			},
 			cond = conditionals.has_comp_before,
 		},
 
 		lsp = {
 			function()
-				local buf_ft = vim.api.nvim_get_option_value("filetype", { scope = "local" })
+				local buf_ft = vim.api.nvim_get_option_value("filetype", {
+					scope = "local",
+				})
 				local clients = vim.lsp.get_clients()
 				local lsp_lists = {}
 				local available_servers = {}
@@ -191,6 +248,9 @@ return function()
 							table.insert(available_servers, client_name)
 						end
 					end
+				end
+				if require("conform").list_formatters() ~= 0 then
+					table.insert(available_servers, "conform")
 				end
 				return next(available_servers) == nil and icons.misc.NoActiveLsp
 					or string.format("%s[%s]", icons.misc.LspAvailable, table.concat(available_servers, ", "))
@@ -212,7 +272,9 @@ return function()
 					return venv
 				end
 
-				if vim.api.nvim_get_option_value("filetype", { scope = "local" }) == "python" then
+				if vim.api.nvim_get_option_value("filetype", {
+					scope = "local",
+				}) == "python" then
 					local venv = os.getenv("CONDA_DEFAULT_ENV")
 					if venv then
 						return icons.misc.PyEnv .. env_cleanup(venv)
@@ -230,7 +292,9 @@ return function()
 
 		tabwidth = {
 			function()
-				return icons.ui.Tab .. vim.api.nvim_get_option_value("shiftwidth", { scope = "local" })
+				return icons.ui.Tab .. vim.api.nvim_get_option_value("shiftwidth", {
+					scope = "local",
+				})
 			end,
 			padding = 1,
 		},
@@ -264,19 +328,27 @@ return function()
 		options = {
 			icons_enabled = true,
 			theme = custom_theme(),
-			disabled_filetypes = { statusline = { "alpha" } },
+			disabled_filetypes = {
+				statusline = {
+					"alpha",
+				},
+			},
 			component_separators = "",
 			-- section_separators = { left = "", right = "" },
 			section_separators = "",
 		},
 		sections = {
-			lualine_a = { "mode" },
+			lualine_a = {
+				"mode",
+			},
 			lualine_b = {
 				{
 					"filetype",
 					colored = true,
 					icon_only = false,
-					icon = { align = "left" },
+					icon = {
+						align = "left",
+					},
 				},
 				components.file_status,
 				vim.tbl_extend("force", components.separator, {
@@ -303,14 +375,25 @@ return function()
 					colored = true,
 					color = utils.gen_hl("subtext0", true, true),
 					cond = conditionals.has_git,
-					padding = { right = 1 },
+					padding = {
+						right = 1,
+					},
 				},
 
-				{ utils.force_centering },
+				{
+					utils.force_centering,
+				},
 				{
 					"diagnostics",
-					sources = { "nvim_diagnostic" },
-					sections = { "error", "warn", "info", "hint" },
+					sources = {
+						"nvim_diagnostic",
+					},
+					sections = {
+						"error",
+						"warn",
+						"info",
+						"hint",
+					},
 					symbols = {
 						error = icons.diagnostics.Error,
 						warn = icons.diagnostics.Warning,
@@ -324,7 +407,9 @@ return function()
 				{
 					"encoding",
 					fmt = string.upper,
-					padding = { left = 1 },
+					padding = {
+						left = 1,
+					},
 					cond = conditionals.has_enough_room,
 				},
 				{
@@ -334,7 +419,9 @@ return function()
 						dos = "CRLF",
 						mac = "CR", -- Legacy macOS
 					},
-					padding = { left = 1 },
+					padding = {
+						left = 1,
+					},
 				},
 				components.tabwidth,
 			},
@@ -343,13 +430,19 @@ return function()
 				components.python_venv,
 				components.cwd,
 			},
-			lualine_z = { components.file_location },
+			lualine_z = {
+				components.file_location,
+			},
 		},
 		inactive_sections = {
 			lualine_a = {},
 			lualine_b = {},
-			lualine_c = { "filename" },
-			lualine_x = { "location" },
+			lualine_c = {
+				"filename",
+			},
+			lualine_x = {
+				"location",
+			},
 			lualine_y = {},
 			lualine_z = {},
 		},
