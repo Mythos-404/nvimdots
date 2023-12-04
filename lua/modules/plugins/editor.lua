@@ -158,6 +158,7 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			config = require("editor.ts-context-commentstring"),
 		},
+		{ "IndianBoy42/tree-sitter-just", config = true },
 	},
 }
 

@@ -31,9 +31,9 @@ completion["stevearc/aerial.nvim"] = {
 	config = require("completion.aerial"),
 }
 completion["stevearc/conform.nvim"] = {
-    lazy = true,
-    event = {"CursorHold", "CursorHoldI"},
-    config = require("completion.conform")
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("completion.conform"),
 }
 completion["hrsh7th/nvim-cmp"] = {
 	lazy = true,

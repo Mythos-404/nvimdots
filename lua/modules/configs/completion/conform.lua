@@ -19,6 +19,8 @@ return function()
 			css = { "prettier" },
 			scss = { "prettier" },
 			markdown = { "prettier" },
+			json = { "prettier" },
+			jsonc = { "prettier" },
 
 			rust = { "rustfmt" },
 

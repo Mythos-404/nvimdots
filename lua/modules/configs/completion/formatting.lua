@@ -4,7 +4,7 @@ local settings = require("core.settings")
 local disabled_workspaces = settings.format_disabled_dirs
 local format_on_save = settings.format_on_save
 local format_notify = settings.format_notify
-local server_formatting_block_list = settings.server_formatting_block_list
+-- local server_formatting_block_list = settings.server_formatting_block_list
 local block_list = settings.formatter_block_list
 
 local function disabled_work_dir(file_dir)
@@ -32,7 +32,8 @@ local function on_format(client_name)
 			)
 		end
 		if err then
-			vim.notify(("[LSP][%s] %s"):format(client_name, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
+			-- vim.notify(("[LSP][%s] %s"):format(client_name, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
+			return
 		end
 	end
 end
@@ -51,23 +52,10 @@ function M.enable_format_on_save(is_configured)
 			local conform = require("conform")
 			local client = conform.list_formatters(args.bufnr)[1]
 			if not client then
-				vim.notify(
-					"[LSP] Format request failed, no matching language servers.",
-					vim.log.levels.WARN,
-					{ title = "Formatting Failed" }
-				)
 				return
 			end
 
-			local result = conform.format({ async = false, lsp_fallback = true }, on_format(client.name))
-
-			if not result then
-				vim.notify(
-					"[LSP] Format request failed, no matching language servers.",
-					vim.log.levels.WARN,
-					{ title = "Formatting Failed" }
-				)
-			end
+			conform.format({ async = false, lsp_fallback = true }, on_format(client.name))
 		end,
 	})
 	if not is_configured then

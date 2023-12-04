@@ -49,6 +49,10 @@ return {
 					fileMatch = { "/.github/workflows/*" },
 					url = "https://json.schemastore.org/github-workflow.json",
 				},
+				{
+					fileMatch = { ".luarc.json", ".luarc.jsonc" },
+					url = "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+				},
 			},
 		},
 	},
