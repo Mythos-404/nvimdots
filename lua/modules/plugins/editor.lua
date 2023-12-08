@@ -107,6 +107,12 @@ editor["echasnovski/mini.move"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-move"),
 }
+editor["echasnovski/mini.splitjoin"] = {
+	lazy = true,
+	version = false,
+	event = "VeryLazy",
+	config = require("editor.mini-splitjoin"),
+}
 editor["brenton-leighton/multiple-cursors.nvim"] = {
 	lazy = true,
 	event = "VeryLazy",
