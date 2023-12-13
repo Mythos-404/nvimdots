@@ -9,6 +9,8 @@ return function()
 			zsh = { "beautysh" },
 			sh = { "beautysh" },
 
+			python = { "black" },
+
 			vue = { "prettier" },
 			typescript = { "prettier" },
 			javascript = { "prettier" },
@@ -30,6 +32,10 @@ return function()
 
 	conform.formatters.clang_format = {
 		prepend_args = require("completion.formatters.clang_format"),
+	}
+
+	conform.formatters.prettier = {
+		prepend_args = require("completion.formatters.prettier"),
 	}
 
 	require("completion.formatting").configure_format_on_save()
