@@ -48,10 +48,10 @@ editor["numToStr/Comment.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.comment"),
 }
-editor["sindrets/diffview.nvim"] = {
-	lazy = true,
-	cmd = { "DiffviewOpen", "DiffviewClose" },
-}
+-- editor["sindrets/diffview.nvim"] = {
+-- 	lazy = true,
+-- 	cmd = { "DiffviewOpen", "DiffviewClose" },
+-- }
 editor["echasnovski/mini.align"] = {
 	lazy = true,
 	version = false,
@@ -113,11 +113,11 @@ editor["echasnovski/mini.splitjoin"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-splitjoin"),
 }
-editor["brenton-leighton/multiple-cursors.nvim"] = {
-	lazy = true,
-	event = "VeryLazy",
-	config = require("editor.multiple-cursors"),
-}
+-- editor["brenton-leighton/multiple-cursors.nvim"] = {
+-- 	lazy = true,
+-- 	event = "VeryLazy",
+-- 	config = require("editor.multiple-cursors"),
+-- }
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --
