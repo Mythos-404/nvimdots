@@ -3,13 +3,12 @@ return function()
 
 	conform.setup({
 		formatters_by_ft = {
-			c = { "clang_format" },
-			cpp = { "clang_format" },
-
 			zsh = { "beautysh" },
-			sh = { "beautysh" },
 
 			python = { "black" },
+
+			c = { "clang_format" },
+			cpp = { "clang_format" },
 
 			vue = { "prettier" },
 			typescript = { "prettier" },
@@ -26,7 +25,11 @@ return function()
 
 			rust = { "rustfmt" },
 
+			sh = { "shfmt" },
+
 			lua = { "stylua" },
+
+			["_"] = { "trim_whitespace" },
 		},
 	})
 
