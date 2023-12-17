@@ -22,12 +22,14 @@ lint: _lint_lua_ls _lint_luacheck
     {{ if `command -v tokei &>> /dev/null;echo $?` != "0" { error("no install tokei") } else { "" } }}
     tokei
 
-plugin_clear +name:
-    if [[ {{ name }} == "all" ]]; then \
-        rm -ri $HOME/.local/share/nvim/site/lazy; \
-    else \
-        rm -ri $HOME/.local/share/nvim/site/lazy/{{ name }}; \
-    fi
+@plugin_clear *$names:
+    if [[ $names == "all" ]]; then                          \
+        rm -rf $HOME/.local/share/nvim/site/lazy            \
+    ;else                                                   \
+        for name in $names; do                              \
+            rm -rf $HOME/.local/share/nvim/site/lazy/$name  \
+        ;done                                               \
+    ;fi
 
 @plugin_list:
     eza --git --icons $HOME/.local/share/nvim/site/lazy
