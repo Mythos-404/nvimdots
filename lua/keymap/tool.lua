@@ -8,16 +8,18 @@ require("keymap.helpers")
 
 local plug_map = {
 	-- Plugin: dial
-	["nv|<C-a>"] = map_callback(function()
-			return et("<Plug>(dial-increment)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nv|<C-x>"] = map_callback(function()
-			return et("<Plug>(dial-decrement)")
-		end)
-		:with_noremap()
-		:with_expr(),
+	["n|<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "normal")
+	end),
+	["n|<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "normal")
+	end),
+	["v|<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "visual")
+	end),
+	["v|<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "visual")
+	end),
 
 	-- Plugin: yanky
 	["nx|p"] = map_callback(function()
