@@ -1,5 +1,5 @@
 return function()
-	require("modules.utils").load_plugin("bqf", {
+	require("bqf").setup({
 		preview = {
 			border = "single",
 			wrap = true,
