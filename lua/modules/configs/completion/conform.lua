@@ -5,7 +5,7 @@ return function()
 		formatters_by_ft = {
 			zsh = { "beautysh" },
 
-			python = { "black" },
+			python = { "black", "isort" },
 
 			c = { "clang_format" },
 			cpp = { "clang_format" },
@@ -33,13 +33,14 @@ return function()
 		},
 	})
 
-	conform.formatters.clang_format = {
-		prepend_args = require("completion.formatters.clang_format"),
-	}
-
-	conform.formatters.prettier = {
-		prepend_args = require("completion.formatters.prettier"),
-	}
+	for _, format_info in ipairs(conform.list_all_formatters()) do
+		local ok, custom_handler = pcall(require, "completion.formatters." .. format_info.name)
+		if ok then
+			conform.formatters[format_info.name] = {
+				prepend_args = custom_handler,
+			}
+		end
+	end
 
 	require("completion.formatting").configure_format_on_save()
 end

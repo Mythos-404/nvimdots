@@ -94,7 +94,6 @@ settings["lsp_deps"] = {
 	"jsonls",
 	"lua_ls",
 	"pylsp",
-	"nimls",
 	"gopls",
 }
 
