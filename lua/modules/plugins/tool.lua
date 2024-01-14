@@ -68,11 +68,6 @@ tool["folke/todo-comments.nvim"] = {
 	config = require("tool.todo-comments"),
 	dependencies = { "nvim-lua/plenary.nvim" },
 }
-tool["VidocqH/lsp-lens.nvim"] = {
-	lazy = true,
-	event = "LspAttach",
-	config = require("tool.lsp-lens"),
-}
 if vim.fn.has("nvim-0.10.0") then
 	tool["Bekaboo/dropbar.nvim"] = {
 		lazy = true,
@@ -95,10 +90,6 @@ tool["LeonHeidelbach/trailblazer.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
 	config = require("tool.trailblazer"),
-}
-tool["wintermute-cell/gitignore.nvim"] = {
-	lazy = true,
-	cmd = "Gitignore",
 }
 
 ----------------------------------------------------------------------
