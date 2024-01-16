@@ -48,15 +48,9 @@ editor["numToStr/Comment.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.comment"),
 }
--- editor["sindrets/diffview.nvim"] = {
--- 	lazy = true,
--- 	cmd = { "DiffviewOpen", "DiffviewClose" },
--- }
-editor["echasnovski/mini.align"] = {
+editor["sindrets/diffview.nvim"] = {
 	lazy = true,
-	version = false,
-	event = "BufReadPost",
-	config = require("editor.mini-aign"),
+	cmd = { "DiffviewOpen", "DiffviewClose" },
 }
 editor["folke/flash.nvim"] = {
 	lazy = true,
@@ -107,17 +101,11 @@ editor["echasnovski/mini.move"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-move"),
 }
-editor["echasnovski/mini.splitjoin"] = {
+editor["chrisgrieser/nvim-recorder"] = {
 	lazy = true,
-	version = false,
-	event = "VeryLazy",
-	config = require("editor.mini-splitjoin"),
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.recorder"),
 }
--- editor["brenton-leighton/multiple-cursors.nvim"] = {
--- 	lazy = true,
--- 	event = "VeryLazy",
--- 	config = require("editor.multiple-cursors"),
--- }
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --
@@ -132,7 +120,7 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 	event = "BufReadPre",
 	config = require("editor.treesitter"),
 	dependencies = {
-		-- { "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
+		{ "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
 		{ "chrisgrieser/nvim-puppeteer" },
 		{ "mfussenegger/nvim-treehopper" },
 		{ "nvim-treesitter/nvim-treesitter-textobjects" },

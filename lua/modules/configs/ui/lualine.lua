@@ -430,8 +430,10 @@ return function()
 				components.separator,
 				components.python_venv,
 				components.cwd,
+				{ require("recorder").displaySlots },
 			},
 			lualine_z = {
+				{ require("recorder").recordingStatus },
 				components.file_location,
 			},
 		},
