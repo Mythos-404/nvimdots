@@ -1,6 +1,10 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/lua_ls.lua
 return {
 	on_init = function(client)
+		if not client.workspace_folders then
+			return true
+		end
+
 		local path = client.workspace_folders[1].name
 		local nvim_workspace = path:find("nvim")
 
