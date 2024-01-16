@@ -103,7 +103,7 @@ editor["echasnovski/mini.move"] = {
 }
 editor["chrisgrieser/nvim-recorder"] = {
 	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
+	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("editor.recorder"),
 }
 
