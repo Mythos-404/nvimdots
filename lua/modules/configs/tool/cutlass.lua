@@ -1,5 +1,5 @@
 return function()
 	require("cutlass").setup({
-		cut_key = "x",
+		cut_key = "X",
 	})
 end
