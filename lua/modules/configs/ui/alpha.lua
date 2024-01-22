@@ -1,7 +1,6 @@
 return function()
 	local alpha = require("alpha")
 	local dashboard = require("alpha.themes.dashboard")
-	local get_random_num = require("modules.utils").get_random_num
 	require("modules.utils").gen_alpha_hl()
 
 	local headers = {
@@ -51,7 +50,10 @@ return function()
 		},
 	}
 
-	dashboard.section.header.val = headers[get_random_num(#headers)]
+	dashboard.section.header.val = (function()
+		math.randomseed(os.time())
+		return headers[math.random(#headers)]
+	end)()
 	dashboard.section.header.opts.hl = "AlphaHeader"
 
 	local function button(sc, txt, leader_txt, keybind, keybind_opts)
