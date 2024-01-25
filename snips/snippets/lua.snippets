@@ -1,0 +1,37 @@
+snippet #!
+	#!/usr/bin/env lua
+
+snippet local
+	local ${1:x} = ${0:1}
+
+snippet rt
+	return
+
+snippet req
+	require('${1:modules}')
+snippet lreq
+	local ${0} = require('${1:modules}')
+
+# Modlue
+snippet mti "modlue template(init)"
+	local M = {}
+
+	function M.${1}(${2})
+		${0}
+	end
+
+	return M
+snippet mt "modlue template"
+	local M = {}
+
+	${0}
+
+	return M
+
+# Pacll
+snippet pca
+	pcall(${0})
+snippet lpca
+	local ${0:result} = pcall(${1})
+snippet llpca
+	local ${2:result}, ${0} = pcall(${1})

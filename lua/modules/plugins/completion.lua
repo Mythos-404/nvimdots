@@ -41,7 +41,6 @@ completion["hrsh7th/nvim-cmp"] = {
 	dependencies = {
 		{
 			"L3MON4D3/LuaSnip",
-			dependencies = { "Mythos-404/friendly-snippets" },
 			config = require("completion.luasnip"),
 		},
 		{ "f3fora/cmp-spell" },
