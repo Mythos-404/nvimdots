@@ -18,13 +18,6 @@ return vim.schedule_wrap(function()
 			end,
 			additional_vim_regex_highlighting = false,
 		},
-		incremental_selection = {
-			enable = true,
-			keymaps = {
-				node_incremental = "v",
-				node_dncremental = "V",
-			},
-		},
 		textobjects = {
 			select = {
 				enable = true,
