@@ -37,13 +37,4 @@ return function()
 		},
 	})
 	vim.notify = notify
-
-	vim.system({ "curl", "-s", "https://vtip.43z.one" }, nil, function(obj)
-		local res = "󰴓 " .. obj.stdout
-		if not obj.code then
-			res = "Error fetching tip: " .. res
-		end
-
-		vim.notify(res, vim.log.levels.INFO, { title = "Tip!" })
-	end)
 end
