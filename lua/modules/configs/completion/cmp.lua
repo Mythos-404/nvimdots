@@ -140,10 +140,9 @@ return function()
 		},
 		-- You should specify your *installed* sources.
 		sources = {
-			{ name = "codeium" },
-			{ name = "nvim_lsp", max_item_count = 350 },
-			{ name = "nvim_lua" },
-			{ name = "luasnip" },
+			{ name = "nvim_lsp", priority = 100, max_item_count = 350 },
+			{ name = "nvim_lua", priority = 100 },
+			{ name = "luasnip", priority = 90 },
 			{ name = "natdat" },
 			{ name = "path" },
 			{ name = "treesitter" },
