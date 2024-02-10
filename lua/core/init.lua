@@ -94,7 +94,9 @@ local clipboard_config = function()
 			paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
 			cache_enabled = 0,
 		}
-	elseif global.is_wsl then
+		return
+	end
+	if global.is_wsl then
 		vim.g.clipboard = {
 			name = "win32yank-wsl",
 			copy = {
@@ -107,7 +109,14 @@ local clipboard_config = function()
 			},
 			cache_enabled = 0,
 		}
+		return
 	end
+	vim.g.clipboard = {
+		name = "hyperland-clipboard",
+		copy = { ["+"] = "wl-copy", ["*"] = "wl-copy" },
+		paste = { ["+"] = "wl-paste -n", ["*"] = "wl-paste -n" },
+		cache_enabled = 0,
+	}
 end
 
 local shell_config = function()
