@@ -14,8 +14,8 @@ return function()
 				motions = {
 					new_trail_mark = "<A-i>",
 					track_back = "<A-b>",
-					peek_move_next_down = "<A-K>",
-					peek_move_previous_up = "<A-J>",
+					peek_move_next_down = "<A-C-k>",
+					peek_move_previous_up = "<A-C-j>",
 					move_to_nearest = "<A-n>",
 					toggle_trail_mark_list = "<A-m>",
 				},
