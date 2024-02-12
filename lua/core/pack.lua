@@ -119,6 +119,9 @@ function Lazy:load_lazy()
 				paths = {}, -- add any custom paths here that you want to include in the rtp
 			},
 		},
+		dev = {
+			path = "~/dev/nvim",
+		},
 	}
 	if is_mac then
 		lazy_settings.concurrency = 20
