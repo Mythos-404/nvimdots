@@ -153,8 +153,8 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			config = require("editor.ts-context-commentstring"),
 		},
-		{ "luckasRanarison/tree-sitter-hyprlang" },
 		{ "IndianBoy42/tree-sitter-just", config = true },
+		{ "luckasRanarison/tree-sitter-hyprlang", config = require("editor.ts-hyprland") },
 	},
 }
 
