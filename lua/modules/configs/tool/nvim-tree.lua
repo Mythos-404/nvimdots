@@ -189,7 +189,7 @@ return function()
 			timeout = 400,
 		},
 		trash = {
-			cmd = "trash put",
+			cmd = "gtrash put",
 		},
 		live_filter = {
 			prefix = "[FILTER]: ",
