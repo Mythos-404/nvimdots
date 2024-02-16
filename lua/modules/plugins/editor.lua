@@ -96,6 +96,12 @@ editor["echasnovski/mini.surround"] = {
 	event = "VeryLazy",
 	config = require("editor.mini-surround"),
 }
+editor["echasnovski/mini.align"] = {
+	lazy = true,
+	version = false,
+	event = "VeryLazy",
+	config = require("editor.mini-align"),
+}
 editor["echasnovski/mini.move"] = {
 	lazy = true,
 	version = false,
