@@ -1,5 +1,15 @@
 return function()
 	require("mini.surround").setup({
+		custom_surroundings = {
+			["("] = { input = { "%b()", "^.().*().$" }, output = { left = "(", right = ")" } },
+			[")"] = { input = { "%b()", "^.%s*().-()%s*.$" }, output = { left = "( ", right = " )" } },
+			["["] = { input = { "%b[]", "^.().*().$" }, output = { left = "[", right = "]" } },
+			["]"] = { input = { "%b[]", "^.%s*().-()%s*.$" }, output = { left = "[ ", right = " ]" } },
+			["{"] = { input = { "%b{}", "^.().*().$" }, output = { left = "{", right = "}" } },
+			["}"] = { input = { "%b{}", "^.%s*().-()%s*.$" }, output = { left = "{ ", right = " }" } },
+			[">"] = { input = { "%b<>", "^.%s*().-()%s*.$" }, output = { left = "< ", right = " >" } },
+			["<"] = { input = { "%b<>", "^.().*().$" }, output = { left = "<", right = ">" } },
+		},
 		-- Module mappings. Use `''` (empty string) to disable one.
 		mappings = {
 			add = "ya", -- Add surrounding in Normal and Visual modes
