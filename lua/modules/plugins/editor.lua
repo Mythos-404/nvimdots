@@ -127,7 +127,7 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 	event = "BufReadPre",
 	config = require("editor.treesitter"),
 	dependencies = {
-		{ "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
+		-- { "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
 		{ "chrisgrieser/nvim-puppeteer" },
 		{ "mfussenegger/nvim-treehopper" },
 		{ "nvim-treesitter/nvim-treesitter-textobjects" },
