@@ -34,6 +34,11 @@ completion["stevearc/conform.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("completion.conform"),
 }
+completion["mfussenegger/nvim-lint"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("completion.lint"),
+}
 completion["hrsh7th/nvim-cmp"] = {
 	lazy = true,
 	event = { "InsertEnter", "CmdlineEnter" },
