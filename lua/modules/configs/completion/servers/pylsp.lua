@@ -1,10 +1,17 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/pylsp.lua
+local is_windows = require("core.global").is_windows
+
 return {
 	cmd = { "pylsp" },
 	filetypes = { "python" },
 	settings = {
 		pylsp = {
 			plugins = {
+				-- Autocomplete
+				jedi = {
+					environment = is_windows and "" or "/usr/bin/python3",
+				},
+
 				-- Lint
 				ruff = {
 					enabled = true,
