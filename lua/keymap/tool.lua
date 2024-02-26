@@ -42,6 +42,41 @@ local plug_map = {
 		end)
 		:with_noremap()
 		:with_expr(),
+	["nx|]p"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentAfterLinewise)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|[p]"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentBeforeLinewise)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|>p"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentAfterShiftRight)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|<p"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentAfterShiftLeft)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|=p"] = map_callback(function()
+			return et("<Plug>(YankyPutAfterFilter)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|=P"] = map_callback(function()
+			return et("<Plug>(YankyPutBeforeFilter)")
+		end)
+		:with_noremap()
+		:with_expr(),
+	["nx|<C-p>"] = map_callback(function()
+			return et("<Plug>(YankyPreviousEntry)")
+		end)
+		:with_noremap()
+		:with_expr(),
 
 	["nx|y"] = map_callback(function()
 			return et("<Plug>(YankyYank)")
@@ -104,7 +139,7 @@ local plug_map = {
 	["n|<leader>lL"] = map_cr("TroubleToggle loclist"):with_noremap():with_silent():with_desc("lsp: Show loclist"),
 
 	-- Plugin: telescope
-	["n|<C-p>"] = map_callback(function()
+	["n|<C-A-p>"] = map_callback(function()
 			_command_panel()
 		end)
 		:with_noremap()

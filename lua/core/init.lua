@@ -113,8 +113,14 @@ local clipboard_config = function()
 	end
 	vim.g.clipboard = {
 		name = "hyperland-clipboard",
-		copy = { ["+"] = "wl-copy", ["*"] = "wl-copy" },
-		paste = { ["+"] = "wl-paste -n", ["*"] = "wl-paste -n" },
+		copy = {
+			["+"] = "wl-copy",
+			["*"] = "wl-copy",
+		},
+		paste = {
+			["+"] = "wl-paste --no-newline",
+			["*"] = "wl-paste --no-newline",
+		},
 		cache_enabled = 0,
 	}
 end

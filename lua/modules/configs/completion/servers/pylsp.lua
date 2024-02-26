@@ -7,11 +7,6 @@ return {
 	settings = {
 		pylsp = {
 			plugins = {
-				-- Autocomplete
-				jedi = {
-					environment = is_windows and "" or "/usr/bin/python3",
-				},
-
 				-- Lint
 				ruff = {
 					enabled = true,

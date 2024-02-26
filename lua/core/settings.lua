@@ -152,7 +152,7 @@ settings["treesitter_deps"] = {
 -- NOTE: Currently, only the following options related to the GUI are supported. Other entries will be IGNORED.
 ---@type { font_name: string, font_size: number }
 settings["gui_config"] = {
-	font_name = "IosevkaCustomTermForMythos404 Nerd Font,思源黑体",
+	font_name = "IosevkaCustomForMythos\\_404",
 	font_size = 13,
 }
 
