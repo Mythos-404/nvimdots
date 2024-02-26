@@ -17,8 +17,8 @@ return {
 				runtime = {
 					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 					version = "LuaJIT",
-					pathStrict = true,
 				},
+				hint = { enable = true, setType = true },
 				workspace = {
 					library = {
 						vim.fn.expand("$VIMRUNTIME/lua"),
