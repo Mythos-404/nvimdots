@@ -113,6 +113,11 @@ editor["chrisgrieser/nvim-recorder"] = {
 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("editor.recorder"),
 }
+editor["brenoprata10/nvim-highlight-colors"] = {
+	lazy = true,
+	event = "BufReadPre",
+	config = require("editor.highlight-colors"),
+}
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --
@@ -138,10 +143,6 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 		{
 			"windwp/nvim-ts-autotag",
 			config = require("editor.autotag"),
-		},
-		{
-			"NvChad/nvim-colorizer.lua",
-			config = require("editor.colorizer"),
 		},
 		{
 			"ThePrimeagen/refactoring.nvim",
