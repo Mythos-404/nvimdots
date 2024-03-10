@@ -33,11 +33,10 @@ lang["Saecki/crates.nvim"] = {
 	config = require("lang.crates"),
 	dependencies = { "nvim-lua/plenary.nvim" },
 }
-lang["ellisonleao/glow.nvim"] = {
+lang["iamcco/markdown-preview.nvim"] = {
 	lazy = true,
 	ft = "markdown",
-	cmd = "Glow",
-	config = true,
+	build = ":call mkdp#util#install()",
 }
 lang["AckslD/nvim-FeMaco.lua"] = {
 	lazy = true,
