@@ -1,1 +1,1 @@
-return { "--tab-width", "4" }
+return { "--tab-width", vim.api.nvim_get_option_value("shiftwidth", { scope = "local" }) }
