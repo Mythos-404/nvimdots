@@ -118,6 +118,11 @@ editor["brenoprata10/nvim-highlight-colors"] = {
 	event = "BufReadPre",
 	config = require("editor.highlight-colors"),
 }
+editor["Darazaki/indent-o-matic"] = {
+	lazy = true,
+	event = "BufReadPost",
+	config = require("editor.indent-o-matic"),
+}
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --
