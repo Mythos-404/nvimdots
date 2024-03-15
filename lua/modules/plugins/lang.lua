@@ -53,5 +53,9 @@ lang["Mythos-404/xmake.nvim"] = {
 	config = require("lang.xmake"),
 	dependencies = { "MunifTanjim/nui.nvim" },
 }
+lang["kmonad/kmonad-vim"] = {
+	lazy = true,
+	ft = "kbd",
+}
 
 return lang
