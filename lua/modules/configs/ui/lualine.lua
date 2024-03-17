@@ -212,7 +212,21 @@ return function()
 				local clients = vim.lsp.get_clients()
 				local lsp_lists = {}
 				local available_servers = {}
-				local conform_status = #require("conform").list_formatters() ~= 0
+
+				local conform_status = (function()
+					local formats = require("conform").list_formatters()
+
+					if #formats == 0 then
+						return false
+					end
+
+					if formats[1].name == "trim_whitespace" then
+						return false
+					end
+
+					return true
+				end)()
+
 				if next(clients) == nil then
 					return conform_status and ("<%s>"):format(icons.misc.NoActiveLsp) or icons.misc.NoActiveLsp -- No server available
 				end
@@ -242,7 +256,7 @@ return function()
 				local function env_cleanup(venv)
 					if string.find(venv, "/") then
 						local final_venv = venv
-						for w in venv:gmatch("([^/]+)") do
+						for w in venv:gmatch("([^/]+)/") do
 							final_venv = w
 						end
 						venv = final_venv
@@ -312,8 +326,7 @@ return function()
 				},
 			},
 			component_separators = "",
-			-- section_separators = { left = "", right = "" },
-			section_separators = "",
+			section_separators = { left = "", right = "" },
 		},
 		sections = {
 			lualine_a = {
