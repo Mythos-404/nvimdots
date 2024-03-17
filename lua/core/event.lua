@@ -98,7 +98,7 @@ function autocmd.load_autocmds()
 			-- {"BufEnter", "*", ":silent !fcitx5-remote -c "},
 			-- {"BufLeave", "*", ":silent !fcitx5-remote -c "}
 			-- Auto set indent
-			{ "BufWritePost,FileWritePost", "*", "IndentOMatic" },
+			{ "BufWritePost", "*", "IndentOMatic" },
 		},
 		wins = {
 			-- Highlight current line only on focused window

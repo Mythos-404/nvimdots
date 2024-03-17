@@ -120,7 +120,7 @@ editor["brenoprata10/nvim-highlight-colors"] = {
 }
 editor["Darazaki/indent-o-matic"] = {
 	lazy = true,
-	event = "BufReadPost",
+	event = { "BufWritePost", "BufNewFile" },
 	config = require("editor.indent-o-matic"),
 }
 
