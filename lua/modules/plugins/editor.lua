@@ -1,10 +1,5 @@
 local editor = {}
 
-editor["rainbowhxch/accelerated-jk.nvim"] = {
-	lazy = true,
-	event = "VeryLazy",
-	config = require("editor.accelerated-jk"),
-}
 editor["chrisgrieser/nvim-spider"] = {
 	lazy = true,
 	event = "VeryLazy",
