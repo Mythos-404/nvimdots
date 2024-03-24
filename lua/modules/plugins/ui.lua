@@ -56,5 +56,10 @@ ui["dstein64/nvim-scrollview"] = {
 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("ui.scrollview"),
 }
+ui["folke/todo-comments.nvim"] = {
+	lazy = true,
+	event = "BufReadPost",
+	config = require("ui.todo-comments"),
+}
 
 return ui

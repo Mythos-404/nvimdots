@@ -7,6 +7,7 @@ completion["neovim/nvim-lspconfig"] = {
 	dependencies = {
 		{ "williamboman/mason.nvim" },
 		{ "williamboman/mason-lspconfig.nvim" },
+		{ "folke/neoconf.nvim" },
 		{
 			"Jint-lzxy/lsp_signature.nvim",
 			config = require("completion.lsp-signature"),
@@ -52,6 +53,7 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-path" },
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-cmdline" },
+		{ "ray-x/cmp-treesitter" },
 		{ "hrsh7th/cmp-nvim-lua" },
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "andersevenrud/cmp-tmux" },
@@ -59,7 +61,6 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "kdheepak/cmp-latex-symbols" },
 		{ "Gelio/cmp-natdat", config = true },
 		{ "lukas-reineke/cmp-under-comparator" },
-		{ "ray-x/cmp-treesitter", commit = "c8e3a74" },
 	},
 }
 

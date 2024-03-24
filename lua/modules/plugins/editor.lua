@@ -43,20 +43,10 @@ editor["numToStr/Comment.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.comment"),
 }
-editor["sindrets/diffview.nvim"] = {
-	lazy = true,
-	cmd = { "DiffviewOpen", "DiffviewClose" },
-	config = require("editor.diffview"),
-}
 editor["folke/flash.nvim"] = {
 	lazy = true,
 	event = "VeryLazy",
 	config = require("editor.flash"),
-}
-editor["RRethy/vim-illuminate"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("editor.vim-illuminate"),
 }
 editor["romainl/vim-cool"] = {
 	lazy = true,
@@ -86,21 +76,15 @@ editor["kevinhwang91/nvim-ufo"] = {
 	},
 }
 editor["echasnovski/mini.surround"] = {
-	lazy = true,
 	version = false,
-	event = "VeryLazy",
 	config = require("editor.mini-surround"),
 }
 editor["echasnovski/mini.align"] = {
-	lazy = true,
 	version = false,
-	event = "VeryLazy",
 	config = require("editor.mini-align"),
 }
 editor["echasnovski/mini.move"] = {
-	lazy = true,
 	version = false,
-	event = "VeryLazy",
 	config = require("editor.mini-move"),
 }
 editor["chrisgrieser/nvim-recorder"] = {
@@ -115,8 +99,17 @@ editor["brenoprata10/nvim-highlight-colors"] = {
 }
 editor["Darazaki/indent-o-matic"] = {
 	lazy = true,
-	event = { "BufWritePost", "BufNewFile" },
+	event = { "BufReadPre", "BufNewFile" },
 	config = require("editor.indent-o-matic"),
+}
+editor["nvim-pack/nvim-spectre"] = {
+	lazy = true,
+	cmd = { "Spectre" },
+}
+editor["mrjones2014/smart-splits.nvim"] = {
+	lazy = true,
+	event = { "CursorHoldI", "CursorHold" },
+	config = require("editor.smart-splits"),
 }
 
 ----------------------------------------------------------------------
@@ -160,8 +153,6 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			config = require("editor.ts-context-commentstring"),
 		},
-		{ "IndianBoy42/tree-sitter-just", config = true },
-		{ "luckasRanarison/tree-sitter-hyprlang", config = require("editor.ts-hyprland") },
 	},
 }
 

@@ -61,13 +61,6 @@ tool["folke/which-key.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("tool.which-key"),
 }
-tool["folke/todo-comments.nvim"] = {
-	lazy = true,
-	cmd = "TodoTelescope",
-	event = "BufRead",
-	config = require("tool.todo-comments"),
-	dependencies = { "nvim-lua/plenary.nvim" },
-}
 if vim.fn.has("nvim-0.10.0") then
 	tool["Bekaboo/dropbar.nvim"] = {
 		lazy = true,
@@ -139,6 +132,9 @@ tool["mfussenegger/nvim-dap"] = {
 		{
 			"rcarriga/nvim-dap-ui",
 			config = require("tool.dap.dapui"),
+			dependencies = {
+				"nvim-neotest/nvim-nio",
+			},
 		},
 		{ "jay-babu/mason-nvim-dap.nvim" },
 	},

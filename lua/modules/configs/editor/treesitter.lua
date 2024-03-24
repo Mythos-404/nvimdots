@@ -4,6 +4,12 @@ return vim.schedule_wrap(function()
 	vim.api.nvim_set_option_value("foldmethod", "expr", {})
 	vim.api.nvim_set_option_value("foldexpr", "nvim_treesitter#foldexpr()", {})
 
+	vim.filetype.add({
+		pattern = {
+			["~/dotfiles/.config/hypr/.*%.conf"] = "hyprlang",
+		},
+	})
+
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = require("core.settings").treesitter_deps,
 		highlight = {

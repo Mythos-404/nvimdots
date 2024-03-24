@@ -12,12 +12,12 @@ return function()
 		force_mappings = {
 			n = {
 				motions = {
-					new_trail_mark = "<A-i>",
+					new_trail_mark = "<A-n>",
 					track_back = "<A-b>",
-					peek_move_next_down = "<A-C-k>",
-					peek_move_previous_up = "<A-C-j>",
-					move_to_nearest = "<A-n>",
+					move_to_nearest = "<A-B>",
 					toggle_trail_mark_list = "<A-m>",
+					peek_move_next_down = "<A-C-j>",
+					peek_move_previous_up = "<A-C-k>",
 				},
 				actions = {},
 			},
