@@ -20,6 +20,18 @@ local plug_map = {
 	["v|<C-x>"] = map_callback(function()
 		require("dial.map").manipulate("decrement", "visual")
 	end),
+	["n|g<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "gnormal")
+	end),
+	["n|g<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "gnormal")
+	end),
+	["v|g<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "gvisual")
+	end),
+	["v|g<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "gvisual")
+	end),
 
 	-- Plugin: yanky
 	["nx|p"] = map_callback(function()

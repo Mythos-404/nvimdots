@@ -12,9 +12,9 @@ return function()
 		-- Note: The `scope` field requires treesitter to be set up
 		scope = {
 			enabled = true,
-			char = "┃",
-			show_start = false,
-			show_end = false,
+			char = "▎",
+			show_start = true,
+			show_end = true,
 			injected_languages = true,
 			priority = 1000,
 			include = {
