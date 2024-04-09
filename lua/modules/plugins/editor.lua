@@ -55,7 +55,7 @@ editor["romainl/vim-cool"] = {
 editor["lambdalisue/suda.vim"] = {
 	lazy = true,
 	cmd = { "SudaRead", "SudaWrite" },
-	config = require("editor.suda"),
+	init = require("editor.suda"),
 }
 editor["tzachar/highlight-undo.nvim"] = {
 	lazy = true,
@@ -76,11 +76,15 @@ editor["kevinhwang91/nvim-ufo"] = {
 	},
 }
 editor["echasnovski/mini.surround"] = {
+	lazy = true,
 	version = false,
+	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.mini-surround"),
 }
 editor["echasnovski/mini.align"] = {
+	lazy = true,
 	version = false,
+	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.mini-align"),
 }
 editor["echasnovski/mini.move"] = {
@@ -99,12 +103,12 @@ editor["brenoprata10/nvim-highlight-colors"] = {
 }
 editor["Darazaki/indent-o-matic"] = {
 	lazy = true,
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "BufNewFile", "BufReadPost", "BufFilePost" },
 	config = require("editor.indent-o-matic"),
 }
 editor["nvim-pack/nvim-spectre"] = {
 	lazy = true,
-	cmd = { "Spectre" },
+	cmd = "Spectre",
 }
 editor["mrjones2014/smart-splits.nvim"] = {
 	lazy = true,

@@ -56,5 +56,10 @@ lang["kmonad/kmonad-vim"] = {
 	lazy = true,
 	ft = "kbd",
 }
+lang["eraserhd/parinfer-rust"] = {
+	lazy = true,
+	ft = "yuck",
+	build = "cargo build --release",
+}
 
 return lang

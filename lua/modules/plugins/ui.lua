@@ -62,7 +62,7 @@ ui["dstein64/nvim-scrollview"] = {
 }
 ui["folke/todo-comments.nvim"] = {
 	lazy = true,
-	event = "BufReadPost",
+	event = { "CursorHold", "CursorHoldI" },
 	config = require("ui.todo-comments"),
 }
 
