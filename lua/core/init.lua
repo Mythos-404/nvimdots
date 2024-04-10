@@ -111,18 +111,6 @@ local clipboard_config = function()
 		}
 		return
 	end
-	vim.g.clipboard = {
-		name = "hyperland-clipboard",
-		copy = {
-			["+"] = "wl-copy",
-			["*"] = "wl-copy",
-		},
-		paste = {
-			["+"] = "wl-paste --no-newline",
-			["*"] = "wl-paste --no-newline",
-		},
-		cache_enabled = 0,
-	}
 end
 
 local shell_config = function()
@@ -148,8 +136,8 @@ You're recommended to install PowerShell for better experience.]],
 		vim.api.nvim_set_option_value("shellcmdflag", ("%s %s;"):format(basecmd, ctrlcmd), {})
 		vim.api.nvim_set_option_value("shellredir", "-RedirectStandardOutput %s -NoNewWindow -Wait", {})
 		vim.api.nvim_set_option_value("shellpipe", "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode", {})
-		vim.api.nvim_set_option_value("shellquote", nil, {})
-		vim.api.nvim_set_option_value("shellxquote", nil, {})
+		vim.api.nvim_set_option_value("shellquote", {}, {})
+		vim.api.nvim_set_option_value("shellxquote", {}, {})
 	end
 end
 

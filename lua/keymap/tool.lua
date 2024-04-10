@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
@@ -34,67 +35,95 @@ local plug_map = {
 	end),
 
 	-- Plugin: yanky
-	["nx|p"] = map_callback(function()
-			return et("<Plug>(YankyPutAfter)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|P"] = map_callback(function()
-			return et("<Plug>(YankyPutBefore)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|gp"] = map_callback(function()
-			return et("<Plug>(YankyGPutAfter)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|gP"] = map_callback(function()
-			return et("<Plug>(YankyGPutBefore)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|]p"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentAfterLinewise)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|[p]"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentBeforeLinewise)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|>p"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentAfterShiftRight)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|<p"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentAfterShiftLeft)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|=p"] = map_callback(function()
-			return et("<Plug>(YankyPutAfterFilter)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|=P"] = map_callback(function()
-			return et("<Plug>(YankyPutBeforeFilter)")
-		end)
-		:with_noremap()
-		:with_expr(),
-	["nx|<C-p>"] = map_callback(function()
-			return et("<Plug>(YankyPreviousEntry)")
-		end)
-		:with_noremap()
-		:with_expr(),
-
 	["nx|y"] = map_callback(function()
 			return et("<Plug>(YankyYank)")
 		end)
 		:with_noremap()
-		:with_expr(),
+		:with_expr()
+		:with_desc("yanky: Yank text"),
+
+	["nx|p"] = map_callback(function()
+			return et("<Plug>(YankyPutAfter)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put yanked text after cursor"),
+
+	["nx|P"] = map_callback(function()
+			return et("<Plug>(YankyPutBefore)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put yanked text before cursor"),
+
+	["nx|gp"] = map_callback(function()
+			return et("<Plug>(YankyGPutAfter)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put yanked text after selection"),
+
+	["nx|gP"] = map_callback(function()
+			return et("<Plug>(YankyGPutBefore)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put yanked text before selection"),
+
+	["n|[p"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentAfterLinewise)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put indented after cursor (linewise)"),
+
+	["n|[P"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentBeforeLinewise)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put indented before cursor (linewise)"),
+
+	["n|<p"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentAfterShiftRight)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put and indent right"),
+
+	["n|<P"] = map_callback(function()
+			return et("<Plug>(YankyPutIndentAfterShiftLeft)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put and indent left"),
+
+	["n|=p"] = map_callback(function()
+			return et("<Plug>(YankyPutAfterFilter)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put after applying a filter"),
+
+	["n|=P"] = map_callback(function()
+			return et("<Plug>(YankyPutBeforeFilter)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Put before applying a filter"),
+
+	["n|<C-p>"] = map_callback(function()
+			return et("<Plug>(YankyPreviousEntry)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Select previous entry through yank history"),
+	["n|<C-S-p>"] = map_callback(function()
+			return et("<Plug>(YankyNextEntry)")
+		end)
+		:with_noremap()
+		:with_expr()
+		:with_desc("yanky: Select next entry through yank history"),
 
 	-- Plugin: nvim-tree
 	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
