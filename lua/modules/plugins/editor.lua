@@ -48,6 +48,11 @@ editor["folke/flash.nvim"] = {
 	event = "VeryLazy",
 	config = require("editor.flash"),
 }
+editor["tzachar/local-highlight.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.local-highlight"),
+}
 editor["romainl/vim-cool"] = {
 	lazy = true,
 	event = { "CursorMoved", "InsertEnter" },
