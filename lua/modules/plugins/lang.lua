@@ -61,5 +61,10 @@ lang["eraserhd/parinfer-rust"] = {
 	ft = "yuck",
 	build = "cargo build --release",
 }
+lang["fabridamicelli/cronex.nvim"] = {
+	lazy = true,
+	ft = { "yaml", "yml", "tf", "cfg", "config", "conf" },
+	config = require("lang.cronex"),
+}
 
 return lang
