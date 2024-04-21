@@ -13,6 +13,7 @@ function autocmd.nvim_create_augroups(definitions)
 	end
 end
 
+-- defer setting LSP-related keymaps till LspAttach
 local mapping = require("keymap.completion")
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("LspKeymapLoader", { clear = true }),
@@ -20,10 +21,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		if _G._debugging then
 			return
 		end
+
 		mapping.lsp(event.buf)
+		local enable_inlayhint = require("core.settings").enable_inlayhint
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
-		if client ~= nil and client.server_capabilities.inlayHintProvider ~= nil then
-			vim.lsp.inlay_hint.enable(event.buf, true)
+		if
+			client ~= nil
+			and client.server_capabilities.inlayHintProvider ~= nil
+			and type(enable_inlayhint) == "boolean"
+		then
+			vim.lsp.inlay_hint.enable(enable_inlayhint, { bufnr = event.buf })
 		end
 	end,
 })
@@ -98,7 +105,7 @@ function autocmd.load_autocmds()
 			-- {"BufEnter", "*", ":silent !fcitx5-remote -c "},
 			-- {"BufLeave", "*", ":silent !fcitx5-remote -c "}
 			-- Auto set indent
-			{ "BufWritePost", "*", "IndentOMatic" },
+			{ "BufWritePost", "*", "GuessIndent" },
 		},
 		wins = {
 			-- Highlight current line only on focused window

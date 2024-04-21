@@ -177,4 +177,8 @@ settings["neovide_config"] = {
 	cursor_vfx_particle_density = 7.0,
 }
 
+-- Set it to false if you don't  want to show inlay hint
+---@type boolean
+settings["enable_inlayhint"] = true
+
 return settings

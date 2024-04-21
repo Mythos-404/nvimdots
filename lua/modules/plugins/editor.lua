@@ -106,10 +106,10 @@ editor["brenoprata10/nvim-highlight-colors"] = {
 	event = "BufReadPre",
 	config = require("editor.highlight-colors"),
 }
-editor["Darazaki/indent-o-matic"] = {
+editor["NMAC427/guess-indent.nvim"] = {
 	lazy = true,
 	event = { "BufNewFile", "BufReadPost", "BufFilePost" },
-	config = require("editor.indent-o-matic"),
+	config = require("editor.guess-indent"),
 }
 editor["nvim-pack/nvim-spectre"] = {
 	lazy = true,
