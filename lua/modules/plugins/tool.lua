@@ -137,6 +137,10 @@ tool["mfussenegger/nvim-dap"] = {
 			},
 		},
 		{ "jay-babu/mason-nvim-dap.nvim" },
+		{
+			"theHamsta/nvim-dap-virtual-text",
+			config = require("tool.dap.dap-virtual-text"),
+		},
 	},
 }
 
