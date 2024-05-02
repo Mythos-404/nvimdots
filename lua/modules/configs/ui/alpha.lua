@@ -91,28 +91,12 @@ return function()
 
 	local leader = " "
 	dashboard.section.buttons.val = {
-		button("space f r", " File frecency", leader, nil, {
+		button("space f d", " Project find", leader, nil, {
 			noremap = true,
 			silent = true,
 			nowait = true,
 			callback = function()
-				require("telescope").extensions.frecency.frecency({})
-			end,
-		}),
-		button("space f e", " File history", leader, nil, {
-			noremap = true,
-			silent = true,
-			nowait = true,
-			callback = function()
-				require("telescope.builtin").oldfiles()
-			end,
-		}),
-		button("space f p", " Project find", leader, nil, {
-			noremap = true,
-			silent = true,
-			nowait = true,
-			callback = function()
-				require("telescope").extensions.projects.projects({})
+				require("search").open({ collection = "workspace" })
 			end,
 		}),
 		button("space f f", "󰮗 File find", leader, nil, {
@@ -120,7 +104,7 @@ return function()
 			silent = true,
 			nowait = true,
 			callback = function()
-				require("telescope.builtin").find_files()
+				require("search").open({ collection = "file" })
 			end,
 		}),
 		button("space f w", " Word find", leader, nil, {

@@ -61,14 +61,11 @@ tool["folke/which-key.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("tool.which-key"),
 }
-if vim.fn.has("nvim-0.10.0") then
-	tool["Bekaboo/dropbar.nvim"] = {
-		lazy = true,
-		event = { "BufReadPre", "BufNewFile" },
-		config = require("tool.dropbar"),
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-	}
-end
+tool["Bekaboo/dropbar.nvim"] = {
+	lazy = true,
+	event = { "BufReadPost", "BufNewFile" },
+	config = require("tool.dropbar"),
+}
 tool["m-demare/hlargs.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
@@ -104,6 +101,23 @@ tool["nvim-telescope/telescope.nvim"] = {
 		{ "debugloop/telescope-undo.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim" },
 		{ "nvim-telescope/telescope-live-grep-args.nvim" },
+		{
+			"FabianWirth/search.nvim",
+			config = require("tool.search"),
+		},
+		{
+			"aaronhallaert/advanced-git-search.nvim",
+			cmd = { "AdvancedGitSearch" },
+			dependencies = {
+				-- to show diff splits and open commits in browser
+				"tpope/vim-fugitive",
+				-- to open commits in browser with fugitive
+				"tpope/vim-rhubarb",
+				-- optional: to replace the diff from fugitive with diffview.nvim
+				-- (fugitive is still needed to open in browser)
+				"sindrets/diffview.nvim",
+			},
+		},
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",

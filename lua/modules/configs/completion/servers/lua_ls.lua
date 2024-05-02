@@ -18,7 +18,6 @@ return {
 					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 					version = "LuaJIT",
 				},
-				hint = { enable = true, setType = true },
 				workspace = {
 					library = {
 						vim.fn.expand("$VIMRUNTIME/lua"),
@@ -38,6 +37,7 @@ return {
 				maxPreload = 100000,
 				preloadFileSize = 10000,
 			},
+			hint = { enable = true, setType = true },
 			format = { enable = false },
 			telemetry = { enable = false },
 			-- Do not override treesitter lua highlighting with lua_ls's highlighting

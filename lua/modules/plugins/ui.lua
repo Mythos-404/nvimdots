@@ -36,11 +36,6 @@ ui["nvim-lualine/lualine.nvim"] = {
 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("ui.lualine"),
 }
--- ui["declancm/cinnamon.nvim"] = {
--- 	lazy = true,
--- 	event = { "CursorHold", "CursorHoldI" },
--- 	config = require("ui.cinnamon"),
--- }
 ui["psliwka/vim-smoothie"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
