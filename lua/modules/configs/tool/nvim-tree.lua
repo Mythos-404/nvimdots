@@ -54,6 +54,10 @@ return function()
 				default_yes = true,
 			},
 		},
+		on_attach = function(bufnr)
+			require("nvim-tree.api").config.mappings.default_on_attach(bufnr)
+			vim.keymap.del("n", "<C-e>", { buffer = bufnr })
+		end,
 		view = {
 			adaptive_size = false,
 			centralize_selection = false,
