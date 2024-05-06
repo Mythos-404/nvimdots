@@ -24,6 +24,12 @@ return {
 						E501 = "I",
 						F841 = "H",
 					},
+
+					format = { "I" },
+					formatEnabled = true,
+					preview = false,
+					lineLength = 120,
+					linelength = 120,
 				},
 				flake8 = { enabled = false },
 				pyflakes = { enabled = false },

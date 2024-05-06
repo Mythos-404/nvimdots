@@ -4,6 +4,8 @@ return function()
 	lint.linters_by_ft = {
 		sh = { "shellcheck" },
 		bash = { "shellcheck" },
+
+		yaml = { "actionlint" },
 	}
 
 	vim.api.nvim_create_autocmd({ "BufWritePost" }, {

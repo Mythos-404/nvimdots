@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 return function()
 	local has_catppuccin = vim.g.colors_name:find("catppuccin") ~= nil
 	local colors = require("modules.utils").get_palette()
@@ -213,6 +214,12 @@ return function()
 
 				local conform_status = (function()
 					local formats = require("conform").list_formatters()
+					local lsp_formats =
+						require("conform.lsp_format").get_format_clients({ bufnr = vim.api.nvim_get_current_buf() })
+
+					if #lsp_formats ~= 0 then
+						return true
+					end
 
 					if #formats == 0 then
 						return false

@@ -1,36 +1,32 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/lua_ls.lua
 return {
 	on_init = function(client)
-		if not client.workspace_folders then
-			return true
+		if not (client.config.cmd_cwd:find("nvim") ~= 0) then
+			return
 		end
 
-		local path = client.workspace_folders[1].name
-		local nvim_workspace = path:find("nvim")
-
-		if nvim_workspace then
-			client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-				diagnostics = {
-					globals = { "vim" },
-					disable = { "different-requires" },
+		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+			diagnostics = {
+				globals = { "vim" },
+				disable = { "different-requires" },
+			},
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+			},
+			workspace = {
+				library = {
+					vim.env.VIMRUNTIME,
+					vim.fn.expand("$VIMRUNTIME/lua"),
+					vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+					"${3rd}/luv/library",
+					"${3rd}/busted/library",
 				},
-				runtime = {
-					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-					version = "LuaJIT",
-				},
-				workspace = {
-					library = {
-						vim.fn.expand("$VIMRUNTIME/lua"),
-						vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-						"${3rd}/luv/library",
-						"${3rd}/busted/library",
-					},
-					ignoreDir = { "types/stable" },
-				},
-			})
-		end
-		return true
+				ignoreDir = { "types/stable" },
+			},
+		})
 	end,
+	cmd = { "lua-language-server", '--locale="zh-cn"' },
 	settings = {
 		Lua = {
 			workspace = {

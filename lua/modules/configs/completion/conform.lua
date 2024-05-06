@@ -5,8 +5,6 @@ return function()
 		formatters_by_ft = {
 			zsh = { "beautysh" },
 
-			python = { "black", "isort" },
-
 			c = { "clang_format" },
 			cpp = { "clang_format" },
 
