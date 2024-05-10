@@ -77,7 +77,7 @@ return function()
 			neogit = false,
 			neotest = false,
 			neotree = { enabled = false, show_root = true, transparent_panel = false },
-			noice = false,
+			noice = true,
 			notify = true,
 			nvimtree = true,
 			overseer = false,

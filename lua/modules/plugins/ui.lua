@@ -40,10 +40,14 @@ ui["psliwka/vim-smoothie"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
 }
-ui["rcarriga/nvim-notify"] = {
+ui["folke/noice.nvim"] = {
 	lazy = true,
 	event = "VeryLazy",
-	config = require("ui.notify"),
+	config = require("ui.noice"),
+	dependencies = {
+		"MunifTanjim/nui.nvim",
+		{ "rcarriga/nvim-notify", config = require("ui.notify") },
+	},
 }
 ui["folke/paint.nvim"] = {
 	lazy = true,
