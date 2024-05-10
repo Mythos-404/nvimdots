@@ -97,6 +97,7 @@ local data = {
 		EmptyFolderOpen = "",
 		File = "󰈤",
 		Fire = "",
+		From = "",
 		Folder = "",
 		FolderOpen = "",
 		FolderWithHeart = "󱃪",
@@ -169,6 +170,8 @@ local data = {
 		ManUp = "",
 		Neovim = "",
 		Vim = "",
+		Help = "󰋖",
+		Shell = "󱆃",
 	},
 	cmp = {
 		Codeium = "",

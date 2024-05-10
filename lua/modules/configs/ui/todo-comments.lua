@@ -13,6 +13,7 @@ return function()
 			PERF = { icon = icons.ui.Perf, alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
 			NOTE = { icon = icons.ui.Note, color = "hint", alt = { "INFO" } },
 			TEST = { icon = icons.ui.Lock, color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+			FROM = { icon = icons.ui.From, color = "info" },
 		},
 		gui_style = {
 			fg = "NONE",
