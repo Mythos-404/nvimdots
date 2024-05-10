@@ -34,97 +34,6 @@ local plug_map = {
 		require("dial.map").manipulate("decrement", "gvisual")
 	end),
 
-	-- Plugin: yanky
-	["nx|y"] = map_callback(function()
-			return et("<Plug>(YankyYank)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Yank text"),
-
-	["nx|p"] = map_callback(function()
-			return et("<Plug>(YankyPutAfter)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put yanked text after cursor"),
-
-	["nx|P"] = map_callback(function()
-			return et("<Plug>(YankyPutBefore)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put yanked text before cursor"),
-
-	["nx|gp"] = map_callback(function()
-			return et("<Plug>(YankyGPutAfter)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put yanked text after selection"),
-
-	["nx|gP"] = map_callback(function()
-			return et("<Plug>(YankyGPutBefore)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put yanked text before selection"),
-
-	["n|[p"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentAfterLinewise)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put indented after cursor (linewise)"),
-
-	["n|[P"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentBeforeLinewise)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put indented before cursor (linewise)"),
-
-	["n|<p"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentAfterShiftRight)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put and indent right"),
-
-	["n|<P"] = map_callback(function()
-			return et("<Plug>(YankyPutIndentAfterShiftLeft)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put and indent left"),
-
-	["n|=p"] = map_callback(function()
-			return et("<Plug>(YankyPutAfterFilter)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put after applying a filter"),
-
-	["n|=P"] = map_callback(function()
-			return et("<Plug>(YankyPutBeforeFilter)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Put before applying a filter"),
-
-	["n|<C-p>"] = map_callback(function()
-			return et("<Plug>(YankyPreviousEntry)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Select previous entry through yank history"),
-	["n|<C-S-p>"] = map_callback(function()
-			return et("<Plug>(YankyNextEntry)")
-		end)
-		:with_noremap()
-		:with_expr()
-		:with_desc("yanky: Select next entry through yank history"),
-
 	-- Plugin: nvim-tree
 	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
 	["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
@@ -320,13 +229,13 @@ local plug_map = {
 		:with_silent()
 		:with_desc("tool: Dropbar Pick"),
 
-	-- Plugin: hlslens
-	["n|n"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>")
-		:with_noremap()
-		:with_silent(),
-	["n|N"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>")
-		:with_noremap()
-		:with_silent(),
+	-- -- Plugin: hlslens
+	-- ["n|n"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>")
+	-- 	:with_noremap()
+	-- 	:with_silent(),
+	-- ["n|N"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>")
+	-- 	:with_noremap()
+	-- 	:with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)

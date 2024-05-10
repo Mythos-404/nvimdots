@@ -12,11 +12,10 @@ tool["nvim-tree/nvim-tree.lua"] = {
 	},
 	config = require("tool.nvim-tree"),
 }
-tool["gbprod/yanky.nvim"] = {
+tool["ibhagwan/smartyank.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
-	config = require("tool.yanky"),
-	dependencies = { "kkharji/sqlite.lua" },
+	config = require("tool.smartyank"),
 }
 tool["gbprod/cutlass.nvim"] = {
 	lazy = true,
@@ -71,11 +70,11 @@ tool["m-demare/hlargs.nvim"] = {
 	event = "BufReadPost",
 	config = require("tool.hlargs"),
 }
-tool["kevinhwang91/nvim-hlslens"] = {
-	lazy = true,
-	event = "CmdlineEnter",
-	config = require("tool.hlslens"),
-}
+-- tool["kevinhwang91/nvim-hlslens"] = {
+-- 	lazy = true,
+-- 	event = "CmdlineEnter",
+-- 	config = require("tool.hlslens"),
+-- }
 tool["LeonHeidelbach/trailblazer.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
