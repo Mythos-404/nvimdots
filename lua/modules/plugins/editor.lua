@@ -93,8 +93,14 @@ editor["echasnovski/mini.align"] = {
 	config = require("editor.mini-align"),
 }
 editor["echasnovski/mini.move"] = {
+	event = "VeryLazy",
 	version = false,
 	config = require("editor.mini-move"),
+}
+editor["echasnovski/mini.ai"] = {
+	event = "VeryLazy",
+	version = false,
+	config = require("editor.mini-ai"),
 }
 editor["chrisgrieser/nvim-recorder"] = {
 	lazy = true,
@@ -106,10 +112,9 @@ editor["brenoprata10/nvim-highlight-colors"] = {
 	event = "BufReadPre",
 	config = require("editor.highlight-colors"),
 }
-editor["NMAC427/guess-indent.nvim"] = {
+editor["tpope/vim-sleuth"] = {
 	lazy = true,
 	event = { "BufNewFile", "BufReadPost", "BufFilePost" },
-	config = require("editor.guess-indent"),
 }
 editor["nvim-pack/nvim-spectre"] = {
 	lazy = true,
@@ -137,7 +142,6 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 		-- { "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
 		{ "chrisgrieser/nvim-puppeteer" },
 		{ "mfussenegger/nvim-treehopper" },
-		{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		{
 			"danymat/neogen",
 			config = require("editor.neogen"),

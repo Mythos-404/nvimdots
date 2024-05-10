@@ -6,7 +6,11 @@ return vim.schedule_wrap(function()
 
 	vim.filetype.add({
 		pattern = {
-			["~/dotfiles/.config/hypr/.*%.conf"] = "hyprlang",
+			[".*/hypr/.*%.conf"] = "hyprlang",
+		},
+		extension = {
+			frag = "glsl",
+			vert = "glsl",
 		},
 	})
 
@@ -23,37 +27,6 @@ return vim.schedule_wrap(function()
 				return ok and is_large_file
 			end,
 			additional_vim_regex_highlighting = false,
-		},
-		textobjects = {
-			select = {
-				enable = true,
-				keymaps = {
-					["af"] = "@function.outer",
-					["if"] = "@function.inner",
-					["ac"] = "@class.outer",
-					["ic"] = "@class.inner",
-				},
-			},
-			move = {
-				enable = true,
-				set_jumps = true, -- whether to set jumps in the jumplist
-				goto_next_start = {
-					["]["] = "@function.outer",
-					["]m"] = "@class.outer",
-				},
-				goto_next_end = {
-					["]]"] = "@function.outer",
-					["]M"] = "@class.outer",
-				},
-				goto_previous_start = {
-					["[["] = "@function.outer",
-					["[m"] = "@class.outer",
-				},
-				goto_previous_end = {
-					["[]"] = "@function.outer",
-					["[M"] = "@class.outer",
-				},
-			},
 		},
 		indent = { enable = true },
 		matchup = { enable = true },

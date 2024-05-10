@@ -1,4 +1,6 @@
 return function()
+	local ft = require("Comment.ft")
+	ft.set("hyprlang", "#%s")
 	require("Comment").setup({
 		-- Add a space b/w comment and the line
 		padding = true,
