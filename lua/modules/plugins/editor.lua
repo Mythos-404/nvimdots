@@ -5,17 +5,7 @@ editor["chrisgrieser/nvim-spider"] = {
 	event = "VeryLazy",
 }
 editor["olimorris/persisted.nvim"] = {
-	lazy = true,
-	cmd = {
-		"SessionToggle",
-		"SessionStart",
-		"SessionStop",
-		"SessionSave",
-		"SessionLoad",
-		"SessionLoadLast",
-		"SessionLoadFromFile",
-		"SessionDelete",
-	},
+	lazy = false,
 	config = require("editor.persisted"),
 }
 editor["altermo/ultimate-autopair.nvim"] = {
@@ -24,11 +14,11 @@ editor["altermo/ultimate-autopair.nvim"] = {
 	event = { "InsertEnter", "CmdlineEnter" },
 	config = require("editor.ultimate-autopair"),
 }
-editor["max397574/better-escape.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("editor.better-escape"),
-}
+-- editor["max397574/better-escape.nvim"] = {
+-- 	lazy = true,
+-- 	event = { "CursorHold", "CursorHoldI" },
+-- 	config = require("editor.better-escape"),
+-- }
 editor["LunarVim/bigfile.nvim"] = {
 	lazy = false,
 	config = require("editor.bigfile"),
@@ -102,11 +92,11 @@ editor["echasnovski/mini.ai"] = {
 	version = false,
 	config = require("editor.mini-ai"),
 }
-editor["chrisgrieser/nvim-recorder"] = {
-	lazy = true,
-	event = { "BufReadPost", "BufAdd", "BufNewFile" },
-	config = require("editor.recorder"),
-}
+-- editor["chrisgrieser/nvim-recorder"] = {
+-- 	lazy = true,
+-- 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
+-- 	config = require("editor.recorder"),
+-- }
 editor["brenoprata10/nvim-highlight-colors"] = {
 	lazy = true,
 	event = "BufReadPre",
@@ -139,12 +129,15 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 	event = "BufReadPre",
 	config = require("editor.treesitter"),
 	dependencies = {
-		-- { "andymass/vim-matchup" }, -- NOTE: https://github.com/andymass/vim-matchup/issues/328 Bug Fix On Open
 		{ "chrisgrieser/nvim-puppeteer" },
 		{ "mfussenegger/nvim-treehopper" },
 		{
 			"danymat/neogen",
 			config = require("editor.neogen"),
+		},
+		{
+			"andymass/vim-matchup",
+			init = require("editor.vim-matchup"),
 		},
 		{
 			"windwp/nvim-ts-autotag",
