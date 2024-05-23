@@ -7,6 +7,12 @@ return function()
 
 			c = { "clang_format" },
 			cpp = { "clang_format" },
+			objc = { "clang_format" },
+			objcpp = { "clang_format" },
+			cs = { "clang_format" },
+			java = { "clang_format" },
+			cuda = { "clang_format" },
+			proto = { "clang_format" },
 
 			vue = { "prettier" },
 			typescript = { "prettier" },
