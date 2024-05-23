@@ -12,6 +12,11 @@ tool["nvim-tree/nvim-tree.lua"] = {
 	},
 	config = require("tool.nvim-tree"),
 }
+tool["echasnovski/mini.files"] = {
+	event = "VeryLazy",
+	version = false,
+	config = require("tool.mini-files"),
+}
 tool["ibhagwan/smartyank.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
@@ -61,8 +66,7 @@ tool["folke/which-key.nvim"] = {
 	config = require("tool.which-key"),
 }
 tool["Bekaboo/dropbar.nvim"] = {
-	lazy = true,
-	event = { "BufReadPost", "BufNewFile" },
+	lazy = false,
 	config = require("tool.dropbar"),
 }
 tool["m-demare/hlargs.nvim"] = {
@@ -80,6 +84,13 @@ tool["LeonHeidelbach/trailblazer.nvim"] = {
 	event = "BufReadPost",
 	config = require("tool.trailblazer"),
 }
+if not vim.g.neovide then
+	tool["3rd/image.nvim"] = {
+		lazy = true,
+		event = "VeryLazy",
+		config = require("tool.image"),
+	}
+end
 
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --

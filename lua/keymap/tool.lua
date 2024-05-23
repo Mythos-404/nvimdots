@@ -35,9 +35,14 @@ local plug_map = {
 	end),
 
 	-- Plugin: nvim-tree
-	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
-	["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
-	["n|<leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent():with_desc("filetree: Refresh"),
+	["n|<C-S-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
+	-- ["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
+	-- ["n|<leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent():with_desc("filetree: Refresh"),
+	-- Plugin: mini.files
+	["n|<C-n>"] = map_cmd("<Cmd>lua if not MiniFiles.close() then MiniFiles.open(vim.api.nvim_buf_get_name(0)) end<CR>")
+		:with_noremap()
+		:with_silent()
+		:with_desc("filetree: Open mini.files"),
 
 	-- Plugin: sniprun
 	["v|<leader>r"] = map_cr("SnipRun"):with_noremap():with_silent():with_desc("tool: Run code by range"),
@@ -228,14 +233,6 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("tool: Dropbar Pick"),
-
-	-- -- Plugin: hlslens
-	-- ["n|n"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>")
-	-- 	:with_noremap()
-	-- 	:with_silent(),
-	-- ["n|N"] = map_cmd("<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>")
-	-- 	:with_noremap()
-	-- 	:with_silent(),
 }
 
 bind.nvim_load_mapping(plug_map)
