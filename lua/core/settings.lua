@@ -20,6 +20,10 @@ settings["format_modifications_only"] = false
 ---@type boolean
 settings["format_notify"] = false
 
+-- Set it to false if you want to turn off LSP Inlay Hints
+---@type boolean
+settings["lsp_inlayhints"] = true
+
 -- Set it to false if diagnostics virtual text is annoying.
 -- If disabled, you may browse lsp diagnostics using trouble.nvim (press `gt` to toggle it).
 ---@type boolean
@@ -35,8 +39,8 @@ settings["file_groups"] = {
 -- Priority: `Error` > `Warning` > `Information` > `Hint`.
 --  > e.g. if you set this option to `Warning`, only lsp warnings and errors will be shown.
 -- NOTE: This entry only works when `diagnostics_virtual_text` is true.
----@type "Error"|"Warning"|"Information"|"Hint"
-settings["diagnostics_level"] = "Hint"
+---@type "ERROR"|"WARN"|"INFO"|"HINT"
+settings["diagnostics_level"] = "HINT"
 
 -- Set the format disabled directories here, files under these dirs won't be formatted on save.
 --- NOTE: Directories may contain regular expressions (grammar: vim). |regexp|
@@ -162,6 +166,8 @@ settings["gui_config"] = {
 -- https://neovide.dev/configuration.html
 ---@type table<string, boolean|number|string>
 settings["neovide_config"] = {
+	remember_window_size = false, -- NOTE: If true, hyprland will always be in full screen state.
+
 	refresh_rate = 150,
 	cursor_vfx_mode = "pixiedust",
 	no_idle = true,
@@ -176,9 +182,5 @@ settings["neovide_config"] = {
 	cursor_vfx_particle_speed = 20.0,
 	cursor_vfx_particle_density = 7.0,
 }
-
--- Set it to false if you don't  want to show inlay hint
----@type boolean
-settings["enable_inlayhint"] = true
 
 return settings

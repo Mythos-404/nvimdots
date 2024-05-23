@@ -94,9 +94,7 @@ local clipboard_config = function()
 			paste = { ["+"] = "pbpaste", ["*"] = "pbpaste" },
 			cache_enabled = 0,
 		}
-		return
-	end
-	if global.is_wsl then
+	elseif global.is_wsl then
 		vim.g.clipboard = {
 			name = "win32yank-wsl",
 			copy = {
@@ -109,7 +107,6 @@ local clipboard_config = function()
 			},
 			cache_enabled = 0,
 		}
-		return
 	end
 end
 
@@ -136,8 +133,18 @@ You're recommended to install PowerShell for better experience.]],
 		vim.api.nvim_set_option_value("shellcmdflag", ("%s %s;"):format(basecmd, ctrlcmd), {})
 		vim.api.nvim_set_option_value("shellredir", "-RedirectStandardOutput %s -NoNewWindow -Wait", {})
 		vim.api.nvim_set_option_value("shellpipe", "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode", {})
-		vim.api.nvim_set_option_value("shellquote", {}, {})
-		vim.api.nvim_set_option_value("shellxquote", {}, {})
+		vim.api.nvim_set_option_value("shellquote", nil, {})
+		vim.api.nvim_set_option_value("shellxquote", nil, {})
+	end
+end
+
+local _v0_10_workarounds = function()
+	local ok, watchfile = pcall(require, "vim.lsp._watchfiles")
+	if ok then
+		-- Disable lsp watcher
+		watchfile._watchfunc = function()
+			return function() end
+		end
 	end
 end
 
@@ -150,6 +157,7 @@ local load_core = function()
 	neovide_config()
 	clipboard_config()
 	shell_config()
+	_v0_10_workarounds()
 
 	require("core.options")
 	require("core.mapping")
