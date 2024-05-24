@@ -100,11 +100,11 @@ tool["nvim-telescope/telescope.nvim"] = {
 	cmd = "Telescope",
 	config = require("tool.telescope"),
 	dependencies = {
-		{
-			"ahmedkhalf/project.nvim",
-			event = { "CursorHold", "CursorHoldI" },
-			config = require("tool.project"),
-		},
+		-- {
+		-- 	"ahmedkhalf/project.nvim",
+		-- 	event = { "CursorHold", "CursorHoldI" },
+		-- 	config = require("tool.project"),
+		-- },
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-tree/nvim-web-devicons" },
 		{ "jvgrootveld/telescope-zoxide" },
