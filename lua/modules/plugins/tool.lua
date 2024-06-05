@@ -17,6 +17,12 @@ tool["echasnovski/mini.files"] = {
 	version = false,
 	config = require("tool.mini-files"),
 }
+tool["pysan3/fcitx5.nvim"] = {
+	lazy = true,
+	event = "BufReadPost",
+	cond = vim.fn.executable("fcitx5-remote") == 1,
+	config = require("tool.fcitx5"),
+}
 tool["ibhagwan/smartyank.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
@@ -100,11 +106,11 @@ tool["nvim-telescope/telescope.nvim"] = {
 	cmd = "Telescope",
 	config = require("tool.telescope"),
 	dependencies = {
-		-- {
-		-- 	"ahmedkhalf/project.nvim",
-		-- 	event = { "CursorHold", "CursorHoldI" },
-		-- 	config = require("tool.project"),
-		-- },
+		{
+			"ahmedkhalf/project.nvim",
+			event = { "CursorHold", "CursorHoldI" },
+			config = require("tool.project"),
+		},
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-tree/nvim-web-devicons" },
 		{ "jvgrootveld/telescope-zoxide" },
