@@ -8,8 +8,8 @@ return function()
 	local cache_timeout = 2000 -- Cache timeout in milliseconds
 
 	local function fetch_git_status(cwd, callback)
-		local stdout = vim.loop.new_pipe(false)
-		local _, _ = vim.loop.spawn(
+		local stdout = vim.uv.new_pipe(false)
+		local _, _ = vim.uv.spawn(
 			"git",
 			---@diagnostic disable-next-line: missing-fields
 			{
