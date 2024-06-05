@@ -34,6 +34,9 @@ local plug_map = {
 		require("dial.map").manipulate("decrement", "gvisual")
 	end),
 
+	["n|<A-C-a>"] = map_cmd(require("dial.map").inc_normal("extra")):with_noremap(),
+	["n|<A-C-x>"] = map_cmd(require("dial.map").dec_normal("extra")):with_noremap(),
+
 	-- Plugin: nvim-tree
 	["n|<C-S-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
 	-- ["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),

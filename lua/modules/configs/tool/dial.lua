@@ -27,5 +27,12 @@ return function()
 		-- default augends used when no group name is specified
 		default = augends,
 		visual = augends,
+
+		extra = {
+			augend.case.new({
+				types = { "snake_case", "camelCase", "PascalCase" },
+				cyclic = true,
+			}),
+		},
 	})
 end
