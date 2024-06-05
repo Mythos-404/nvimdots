@@ -11,7 +11,7 @@ return function()
 			return true
 		end, -- function to determine if a session should be autosaved
 		-- Set `lazy = false` in `plugins/editor.lua` to enable this
-		autoload = true, -- automatically load the session for the cwd on Neovim startup
+		autoload = false, -- automatically load the session for the cwd on Neovim startup
 		on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
 		follow_cwd = true, -- change session file name to match current working directory if it changes
 		allowed_dirs = nil, -- table of dirs that the plugin will auto-save and auto-load from

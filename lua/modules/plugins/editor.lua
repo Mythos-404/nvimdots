@@ -5,7 +5,17 @@ editor["chrisgrieser/nvim-spider"] = {
 	event = "VeryLazy",
 }
 editor["olimorris/persisted.nvim"] = {
-	lazy = false,
+	lazy = true,
+	cmd = {
+		"SessionToggle",
+		"SessionStart",
+		"SessionStop",
+		"SessionSave",
+		"SessionLoad",
+		"SessionLoadLast",
+		"SessionLoadFromFile",
+		"SessionDelete",
+	},
 	config = require("editor.persisted"),
 }
 editor["altermo/ultimate-autopair.nvim"] = {
