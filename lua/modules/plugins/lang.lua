@@ -66,5 +66,9 @@ lang["fabridamicelli/cronex.nvim"] = {
 	ft = { "yaml", "yml", "tf", "cfg", "config", "conf" },
 	config = require("lang.cronex"),
 }
+lang["kchmck/vim-coffee-script"] = {
+	lazy = true,
+	ft = { "coffee" },
+}
 
 return lang
