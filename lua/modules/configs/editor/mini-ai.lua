@@ -6,25 +6,9 @@ return function()
 		-- Table with textobject id as fields, textobject specification as values.
 		-- Also use this to disable builtin textobjects. See |MiniAi.config|.
 		custom_textobjects = {
-			-- Tweak function call to not detect dot in function name
-			f = gen_spec.function_call({ name_pattern = "[%w_]" }),
-			F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
-			o = gen_spec.treesitter({
-				a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-				i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-			}, {}),
-			C = gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
+			q = { "[`'\"]().-()[`'\"]" },
+			x = { " %w+=[\"']().-()[\"']" },
 			t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
-			d = { "%f[%d]%d+" }, -- digits
-			e = { -- Word with case
-				{
-					"%u[%l%d]+%f[^%l%d]",
-					"%f[%S][%l%d]+%f[^%l%d]",
-					"%f[%P][%l%d]+%f[^%l%d]",
-					"^[%l%d]+%f[^%l%d]",
-				},
-				"^().*()$",
-			},
 			g = function() -- Whole buffer, similar to `gg` and 'G' motion
 				local from = { line = 1, col = 1 }
 				local to = {
@@ -33,8 +17,14 @@ return function()
 				}
 				return { from = from, to = to }
 			end,
-			u = gen_spec.function_call(), -- u for "Usage"
-			U = gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+			-- Tweak function call to not detect dot in function name
+			f = gen_spec.function_call({ name_pattern = "[%w_]" }),
+			F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+			o = gen_spec.treesitter({
+				a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+				i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+			}, {}),
+			C = gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
 		},
 
 		-- Module mappings. Use `''` (empty string) to disable one.
