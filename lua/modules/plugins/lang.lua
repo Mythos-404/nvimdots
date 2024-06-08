@@ -70,5 +70,16 @@ lang["kchmck/vim-coffee-script"] = {
 	lazy = true,
 	ft = { "coffee" },
 }
+lang["jbyuki/one-small-step-for-vimkind"] = {
+	lazy = true,
+	ft = { "lua" },
+}
+lang["traduire.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	dev = true,
+	opt = {},
+	config = true,
+}
 
 return lang

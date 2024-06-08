@@ -76,4 +76,6 @@ return function()
 		automatic_installation = true,
 		handlers = { mason_dap_handler },
 	})
+
+	require("tool.dap.clients.lua")()
 end

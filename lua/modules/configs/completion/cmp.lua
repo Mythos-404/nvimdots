@@ -151,7 +151,7 @@ return function()
 			{ name = "nvim_lua", priority = 100 },
 			{ name = "luasnip", priority = 90 },
 			{ name = "path" },
-			{ name = "treesitter" },
+			-- { name = "treesitter" },
 			-- { name = "spell" },
 			-- { name = "tmux" },
 			{

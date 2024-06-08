@@ -39,5 +39,9 @@ return function()
 			"RainbowDelimiterCyan",
 			"RainbowDelimiterViolet",
 		},
+		blacklist = {
+			"comment",
+			"zig",
+		},
 	}
 end

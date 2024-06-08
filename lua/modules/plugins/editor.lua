@@ -157,10 +157,10 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"ThePrimeagen/refactoring.nvim",
 			config = require("editor.refacotring"),
 		},
-		{
-			"hiphish/rainbow-delimiters.nvim",
-			config = require("editor.rainbow_delims"),
-		},
+		-- {
+		-- 	"hiphish/rainbow-delimiters.nvim",
+		-- 	config = require("editor.rainbow_delims"),
+		-- },
 		{
 			"nvim-treesitter/nvim-treesitter-context",
 			config = require("editor.ts-context"),
