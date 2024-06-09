@@ -52,15 +52,6 @@ lang["Mythos-404/xmake.nvim"] = {
 	config = require("lang.xmake"),
 	dependencies = { "MunifTanjim/nui.nvim" },
 }
-lang["kmonad/kmonad-vim"] = {
-	lazy = true,
-	ft = "kbd",
-}
-lang["eraserhd/parinfer-rust"] = {
-	lazy = true,
-	ft = "yuck",
-	build = "cargo build --release",
-}
 lang["fabridamicelli/cronex.nvim"] = {
 	lazy = true,
 	ft = { "yaml", "yml", "tf", "cfg", "config", "conf" },
@@ -73,13 +64,6 @@ lang["kchmck/vim-coffee-script"] = {
 lang["jbyuki/one-small-step-for-vimkind"] = {
 	lazy = true,
 	ft = { "lua" },
-}
-lang["traduire.nvim"] = {
-	lazy = true,
-	event = "VeryLazy",
-	dev = true,
-	opt = {},
-	config = true,
 }
 
 return lang

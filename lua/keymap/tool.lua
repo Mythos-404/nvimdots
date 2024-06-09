@@ -4,7 +4,6 @@ local map_cr = bind.map_cr
 local map_cu = bind.map_cu
 local map_cmd = bind.map_cmd
 local map_callback = bind.map_callback
-local et = bind.escape_termcode
 require("keymap.helpers")
 
 local plug_map = {
@@ -33,19 +32,13 @@ local plug_map = {
 	["v|g<C-x>"] = map_callback(function()
 		require("dial.map").manipulate("decrement", "gvisual")
 	end),
-
 	["n|<A-C-a>"] = map_cmd(require("dial.map").inc_normal("extra")):with_noremap(),
 	["n|<A-C-x>"] = map_cmd(require("dial.map").dec_normal("extra")):with_noremap(),
 
 	-- Plugin: nvim-tree
-	["n|<C-S-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
-	-- ["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
-	-- ["n|<leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent():with_desc("filetree: Refresh"),
-	-- Plugin: mini.files
-	["n|<C-n>"] = map_cmd("<Cmd>lua if not MiniFiles.close() then MiniFiles.open(vim.api.nvim_buf_get_name(0)) end<CR>")
-		:with_noremap()
-		:with_silent()
-		:with_desc("filetree: Open mini.files"),
+	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
+	["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
+	["n|<leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent():with_desc("filetree: Refresh"),
 
 	-- Plugin: sniprun
 	["v|<leader>r"] = map_cr("SnipRun"):with_noremap():with_silent():with_desc("tool: Run code by range"),
@@ -129,10 +122,6 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("find: File in project"),
-	["n|<leader>fc"] = map_cu("Telescope colorscheme")
-		:with_noremap()
-		:with_silent()
-		:with_desc("ui: Change colorscheme for current session"),
 	["n|<leader>bn"] = map_cu(":enew"):with_noremap():with_silent():with_desc("buffer: New"),
 	["n|<leader>fg"] = map_callback(function()
 			require("search").open({ collection = "git" })
@@ -211,7 +200,7 @@ local plug_map = {
 		:with_silent()
 		:with_desc("debug: Open REPL"),
 
-	-- todo-comments plug_map
+	-- Plugin: todo-comments.nvim
 	["n|]t"] = map_callback(function()
 			require("todo-comments").jump_next()
 		end)
@@ -229,13 +218,23 @@ local plug_map = {
 		:with_silent()
 		:with_desc("todo: Search through with Telescope"),
 
-	-- Public dropbar
+	-- Public: dropbar.nvim
 	["n|<C-m>"] = map_callback(function()
 			require("dropbar.api").pick()
 		end)
 		:with_noremap()
 		:with_silent()
 		:with_desc("tool: Dropbar Pick"),
+
+	-- Plugin: traduire.nvim
+	["v|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.api.to_cn()<CR>")
+		:with_noremap()
+		:with_silent()
+		:with_desc("translate: To CN"),
+	["n|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.api.to_en()<CR>")
+		:with_noremap()
+		:with_silent()
+		:with_desc("translate: To EN"),
 }
 
 bind.nvim_load_mapping(plug_map)

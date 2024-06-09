@@ -1,35 +1,3 @@
-local function custom_sorter(nodes)
-	local file_groups = require("core.settings").file_groups
-	local function get_group_index(name)
-		for i, group in ipairs(file_groups) do
-			for j, ext in ipairs(group) do
-				if name:sub(-#ext) == ext then
-					return i, j
-				end
-			end
-		end
-		return #file_groups + 1, 1
-	end
-
-	table.sort(nodes, function(a, b)
-		local name_a, name_b = a.name, b.name
-		local group_index_a, suffix_index_a = get_group_index(name_a)
-		local group_index_b, suffix_index_b = get_group_index(name_b)
-
-		if group_index_a == group_index_b then
-			if suffix_index_a == suffix_index_b then
-				return name_a < name_b
-			else
-				return suffix_index_a < suffix_index_b
-			end
-		else
-			return group_index_a < group_index_b
-		end
-	end)
-
-	return nodes
-end
-
 return function()
 	local icons = {
 		diagnostics = require("modules.utils.icons").get("diagnostics"),
@@ -47,7 +15,7 @@ return function()
 		hijack_unnamed_buffer_when_opening = true,
 		open_on_tab = false,
 		respect_buf_cwd = false,
-		sort_by = custom_sorter,
+		sort_by = "name",
 		sync_root_with_cwd = true,
 		ui = {
 			confirm = {

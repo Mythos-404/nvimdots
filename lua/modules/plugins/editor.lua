@@ -24,11 +24,6 @@ editor["altermo/ultimate-autopair.nvim"] = {
 	event = { "InsertEnter", "CmdlineEnter" },
 	config = require("editor.ultimate-autopair"),
 }
--- editor["max397574/better-escape.nvim"] = {
--- 	lazy = true,
--- 	event = { "CursorHold", "CursorHoldI" },
--- 	config = require("editor.better-escape"),
--- }
 editor["LunarVim/bigfile.nvim"] = {
 	lazy = false,
 	config = require("editor.bigfile"),
@@ -38,15 +33,20 @@ editor["ojroques/nvim-bufdel"] = {
 	lazy = true,
 	cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
 }
+editor["folke/flash.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("editor.flash"),
+}
 editor["numToStr/Comment.nvim"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.comment"),
 }
-editor["folke/flash.nvim"] = {
+editor["sindrets/diffview.nvim"] = {
 	lazy = true,
-	event = "VeryLazy",
-	config = require("editor.flash"),
+	cmd = { "DiffviewOpen", "DiffviewClose" },
+	config = require("editor.diffview"),
 }
 editor["tzachar/local-highlight.nvim"] = {
 	lazy = true,
@@ -62,29 +62,10 @@ editor["lambdalisue/suda.vim"] = {
 	cmd = { "SudaRead", "SudaWrite" },
 	init = require("editor.suda"),
 }
-editor["tzachar/highlight-undo.nvim"] = {
-	lazy = true,
-	event = "BufReadPost",
-	config = require("editor.highlight-undo"),
-}
-editor["kevinhwang91/nvim-ufo"] = {
-	lazy = true,
-	event = "BufReadPost",
-	config = require("editor.ufo"),
-	dependencies = {
-		{ "kevinhwang91/promise-async" },
-		{
-			"luukvbaal/statuscol.nvim",
-			branch = "0.10",
-			config = require("editor.statuscol"),
-		},
-	},
-}
-editor["echasnovski/mini.surround"] = {
-	lazy = true,
+editor["echasnovski/mini.ai"] = {
+	event = "VeryLazy",
 	version = false,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("editor.mini-surround"),
+	config = require("editor.mini-ai"),
 }
 editor["echasnovski/mini.align"] = {
 	lazy = true,
@@ -97,20 +78,11 @@ editor["echasnovski/mini.move"] = {
 	version = false,
 	config = require("editor.mini-move"),
 }
-editor["echasnovski/mini.ai"] = {
-	event = "VeryLazy",
-	version = false,
-	config = require("editor.mini-ai"),
-}
--- editor["chrisgrieser/nvim-recorder"] = {
--- 	lazy = true,
--- 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
--- 	config = require("editor.recorder"),
--- }
-editor["brenoprata10/nvim-highlight-colors"] = {
+editor["echasnovski/mini.surround"] = {
 	lazy = true,
-	event = "BufReadPre",
-	config = require("editor.highlight-colors"),
+	version = false,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.mini-surround"),
 }
 editor["tpope/vim-sleuth"] = {
 	lazy = true,
@@ -125,10 +97,23 @@ editor["mrjones2014/smart-splits.nvim"] = {
 	event = { "CursorHoldI", "CursorHold" },
 	config = require("editor.smart-splits"),
 }
+editor["kevinhwang91/nvim-ufo"] = {
+	lazy = true,
+	event = "BufReadPost",
+	config = require("editor.ufo"),
+	dependencies = {
+		{ "kevinhwang91/promise-async" },
+		{
+			"luukvbaal/statuscol.nvim",
+			branch = "0.10",
+			config = require("editor.statuscol"),
+		},
+	},
+}
 
-----------------------------------------------------------------------
---                  :treesitter related plugins                    --
-----------------------------------------------------------------------
+-- ----------------------------------------------------------------------
+-- --                  :treesitter related plugins                    --
+-- ----------------------------------------------------------------------
 editor["nvim-treesitter/nvim-treesitter"] = {
 	lazy = true,
 	build = function()
@@ -145,10 +130,10 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"danymat/neogen",
 			config = require("editor.neogen"),
 		},
-		{
-			"andymass/vim-matchup",
-			init = require("editor.vim-matchup"),
-		},
+		-- {
+		-- 	"andymass/vim-matchup",
+		--   init = require("editor.vim-matchup"),
+		-- },
 		{
 			"windwp/nvim-ts-autotag",
 			config = require("editor.autotag"),
@@ -157,10 +142,14 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"ThePrimeagen/refactoring.nvim",
 			config = require("editor.refacotring"),
 		},
-		-- {
-		-- 	"hiphish/rainbow-delimiters.nvim",
-		-- 	config = require("editor.rainbow_delims"),
-		-- },
+		{
+			"hiphish/rainbow-delimiters.nvim",
+			config = require("editor.rainbow_delims"),
+		},
+		{
+			"brenoprata10/nvim-highlight-colors",
+			config = require("editor.highlight-colors"),
+		},
 		{
 			"nvim-treesitter/nvim-treesitter-context",
 			config = require("editor.ts-context"),

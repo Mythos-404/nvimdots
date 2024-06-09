@@ -20,25 +20,28 @@ completion["nvimdev/lspsaga.nvim"] = {
 	config = require("completion.lspsaga"),
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 }
-completion["dnlhc/glance.nvim"] = {
-	lazy = true,
-	event = "LspAttach",
-	config = require("completion.glance"),
-}
 completion["stevearc/aerial.nvim"] = {
 	lazy = true,
 	event = "LspAttach",
 	config = require("completion.aerial"),
 }
-completion["stevearc/conform.nvim"] = {
+completion["dnlhc/glance.nvim"] = {
 	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("completion.conform"),
+	event = "LspAttach",
+	config = require("completion.glance"),
 }
-completion["mfussenegger/nvim-lint"] = {
+completion["joechrisellis/lsp-format-modifications.nvim"] = {
+	lazy = true,
+	event = "LspAttach",
+}
+completion["nvimtools/none-ls.nvim"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
-	config = require("completion.lint"),
+	config = require("completion.null-ls"),
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"jay-babu/mason-null-ls.nvim",
+	},
 }
 completion["hrsh7th/nvim-cmp"] = {
 	lazy = true,
@@ -49,16 +52,15 @@ completion["hrsh7th/nvim-cmp"] = {
 			"L3MON4D3/LuaSnip",
 			config = require("completion.luasnip"),
 		},
-		-- { "f3fora/cmp-spell" },
+		{ "f3fora/cmp-spell" },
 		{ "hrsh7th/cmp-path" },
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-cmdline" },
-		{ "ray-x/cmp-treesitter" },
 		{ "hrsh7th/cmp-nvim-lua" },
 		{ "hrsh7th/cmp-nvim-lsp" },
-		-- { "andersevenrud/cmp-tmux" },
+		{ "andersevenrud/cmp-tmux" },
 		{ "saadparwaiz1/cmp_luasnip" },
-		-- { "kdheepak/cmp-latex-symbols" },
+		{ "ray-x/cmp-treesitter", commit = "c8e3a74" },
 	},
 }
 

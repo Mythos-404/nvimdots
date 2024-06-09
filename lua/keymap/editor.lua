@@ -146,6 +146,28 @@ local plug_map = {
 		:with_silent()
 		:with_noremap()
 		:with_desc("edit: Preview all folds"),
+
+	-- Plugin: refactoring.nvim
+	["v|<leader>Rt"] = map_cu(":Refactor extract_to_file ")
+		:with_silent()
+		:with_noremap()
+		:with_desc("refactoring: Extract to file"),
+	["v|<leader>Ref"] = map_cu(":Refactor extract ")
+		:with_silent()
+		:with_noremap()
+		:with_desc("refactoring: Extract function"),
+	["v|<leader>Rev"] = map_cu(":Refactor extract_var ")
+		:with_silent()
+		:with_noremap()
+		:with_desc("refactoring: Extract variable"),
+	["n|<leader>Rlf"] = map_cu(":Refactor inlien_func ")
+		:with_silent()
+		:with_noremap()
+		:with_desc("refactoring: Inline variable"),
+	["n|<leader>Rlv"] = map_cu(":Refactor inline_var ")
+		:with_silent()
+		:with_noremap()
+		:with_desc("refactoring: Inline variable"),
 }
 
 bind.nvim_load_mapping(plug_map)

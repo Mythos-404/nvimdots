@@ -12,10 +12,9 @@ tool["nvim-tree/nvim-tree.lua"] = {
 	},
 	config = require("tool.nvim-tree"),
 }
-tool["echasnovski/mini.files"] = {
-	event = "VeryLazy",
-	version = false,
-	config = require("tool.mini-files"),
+tool["Bekaboo/dropbar.nvim"] = {
+	lazy = false,
+	config = require("tool.dropbar"),
 }
 tool["pysan3/fcitx5.nvim"] = {
 	lazy = true,
@@ -71,20 +70,11 @@ tool["folke/which-key.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("tool.which-key"),
 }
-tool["Bekaboo/dropbar.nvim"] = {
-	lazy = false,
-	config = require("tool.dropbar"),
-}
 tool["m-demare/hlargs.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
 	config = require("tool.hlargs"),
 }
--- tool["kevinhwang91/nvim-hlslens"] = {
--- 	lazy = true,
--- 	event = "CmdlineEnter",
--- 	config = require("tool.hlslens"),
--- }
 tool["LeonHeidelbach/trailblazer.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
@@ -97,6 +87,13 @@ if not vim.g.neovide then
 		config = require("tool.image"),
 	}
 end
+tool["traduire.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	dev = true,
+	config = true,
+	opt = {},
+}
 
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --
@@ -106,11 +103,6 @@ tool["nvim-telescope/telescope.nvim"] = {
 	cmd = "Telescope",
 	config = require("tool.telescope"),
 	dependencies = {
-		{
-			"ahmedkhalf/project.nvim",
-			event = { "CursorHold", "CursorHoldI" },
-			config = require("tool.project"),
-		},
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-tree/nvim-web-devicons" },
 		{ "jvgrootveld/telescope-zoxide" },
@@ -120,6 +112,11 @@ tool["nvim-telescope/telescope.nvim"] = {
 		{
 			"FabianWirth/search.nvim",
 			config = require("tool.search"),
+		},
+		{
+			"ahmedkhalf/project.nvim",
+			event = { "CursorHold", "CursorHoldI" },
+			config = require("tool.project"),
 		},
 		{
 			"aaronhallaert/advanced-git-search.nvim",

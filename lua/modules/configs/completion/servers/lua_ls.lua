@@ -20,7 +20,6 @@ return {
 					vim.fn.expand("$VIMRUNTIME/lua"),
 					vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
 					"${3rd}/luv/library",
-					"${3rd}/busted/library",
 				},
 				ignoreDir = { "types/stable" },
 			},

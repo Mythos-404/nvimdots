@@ -36,9 +36,15 @@ ui["nvim-lualine/lualine.nvim"] = {
 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("ui.lualine"),
 }
-ui["psliwka/vim-smoothie"] = {
+ui["zbirenbaum/neodim"] = {
+	lazy = true,
+	event = "LspAttach",
+	config = require("ui.neodim"),
+}
+ui["karb94/neoscroll.nvim"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
+	config = require("ui.neoscroll"),
 }
 ui["folke/noice.nvim"] = {
 	lazy = true,
@@ -54,15 +60,15 @@ ui["folke/paint.nvim"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("ui.paint"),
 }
-ui["dstein64/nvim-scrollview"] = {
-	lazy = true,
-	event = { "BufReadPost", "BufAdd", "BufNewFile" },
-	config = require("ui.scrollview"),
-}
 ui["folke/todo-comments.nvim"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("ui.todo-comments"),
+}
+ui["dstein64/nvim-scrollview"] = {
+	lazy = true,
+	event = { "BufReadPost", "BufAdd", "BufNewFile" },
+	config = require("ui.scrollview"),
 }
 
 return ui

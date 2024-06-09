@@ -38,6 +38,11 @@ return function()
 			W = {
 				name = icons.ui.Window .. " Window",
 			},
+			R = {
+				e = { name = icons.misc.Refactor .. " Extract" },
+				l = { name = icons.misc.Refactor .. " InLine" },
+				name = icons.misc.Refactor .. " Refactor",
+			},
 		},
 	})
 

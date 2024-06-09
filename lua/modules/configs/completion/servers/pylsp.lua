@@ -1,6 +1,4 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/pylsp.lua
-local is_windows = require("core.global").is_windows
-
 return {
 	cmd = { "pylsp" },
 	filetypes = { "python" },
@@ -40,7 +38,7 @@ return {
 				rope = { enabled = true },
 
 				-- Formatting
-				black = { enabled = true, preview = true },
+				black = { enabled = false, preview = false },
 				pyls_isort = { enabled = false },
 				autopep8 = { enabled = false },
 				yapf = { enabled = false },

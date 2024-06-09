@@ -172,6 +172,7 @@ local data = {
 		Vim = "",
 		Help = "󰋖",
 		Shell = "󱆃",
+		Refactor = "",
 	},
 	cmp = {
 		Codeium = "",

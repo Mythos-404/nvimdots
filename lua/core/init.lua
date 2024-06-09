@@ -22,11 +22,11 @@ local createdir = function()
 end
 
 local disable_distribution_plugins = function()
-	-- disable menu loading
+	-- Disable menu loading
 	vim.g.did_install_default_menus = 1
 	vim.g.did_install_syntax_menu = 1
 
-	-- Uncomment this if you define your own filetypes in `after/ftplugin`
+	-- Comment this if you define your own filetypes in `after/ftplugin`
 	-- vim.g.did_load_filetypes = 1
 
 	-- Do not load native syntax completion
@@ -46,8 +46,8 @@ local disable_distribution_plugins = function()
 	-- Do not load tohtml.vim
 	vim.g.loaded_2html_plugin = 1
 
-	-- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim (all these plugins are
-	-- related to checking files inside compressed files)
+	-- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim (all of these plugins are
+	-- related to reading files inside compressed containers)
 	vim.g.loaded_gzip = 1
 	vim.g.loaded_tar = 1
 	vim.g.loaded_tarPlugin = 1
@@ -56,19 +56,20 @@ local disable_distribution_plugins = function()
 	vim.g.loaded_zip = 1
 	vim.g.loaded_zipPlugin = 1
 
-	-- Do not use builtin matchit.vim and matchparen.vim since the use of vim-matchup
+	-- Do not use builtin matchit.vim and matchparen.vim because we're using vim-matchup
 	vim.g.loaded_matchit = 1
 	vim.g.loaded_matchparen = 1
 
 	-- Disable sql omni completion.
 	vim.g.loaded_sql_completion = 1
 
-	-- Disable EditorConfig support
+	-- Set this to 0 in order to disable native EditorConfig support
 	vim.g.editorconfig = 1
 
 	-- Disable remote plugins
-	-- NOTE: Disabling rplugin.vim will show error for `wilder.nvim` in :checkhealth,
-	-- NOTE:  but since it's config doesn't require python rtp, it's fine to ignore.
+	-- NOTE:
+	--  > Disabling rplugin.vim will make `wilder.nvim` complain about missing rplugins during :checkhealth,
+	--  > but since it's config doesn't require python rtp (strictly), it's fine to ignore that for now.
 	-- vim.g.loaded_remote_plugins = 1
 end
 
@@ -129,12 +130,13 @@ You're recommended to install PowerShell for better experience.]],
 
 		local basecmd = "-NoLogo -MTA -ExecutionPolicy RemoteSigned"
 		local ctrlcmd = "-Command [console]::InputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8"
-		vim.api.nvim_set_option_value("shell", vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell", {})
-		vim.api.nvim_set_option_value("shellcmdflag", ("%s %s;"):format(basecmd, ctrlcmd), {})
-		vim.api.nvim_set_option_value("shellredir", "-RedirectStandardOutput %s -NoNewWindow -Wait", {})
-		vim.api.nvim_set_option_value("shellpipe", "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode", {})
-		vim.api.nvim_set_option_value("shellquote", "", {})
-		vim.api.nvim_set_option_value("shellxquote", "", {})
+		local set_opts = vim.api.nvim_set_option_value
+		set_opts("shell", vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell", {})
+		set_opts("shellcmdflag", ("%s %s;"):format(basecmd, ctrlcmd), {})
+		set_opts("shellredir", "-RedirectStandardOutput %s -NoNewWindow -Wait", {})
+		set_opts("shellpipe", "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode", {})
+		set_opts("shellquote", "", {})
+		set_opts("shellxquote", "", {})
 	end
 end
 

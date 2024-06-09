@@ -1,4 +1,4 @@
--- Now use `<A-i>` or `<A-1>` to back to the `dotstutor`.
+-- Now use `<A-o>` or `<A-1>` to back to the `dotstutor`.
 local autocmd = {}
 
 function autocmd.nvim_create_augroups(definitions)
@@ -40,7 +40,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		local layout = vim.api.nvim_call_function("winlayout", {})
 		if
 			layout[1] == "leaf"
-			and vim.api.nvim_get_option_value("filetype", { buf = vim.api.nvim_win_get_buf(layout[2]) }) == "NvimTree"
+			and vim.bo[vim.api.nvim_win_get_buf(layout[2])].filetype == "NvimTree"
 			and layout[3] == nil
 		then
 			vim.api.nvim_command([[confirm quit]])
@@ -126,14 +126,26 @@ function autocmd.load_autocmds()
 			{ "VimResized", "*", [[tabdo wincmd =]] },
 		},
 		ft = {
-			{ "FileType", "*", "setlocal formatoptions-=cro" },
-			{ "FileType", "alpha", "setlocal showtabline=0" },
-			{ "FileType", "markdown", "setlocal wrap" },
+			{ "FileType", "alpha", "set showtabline=0" },
+			{ "FileType", "markdown", "set wrap" },
+			{ "FileType", "make", "set noexpandtab shiftwidth=8 softtabstop=0" },
 			{ "FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()" },
+			{
+				"FileType",
+				"*",
+				[[setlocal formatoptions-=cro]],
+			},
 			{
 				"FileType",
 				"c,cpp",
 				"nnoremap <leader>h :ClangdSwitchSourceHeaderVSplit<CR>",
+			},
+		},
+		yank = {
+			{
+				"TextYankPost",
+				"*",
+				[[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]],
 			},
 		},
 	}

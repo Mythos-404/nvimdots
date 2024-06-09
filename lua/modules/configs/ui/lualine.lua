@@ -174,6 +174,7 @@ return function()
 			end,
 			padding = 0,
 			color = utils.gen_hl("surface1", true, true),
+			separator = { left = "", right = "" },
 		},
 
 		file_status = {
@@ -207,47 +208,32 @@ return function()
 
 		lsp = {
 			function()
-				local buf_ft = vim.api.nvim_get_option_value("filetype", { scope = "local" })
-				local clients = vim.lsp.get_clients()
+				local buf_ft = vim.bo.filetype
+				local clients = vim.lsp.get_clients({ buffer = vim.api.nvim_get_current_buf() })
 				local lsp_lists = {}
 				local available_servers = {}
-
-				local conform_status = (function()
-					local formats = require("conform").list_formatters()
-					local lsp_formats =
-						require("conform.lsp_format").get_format_clients({ bufnr = vim.api.nvim_get_current_buf() })
-
-					if #lsp_formats ~= 0 then
-						return true
-					end
-
-					if #formats == 0 then
-						return false
-					end
-
-					if formats[1].name == "trim_whitespace" then
-						return false
-					end
-
-					return true
-				end)()
+				local is_null_lsp = vim.iter(clients):find(function(client)
+					return client.name == "null-ls"
+				end)
 
 				if next(clients) == nil then
-					return conform_status and ("<%s>"):format(icons.misc.NoActiveLsp) or icons.misc.NoActiveLsp -- No server available
+					return is_null_lsp and ("<%s>"):format(icons.misc.NoActiveLsp) or icons.misc.NoActiveLsp
 				end
+
 				for _, client in ipairs(clients) do
 					local filetypes = client.config.filetypes
 					local client_name = client.name
 					if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-						-- Avoid adding servers that already exists.
-						if not lsp_lists[client_name] then
+						-- avoid adding servers that already exists.
+						if not lsp_lists[client_name] and client_name ~= "null-ls" then
 							lsp_lists[client_name] = true
 							table.insert(available_servers, client_name)
 						end
 					end
 				end
+
 				return next(available_servers) == nil and icons.misc.NoActiveLsp
-					or (conform_status and "%s<%s>" or "%s[%s]"):format(
+					or (is_null_lsp and "%s<%s>" or "%s[%s]"):format(
 						icons.misc.LspAvailable,
 						table.concat(available_servers, ", ")
 					)
@@ -261,7 +247,7 @@ return function()
 				local function env_cleanup(venv)
 					if string.find(venv, "/") then
 						local final_venv = venv
-						for w in venv:gmatch("([^/]+)/") do
+						for w in venv:gmatch("([^/]+)") do
 							final_venv = w
 						end
 						venv = final_venv
@@ -269,7 +255,7 @@ return function()
 					return venv
 				end
 
-				if vim.api.nvim_get_option_value("filetype", { scope = "local" }) == "python" then
+				if vim.bo.filetype == "python" then
 					local venv = os.getenv("CONDA_DEFAULT_ENV")
 					if venv then
 						return icons.misc.PyEnv .. env_cleanup(venv)

@@ -2,7 +2,6 @@ local global = require("core.global")
 
 local function load_options()
 	local global_local = {
-		-- winblend = 10,
 		autoindent = true,
 		autoread = true,
 		autowrite = true,
@@ -45,7 +44,6 @@ local function load_options()
 		listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←",
 		magic = true,
 		mousescroll = "ver:3,hor:6",
-		mousemoveevent = true,
 		number = true,
 		previewheight = 12,
 		-- Do NOT adjust the following option (pumblend) if you're using transparent background

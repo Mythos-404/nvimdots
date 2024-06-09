@@ -4,9 +4,17 @@ local settings = {}
 ---@type boolean
 settings["use_ssh"] = true
 
--- Set it to false if there are no need to format on save.
+-- Set it to false if you want to turn off LSP Inlay Hints
+---@type boolean
+settings["lsp_inlayhints"] = true
+
+-- Set it to false if there is no need to format on save.
 ---@type boolean
 settings["format_on_save"] = true
+
+-- Set it to false if the notification after formatting is annoying.
+---@type boolean
+settings["format_notify"] = true
 
 -- Set it to true if you prefer formatting ONLY the *changed lines* as defined by your version control system.
 -- NOTE: This entry will only be respected if:
@@ -16,24 +24,33 @@ settings["format_on_save"] = true
 ---@type boolean
 settings["format_modifications_only"] = false
 
--- Set it to false if the notification after formatting is annoying.
----@type boolean
-settings["format_notify"] = false
+-- Set the format disabled directories here, files under these dirs won't be formatted on save.
+--- NOTE: Directories may contain regular expressions (grammar: vim). |regexp|
+--- NOTE: Directories are automatically normalized. |vim.fs.normalize()|
+---@type string[]
+settings["format_disabled_dirs"] = {
+	-- Example
+	"~/format_disabled_dir",
+}
 
--- Set it to false if you want to turn off LSP Inlay Hints
----@type boolean
-settings["lsp_inlayhints"] = true
+-- Filetypes in this list will skip lsp formatting if rhs is true.
+---@type table<string, boolean>
+settings["formatter_block_list"] = {
+	lua = false, -- example
+}
+
+-- Servers in this list will skip setting formatting capabilities if rhs is true.
+---@type table<string, boolean>
+settings["server_formatting_block_list"] = {
+	lua_ls = true,
+	tsserver = true,
+	clangd = true,
+}
 
 -- Set it to false if diagnostics virtual text is annoying.
 -- If disabled, you may browse lsp diagnostics using trouble.nvim (press `gt` to toggle it).
 ---@type boolean
 settings["diagnostics_virtual_text"] = true
-
--- Set file_groups
-settings["file_groups"] = {
-	{ ".h", ".cc" },
-	{ ".ts", ".js" },
-}
 
 -- Set it to one of the values below if you want to change the visible severity level of lsp diagnostics.
 -- Priority: `Error` > `Warning` > `Information` > `Hint`.
@@ -41,14 +58,6 @@ settings["file_groups"] = {
 -- NOTE: This entry only works when `diagnostics_virtual_text` is true.
 ---@type "ERROR"|"WARN"|"INFO"|"HINT"
 settings["diagnostics_level"] = "HINT"
-
--- Set the format disabled directories here, files under these dirs won't be formatted on save.
---- NOTE: Directories may contain regular expressions (grammar: vim). |regexp|
---- NOTE: Directories are automatically normalized. |vim.fs.normalize()|
----@type string[]
-settings["format_disabled_dirs"] = {
-	"~/format_disabled_dir",
-}
 
 -- Set it to false if you don't use nvim to open big files.
 ---@type boolean
@@ -81,12 +90,6 @@ settings["background"] = "dark"
 ---@type string
 settings["external_browser"] = "chrome-cli open"
 
--- Filetypes in this list will skip lsp formatting if rhs is true.
----@type table<string, boolean>
-settings["formatter_block_list"] = {
-	lua = false, -- example
-}
-
 -- Set the language servers that will be installed during bootstrap here.
 -- check the below link for all the supported LSPs:
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
@@ -104,10 +107,12 @@ settings["lsp_deps"] = {
 -- Set the general-purpose servers that will be installed during bootstrap here.
 -- Check the below link for all supported sources.
 -- in `code_actions`, `completion`, `diagnostics`, `formatting`, `hover` folders:
--- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins
+-- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins
 ---@type string[]
 settings["null_ls_deps"] = {
 	"clang_format",
+	"gofumpt",
+	"goimports",
 	"prettier",
 	"shfmt",
 	"stylua",
@@ -139,6 +144,7 @@ settings["treesitter_deps"] = {
 	"html",
 	"javascript",
 	"json",
+	"jsonc",
 	"latex",
 	"lua",
 	"make",

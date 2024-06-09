@@ -42,7 +42,7 @@ return function(options)
 		filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 		cmd = {
 			"clangd",
-			"-j=14",
+			"-j=12",
 			"--enable-config",
 			"--background-index",
 			"--pch-storage=memory",

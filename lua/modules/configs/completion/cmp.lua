@@ -47,10 +47,12 @@ return function()
 		sorting = {
 			priority_weight = 2,
 			comparators = {
-				compare.offset,
+				compare.offset, -- Items closer to cursor will have lower priority
 				compare.exact,
+				compare.lsp_scores,
+				compare.sort_text,
 				compare.score,
-
+				compare.recently_used,
 				function(entry1, entry2)
 					local _, entry1_under = entry1.completion_item.label:find("^_+")
 					local _, entry2_under = entry2.completion_item.label:find("^_+")
@@ -62,10 +64,7 @@ return function()
 						return true
 					end
 				end,
-
-				compare.lsp_scores,
 				compare.kind,
-				compare.sort_text,
 				compare.length,
 				compare.order,
 			},
@@ -147,13 +146,14 @@ return function()
 		},
 		-- You should specify your *installed* sources.
 		sources = {
-			{ name = "nvim_lsp", priority = 100, max_item_count = 350 },
-			{ name = "nvim_lua", priority = 100 },
-			{ name = "luasnip", priority = 90 },
+			{ name = "nvim_lsp", max_item_count = 350 },
+			{ name = "nvim_lua" },
+			{ name = "luasnip" },
 			{ name = "path" },
-			-- { name = "treesitter" },
-			-- { name = "spell" },
-			-- { name = "tmux" },
+			{ name = "treesitter" },
+			{ name = "spell" },
+			{ name = "tmux" },
+			{ name = "orgmode" },
 			{
 				name = "buffer",
 				option = {
