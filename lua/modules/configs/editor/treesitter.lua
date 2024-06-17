@@ -6,7 +6,7 @@ return vim.schedule_wrap(function()
 
 	vim.filetype.add({
 		pattern = {
-			[".*/hypr/.*%.conf"] = "hyprlang",
+			[".*/hypr/.*/.*%.conf"] = "hyprlang",
 		},
 		extension = {
 			frag = "glsl",
