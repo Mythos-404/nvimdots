@@ -14,7 +14,7 @@ return function()
 		mappings = {
 			-- Use a table to apply multiple mappings
 			edit = "e",
-			expand = { "<CR>", "<2-LeftMouse>" },
+			expand = { "<Tab>", "<2-LeftMouse>" },
 			open = "o",
 			remove = "d",
 			repl = "r",
@@ -32,13 +32,13 @@ return function()
 					{ id = "stacks", size = 0.3 },
 					{ id = "breakpoints", size = 0.1 },
 				},
-				size = 0.3,
+				size = 0.34,
 				position = "right",
 			},
 			{
 				elements = {
-					{ id = "console", size = 0.55 },
-					{ id = "repl", size = 0.45 },
+					{ id = "repl", size = 0.55 },
+					{ id = "console", size = 0.45 },
 				},
 				position = "bottom",
 				size = 0.25,
