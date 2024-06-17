@@ -114,12 +114,22 @@ return function()
 		},
 		-- You can set mappings if you want
 		mapping = cmp.mapping.preset.insert({
-			["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
 			["<C-p>"] = cmp.mapping.select_prev_item(),
 			["<C-n>"] = cmp.mapping.select_next_item(),
-			["<C-d>"] = cmp.mapping.scroll_docs(-4),
+			["<C-b>"] = cmp.mapping.scroll_docs(-4),
 			["<C-f>"] = cmp.mapping.scroll_docs(4),
 			["<C-w>"] = cmp.mapping.close(),
+			["<CR>"] = cmp.mapping({
+				i = function(fallback)
+					if cmp.visible() and cmp.get_active_entry() then
+						cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+					else
+						fallback()
+					end
+				end,
+				s = cmp.mapping.confirm({ select = true }),
+				-- c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+			}),
 			["<Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
 					cmp.select_next_item()
@@ -149,7 +159,7 @@ return function()
 			{ name = "nvim_lsp", max_item_count = 350 },
 			{ name = "nvim_lua" },
 			{ name = "luasnip" },
-			{ name = "path" },
+			{ name = "async_path" },
 			{ name = "treesitter" },
 			{ name = "spell" },
 			{ name = "tmux" },
@@ -162,7 +172,6 @@ return function()
 					end,
 				},
 			},
-			-- { name = "latex_symbols" },
 		},
 		experimental = {
 			ghost_text = {
@@ -182,9 +191,10 @@ return function()
 	-- `:` cmdline setup.
 	cmp.setup.cmdline(":", {
 		mapping = cmdline_maps,
-		sources = cmp.config.sources(
-			{ { name = "path" } },
-			{ { name = "cmdline", option = { ignore_cmds = { "Man", "!" } } } }
-		),
+		sources = cmp.config.sources({
+			{ name = "async_path" },
+		}, {
+			{ name = "cmdline" },
+		}),
 	})
 end
