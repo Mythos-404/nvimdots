@@ -14,19 +14,19 @@ snippet lreq
 
 # Modlue
 snippet mti "modlue template(init)"
-	local M = {}
+	local ${1:M} = {}
 
-	function M.${1}(${2})
+	function ${1}.${2}(${3})
 		${0}
 	end
 
 	return M
 snippet mt "modlue template"
-	local M = {}
+	local ${1:M} = {}
 
 	${0}
 
-	return M
+	return ${1}
 
 # Pacll
 snippet pca
@@ -35,3 +35,7 @@ snippet lpca
 	local ${0:result} = pcall(${1})
 snippet llpca
 	local ${2:result}, ${0} = pcall(${1})
+
+# injection
+snippet inject
+	--> INJECT: 
