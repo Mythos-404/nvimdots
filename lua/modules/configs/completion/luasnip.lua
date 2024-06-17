@@ -9,6 +9,7 @@ return function()
 		history = true,
 		update_events = "TextChanged,TextChangedI",
 		delete_check_events = "TextChanged,InsertLeave",
+		store_selection_keys = "<Tab>",
 		-- Display a cursor-like placeholder in unvisited nodes
 		-- of the snippet.
 		ext_opts = {
