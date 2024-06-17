@@ -226,6 +226,10 @@ local plug_map = {
 		:with_silent()
 		:with_desc("tool: Dropbar Pick"),
 
+	["nv|S"] = map_callback(function()
+		require("rip-substitute").sub()
+	end):with_silent(),
+
 	-- Plugin: traduire.nvim
 	["v|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.api.to_cn()<CR>")
 		:with_noremap()

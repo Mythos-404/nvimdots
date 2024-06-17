@@ -87,6 +87,11 @@ if not vim.g.neovide then
 		config = require("tool.image"),
 	}
 end
+tool["chrisgrieser/nvim-rip-substitute"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("tool.rip-substitute"),
+}
 tool["traduire.nvim"] = {
 	lazy = true,
 	event = "VeryLazy",
@@ -104,15 +109,12 @@ tool["nvim-telescope/telescope.nvim"] = {
 	config = require("tool.telescope"),
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
-		{ "nvim-tree/nvim-web-devicons" },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "debugloop/telescope-undo.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim" },
 		{ "nvim-telescope/telescope-live-grep-args.nvim" },
-		{
-			"FabianWirth/search.nvim",
-			config = require("tool.search"),
-		},
+		{ "nvim-tree/nvim-web-devicons", config = require("tool.web-devicons") },
+		{ "FabianWirth/search.nvim", config = require("tool.search") },
 		{
 			"ahmedkhalf/project.nvim",
 			event = { "CursorHold", "CursorHoldI" },
@@ -159,9 +161,7 @@ tool["mfussenegger/nvim-dap"] = {
 		{
 			"rcarriga/nvim-dap-ui",
 			config = require("tool.dap.dapui"),
-			dependencies = {
-				"nvim-neotest/nvim-nio",
-			},
+			dependencies = { "nvim-neotest/nvim-nio" },
 		},
 		{ "jay-babu/mason-nvim-dap.nvim" },
 		{

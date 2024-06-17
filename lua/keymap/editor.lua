@@ -63,7 +63,7 @@ local plug_map = {
 		:with_desc("edit: Toggle comment for block with selection"),
 
 	-- Plugin: flash
-	["nv|S"] = map_cmd("<Cmd>lua require('flash').jump()<CR>"):with_noremap():with_desc("jump: Goto one char"),
+	["nv|s"] = map_cmd("<Cmd>lua require('flash').jump()<CR>"):with_noremap():with_desc("jump: Goto one char"),
 	["nv|B"] = map_cmd("<Cmd>lua require('flash').treesitter()<CR>"):with_noremap():with_desc("jump: Goto one char"),
 	["o|r"] = map_cmd("<Cmd>lua require('flash').remote()<CR>"):with_silent():with_noremap():with_desc("Remote Flash"),
 	["ox|R"] = map_cmd("<Cmd>lua require('flash').treesitter_search()<CR>"),
