@@ -17,38 +17,6 @@ local function ts_query_get_ranges(parser, root, query_string)
 	return line_range
 end
 
-local function get_header_ranges(parser, root)
-	local header_ranges = ts_query_get_ranges(parser, root, string.format("(line . [(h1) (h2) (h3)]) @v", type))
-
-	-- If last line of buffer is present in ranges, you remove that range
-	-- This is because, modeline is parsed as a heading in older vimdocs
-	header_ranges = vim.tbl_filter(function(range)
-		return range[2] ~= vim.api.nvim_buf_line_count(0)
-	end, header_ranges)
-
-	-- We combine header_ranges & tag ranges only when they overlap
-	local tag_ranges = ts_query_get_ranges(parser, root, '((line . [(h1) (h2) (h3)]) . (line . (tag)+ . "\\n"?)* @v)')
-	for i, header_range in ipairs(header_ranges) do -- Yes O(n^2), I don't really care.
-		for _, tag_range in ipairs(tag_ranges) do
-			if
-				header_range[1] < tag_range[1] -- header starts first
-				and header_range[2] + 1 >= tag_range[1] -- header end is farther or equal than tag start
-				and header_range[2] < tag_range[2]
-			then -- header end is less than tag end
-				header_ranges[i][2] = tag_range[2]
-			elseif
-				tag_range[1] < header_range[1] -- tag starts first
-				and tag_range[2] + 1 >= header_range[1] -- tag end is farther or equal than header start
-				and tag_range[2] < header_range[2]
-			then -- tag end is less than header end
-				header_ranges[i][1] = tag_range[1]
-			end
-		end
-	end
-
-	return header_ranges
-end
-
 local function extmark_render_box(ranges, hl)
 	for _, range in ipairs(ranges) do
 		local start, stop = unpack(range)
@@ -104,7 +72,15 @@ vim.api.nvim_create_autocmd("FileType", {
 		local root = tree[1]:root()
 
 		local code_ranges = ts_query_get_ranges(parser, root, "(code) @v")
-		local header_ranges = get_header_ranges(parser, root)
+		local header_ranges = vim.iter({ "h1", "h2", "h3" }):fold({}, function(acc, type)
+			return vim.list_extend(acc, ts_query_get_ranges(parser, root, string.format("(line . (%s)) @v", type)))
+		end)
+
+		-- If last line of buffer is present in ranges, you remove that range
+		-- This is because, sometimes modeline is parsed as a heading
+		header_ranges = vim.tbl_filter(function(range)
+			return range[2] ~= vim.api.nvim_buf_line_count(0)
+		end, header_ranges)
 
 		vim.api.nvim_buf_clear_namespace(0, ns, 0, -1)
 		extmark_render_box(code_ranges, "Comment")
