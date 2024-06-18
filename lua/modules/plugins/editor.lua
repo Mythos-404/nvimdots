@@ -117,7 +117,7 @@ editor["kevinhwang91/nvim-ufo"] = {
 editor["nvim-treesitter/nvim-treesitter"] = {
 	lazy = true,
 	build = function()
-		if #vim.api.nvim_list_uis() ~= 0 then
+		if vim.fn.has("gui_running") == 1 then
 			vim.api.nvim_command([[ TSUpdate ]])
 		end
 	end,
