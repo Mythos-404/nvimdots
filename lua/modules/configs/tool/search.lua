@@ -31,9 +31,33 @@ return function()
 					},
 				},
 			},
-			git = {
-				initial_tab = 4,
+			live_grep = {
+				initial_tab = 1,
 				tabs = {
+					{
+						name = "Word in project",
+						tele_func = function()
+							extensions.live_grep_args.live_grep_args()
+						end,
+					},
+					{
+						name = "Word under cursor",
+						tele_func = function(opts)
+							opts = opts or {}
+							builtin.grep_string(opts)
+						end,
+					},
+				},
+			},
+			git = {
+				initial_tab = 1,
+				tabs = {
+					{
+						name = "Branches",
+						tele_func = function()
+							builtin.git_branches()
+						end,
+					},
 					{
 						name = "Commits",
 						tele_func = function()
@@ -41,21 +65,15 @@ return function()
 						end,
 					},
 					{
-						name = "Commits on File",
-						tele_func = function()
-							extensions.advanced_git_search.diff_commit_file()
-						end,
-					},
-					{
-						name = "Commit Content",
+						name = "Commit content",
 						tele_func = function()
 							extensions.advanced_git_search.search_log_content()
 						end,
 					},
 					{
-						name = "Branches",
+						name = "Diff current file with commit",
 						tele_func = function()
-							builtin.git_branches()
+							extensions.advanced_git_search.diff_commit_file()
 						end,
 					},
 				},
@@ -63,6 +81,12 @@ return function()
 			workspace = {
 				initial_tab = 1,
 				tabs = {
+					{
+						name = "Buffers",
+						tele_func = function()
+							builtin.buffers()
+						end,
+					},
 					{
 						name = "Sessions",
 						tele_func = function()
@@ -79,6 +103,23 @@ return function()
 						name = "Zoxide",
 						tele_func = function()
 							extensions.zoxide.list()
+						end,
+					},
+				},
+			},
+			misc = {
+				initial_tab = 1,
+				tabs = {
+					{
+						name = "Tode",
+						tele_func = function()
+							pcall(vim.cmd.TodoTelescope)
+						end,
+					},
+					{
+						name = "Undo History",
+						tele_func = function()
+							extensions.undo.undo()
 						end,
 					},
 				},

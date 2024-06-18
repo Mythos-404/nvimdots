@@ -50,7 +50,7 @@ editor["sindrets/diffview.nvim"] = {
 }
 editor["tzachar/local-highlight.nvim"] = {
 	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
+	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("editor.local-highlight"),
 }
 editor["romainl/vim-cool"] = {

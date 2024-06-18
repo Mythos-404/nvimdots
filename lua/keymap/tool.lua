@@ -99,14 +99,8 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("tool: Toggle command panel"),
-	["n|<leader>fu"] = map_callback(function()
-			require("telescope").extensions.undo.undo()
-		end)
-		:with_noremap()
-		:with_silent()
-		:with_desc("edit: Show undo history"),
 	["n|<leader>fw"] = map_callback(function()
-			require("telescope").extensions.live_grep_args.live_grep_args()
+			require("search").open({ collection = "live_grep" })
 		end)
 		:with_noremap()
 		:with_silent()
@@ -124,14 +118,18 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("find: Git related search"),
-	["n|<leader>fb"] = map_cu("Telescope buffers"):with_noremap():with_silent():with_desc("find: Buffer opened"),
-	["n|<leader>fs"] = map_cu("Telescope grep_string"):with_noremap():with_silent():with_desc("find: Current word"),
 	["n|<leader>fd"] = map_callback(function()
 			require("search").open({ collection = "workspace" })
 		end)
 		:with_noremap()
 		:with_silent()
 		:with_desc("find: Session, Project and Directory"),
+	["n|<leader>ft"] = map_callback(function()
+			require("search").open({ collection = "misc" })
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("find: Misc in project"),
 
 	-- Plugin: dap
 	["n|<F5>"] = map_callback(function()
@@ -208,10 +206,6 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("todo: Jump prev todo comment"),
-	["n|<leader>ft"] = map_cr("TodoTelescope")
-		:with_noremap()
-		:with_silent()
-		:with_desc("todo: Search through with Telescope"),
 
 	-- Public: dropbar.nvim
 	["n|<C-m>"] = map_callback(function()
