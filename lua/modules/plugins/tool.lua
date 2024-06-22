@@ -116,7 +116,7 @@ tool["nvim-telescope/telescope.nvim"] = {
 		{ "nvim-tree/nvim-web-devicons", config = require("tool.web-devicons") },
 		{ "FabianWirth/search.nvim", config = require("tool.search") },
 		{
-			"ahmedkhalf/project.nvim",
+			"Mythos-404/project.nvim",
 			event = { "CursorHold", "CursorHoldI" },
 			config = require("tool.project"),
 		},
