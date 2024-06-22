@@ -1,12 +1,5 @@
 local M = {}
 
-local severity_map = {
-	["Error"] = vim.diagnostic.severity.ERROR,
-	["Warning"] = vim.diagnostic.severity.WARN,
-	["Information"] = vim.diagnostic.severity.INFO,
-	["Hint"] = vim.diagnostic.severity.HINT,
-}
-
 M.setup = function()
 	local diagnostics_virtual_text = require("core.settings").diagnostics_virtual_text
 	local diagnostics_level = require("core.settings").diagnostics_level
@@ -22,9 +15,11 @@ M.setup = function()
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 		signs = true,
 		underline = true,
-		severity = {
-			min = severity_map[diagnostics_level],
-		},
+		virtual_text = diagnostics_virtual_text and {
+			severity = {
+				min = vim.diagnostic.severity[diagnostics_level],
+			},
+		} or false,
 		-- set update_in_insert to false because it was enabled by lspsaga
 		update_in_insert = false,
 	})
@@ -35,20 +30,7 @@ M.setup = function()
 	---A handler to setup all servers defined under `completion/servers/*.lua`
 	---@param lsp_name string
 	local function mason_lsp_handler(lsp_name)
-		-- rust_analyzer is configured using mrcjkb/rustaceanvim
-		-- warn users if they have set it up manually
-		if lsp_name == "rust_analyzer" then
-			local config_exist = pcall(require, "completion.servers." .. lsp_name)
-			if config_exist then
-				vim.notify(
-					[[
-`rust_analyzer` is configured independently via `mrcjkb/rustaceanvim`. To get rid of this warning,
-please REMOVE your LSP configuration (rust_analyzer.lua) from the `servers` directory and configure
-`rust_analyzer` using the appropriate init options provided by `rustaceanvim` instead.]],
-					vim.log.levels.WARN,
-					{ title = "nvim-lspconfig" }
-				)
-			end
+		if lsp_name == "rust_analyzer" or lsp_name == "hls" then
 			return
 		end
 
