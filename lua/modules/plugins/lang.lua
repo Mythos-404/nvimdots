@@ -32,6 +32,10 @@ lang["Saecki/crates.nvim"] = {
 	config = require("lang.crates"),
 	dependencies = { "nvim-lua/plenary.nvim" },
 }
+lang["mrcjkb/haskell-tools.nvim"] = {
+	lazy = false,
+	config = require("lang.haskell"),
+}
 lang["iamcco/markdown-preview.nvim"] = {
 	lazy = true,
 	ft = "markdown",

@@ -6,6 +6,5 @@ return function()
 				hopout = true,
 			},
 		}),
-		{ profile = require("ultimate-autopair.experimental.cmpair").init },
 	})
 end
