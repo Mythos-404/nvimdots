@@ -67,6 +67,7 @@ editor["echasnovski/mini.ai"] = {
 	event = "VeryLazy",
 	version = false,
 	config = require("editor.mini-ai"),
+	dependencies = "echasnovski/mini.extra",
 }
 editor["echasnovski/mini.align"] = {
 	lazy = true,

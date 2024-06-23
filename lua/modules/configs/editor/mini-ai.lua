@@ -2,6 +2,8 @@ return function()
 	local mini_ai = require("mini.ai")
 	local gen_spec = mini_ai.gen_spec
 	local spec_treesitter = gen_spec.treesitter
+	local extra_ai_gen_spec = require("mini.extra").gen_ai_spec
+
 	require("mini.ai").setup({
 		-- Table with textobject id as fields, textobject specification as values.
 		-- Also use this to disable builtin textobjects. See |MiniAi.config|.
@@ -9,15 +11,10 @@ return function()
 			q = { "[`'\"]().-()[`'\"]" },
 			x = { " %w+=[\"']().-()[\"']" },
 			t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
-			g = function() -- Whole buffer, similar to `gg` and 'G' motion
-				local from = { line = 1, col = 1 }
-				local to = {
-					line = vim.fn.line("$"),
-					col = math.max(vim.fn.getline("$"):len(), 1),
-				}
-				return { from = from, to = to }
-			end,
-			-- Tweak function call to not detect dot in function name
+			g = extra_ai_gen_spec.diagnostic(),
+			I = extra_ai_gen_spec.indent(),
+			D = extra_ai_gen_spec.diagnostic(),
+
 			f = gen_spec.function_call({ name_pattern = "[%w_]" }),
 			F = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
 			o = gen_spec.treesitter({
