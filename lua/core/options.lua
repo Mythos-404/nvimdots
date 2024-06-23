@@ -80,7 +80,7 @@ local function load_options()
 		timeoutlen = 300,
 		ttimeout = true,
 		ttimeoutlen = 0,
-		undodir = global.cache_dir .. "undo/",
+		undodir = global.cache_dir .. "/undo/",
 		undofile = true,
 		-- Please do NOT set `updatetime` to above 500, otherwise most plugins may not function correctly
 		updatetime = 200,
