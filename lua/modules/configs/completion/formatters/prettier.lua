@@ -1,5 +1,5 @@
 return {
-	("--tab-width=%s"):format(vim.bo.shiftwidth),
+	("--tab-width=%s"):format(require("utils").get_indent()),
 	"--trailing-comma=none",
 	"--print-width=120",
 }

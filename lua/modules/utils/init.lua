@@ -267,4 +267,17 @@ function M.tobool(value)
 	end
 end
 
+--- Call `vim#SluethIndicator` to get the real indentation
+--- Because using `vim.bo.tabstop` or `vim.bo.shiftwidth` is not accurate
+---@return string
+function M.get_indent()
+	---@type boolean, string
+	local result, indent_info = pcall(vim.fn.SleuthIndicator)
+	if not result then
+		return "4"
+	end
+
+	return indent_info:match("%d")
+end
+
 return M

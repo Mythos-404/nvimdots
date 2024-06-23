@@ -273,7 +273,7 @@ return function()
 
 		tabwidth = {
 			function()
-				return icons.ui.Tab .. vim.bo.tabstop
+				return icons.ui.Tab .. require("modules.utils").get_indent()
 			end,
 			padding = 1,
 		},
