@@ -12,9 +12,15 @@ tool["nvim-tree/nvim-tree.lua"] = {
 	},
 	config = require("tool.nvim-tree"),
 }
-tool["Bekaboo/dropbar.nvim"] = {
-	lazy = false,
-	config = require("tool.dropbar"),
+tool["folke/trouble.nvim"] = {
+	lazy = true,
+	cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
+	config = require("tool.trouble"),
+}
+tool["folke/which-key.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("tool.which-key"),
 }
 tool["pysan3/fcitx5.nvim"] = {
 	lazy = true,
@@ -32,22 +38,6 @@ tool["gbprod/cutlass.nvim"] = {
 	event = "BufReadPost",
 	config = require("tool.cutlass"),
 }
-tool["monaqa/dial.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("tool.dial"),
-	dependencies = "nvim-lua/plenary.nvim",
-}
-if not is_windows then
-	tool["michaelb/sniprun"] = {
-		lazy = true,
-		-- You need to cd to `~/.local/share/nvim/site/lazy/sniprun/` and execute `bash ./install.sh`,
-		-- if you encountered error about no executable sniprun found.
-		build = "bash ./install.sh",
-		cmd = { "SnipRun", "SnipReset", "SnipInfo" },
-		config = require("tool.sniprun"),
-	}
-end
 tool["akinsho/toggleterm.nvim"] = {
 	lazy = true,
 	cmd = {
@@ -60,38 +50,24 @@ tool["akinsho/toggleterm.nvim"] = {
 	},
 	config = require("tool.toggleterm"),
 }
-tool["folke/trouble.nvim"] = {
-	lazy = true,
-	cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
-	config = require("tool.trouble"),
-}
-tool["folke/which-key.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("tool.which-key"),
-}
-tool["m-demare/hlargs.nvim"] = {
-	lazy = true,
-	event = "BufReadPost",
-	config = require("tool.hlargs"),
-}
 tool["LeonHeidelbach/trailblazer.nvim"] = {
 	lazy = true,
 	event = "BufReadPost",
 	config = require("tool.trailblazer"),
 }
-if not vim.g.neovide then
-	tool["3rd/image.nvim"] = {
-		lazy = true,
-		event = "VeryLazy",
-		config = require("tool.image"),
-	}
-end
 tool["chrisgrieser/nvim-rip-substitute"] = {
 	lazy = true,
 	event = "VeryLazy",
 	config = require("tool.rip-substitute"),
 }
+if not is_windows then
+	tool["michaelb/sniprun"] = {
+		lazy = true,
+		build = "bash ./install.sh",
+		cmd = { "SnipRun", "SnipReset", "SnipInfo" },
+		config = require("tool.sniprun"),
+	}
+end
 tool["traduire.nvim"] = {
 	lazy = true,
 	event = "VeryLazy",
@@ -158,12 +134,12 @@ tool["mfussenegger/nvim-dap"] = {
 	},
 	config = require("tool.dap"),
 	dependencies = {
+		{ "jay-babu/mason-nvim-dap.nvim" },
 		{
 			"rcarriga/nvim-dap-ui",
 			config = require("tool.dap.dapui"),
 			dependencies = { "nvim-neotest/nvim-nio" },
 		},
-		{ "jay-babu/mason-nvim-dap.nvim" },
 		{
 			"theHamsta/nvim-dap-virtual-text",
 			config = require("tool.dap.dap-virtual-text"),

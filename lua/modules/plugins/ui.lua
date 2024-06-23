@@ -5,70 +5,66 @@ ui["goolord/alpha-nvim"] = {
 	event = "BufWinEnter",
 	config = require("ui.alpha"),
 }
-ui["akinsho/bufferline.nvim"] = {
-	lazy = true,
-	event = { "BufReadPost", "BufAdd", "BufNewFile" },
-	config = require("ui.bufferline"),
-}
 ui["Jint-lzxy/nvim"] = {
 	lazy = false,
 	branch = "refactor/syntax-highlighting",
 	name = "catppuccin",
 	config = require("ui.catppuccin"),
 }
-ui["j-hui/fidget.nvim"] = {
+ui["akinsho/bufferline.nvim"] = {
 	lazy = true,
-	event = "LspAttach",
-	config = require("ui.fidget"),
-}
-ui["lewis6991/gitsigns.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("ui.gitsigns"),
-}
-ui["lukas-reineke/indent-blankline.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("ui.indent-blankline"),
+	event = { "BufReadPost", "BufAdd", "BufNewFile" },
+	config = require("ui.bufferline"),
 }
 ui["nvim-lualine/lualine.nvim"] = {
 	lazy = true,
 	event = { "BufReadPost", "BufAdd", "BufNewFile" },
 	config = require("ui.lualine"),
 }
-ui["zbirenbaum/neodim"] = {
+ui["dstein64/nvim-scrollview"] = {
 	lazy = true,
+	event = { "BufReadPost", "BufAdd", "BufNewFile" },
+	config = require("ui.scrollview"),
+}
+ui["rcarriga/nvim-notify"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("ui.notify"),
+}
+ui["lewis6991/gitsigns.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("ui.gitsigns"),
+}
+ui["j-hui/fidget.nvim"] = {
+	lazy = true,
+	branch = "legacy",
 	event = "LspAttach",
-	config = require("ui.neodim"),
+	config = require("ui.fidget"),
+}
+ui["Bekaboo/dropbar.nvim"] = {
+	lazy = false,
+	config = require("ui.dropbar"),
+}
+ui["lukas-reineke/indent-blankline.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("ui.indent-blankline"),
 }
 ui["karb94/neoscroll.nvim"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("ui.neoscroll"),
 }
-ui["folke/noice.nvim"] = {
-	lazy = true,
-	event = "VeryLazy",
-	config = require("ui.noice"),
-	dependencies = {
-		"MunifTanjim/nui.nvim",
-		{ "rcarriga/nvim-notify", config = require("ui.notify") },
-	},
-}
-ui["folke/paint.nvim"] = {
-	lazy = true,
-	event = { "CursorHold", "CursorHoldI" },
-	config = require("ui.paint"),
-}
 ui["folke/todo-comments.nvim"] = {
 	lazy = true,
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("ui.todo-comments"),
 }
-ui["dstein64/nvim-scrollview"] = {
+ui["m-demare/hlargs.nvim"] = {
 	lazy = true,
-	event = { "BufReadPost", "BufAdd", "BufNewFile" },
-	config = require("ui.scrollview"),
+	event = "BufReadPost",
+	config = require("ui.hlargs"),
 }
 
 return ui

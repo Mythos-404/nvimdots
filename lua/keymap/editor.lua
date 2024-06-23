@@ -6,6 +6,34 @@ local map_callback = bind.map_callback
 local et = bind.escape_termcode
 
 local plug_map = {
+	-- Plugin: dial.nvim
+	["n|<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "normal")
+	end),
+	["n|<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "normal")
+	end),
+	["v|<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "visual")
+	end),
+	["v|<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "visual")
+	end),
+	["n|g<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "gnormal")
+	end),
+	["n|g<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "gnormal")
+	end),
+	["v|g<C-a>"] = map_callback(function()
+		require("dial.map").manipulate("increment", "gvisual")
+	end),
+	["v|g<C-x>"] = map_callback(function()
+		require("dial.map").manipulate("decrement", "gvisual")
+	end),
+	["n|<A-C-a>"] = map_cmd(require("dial.map").inc_normal("extra")):with_noremap(),
+	["n|<A-C-x>"] = map_cmd(require("dial.map").dec_normal("extra")):with_noremap(),
+
 	-- Plug nvim-spider
 	["nox|w"] = map_cmd("<Cmd>lua require('spider').motion('w', { skipInsignificantPunctuation = false })<CR>")
 		:with_noremap()
@@ -85,32 +113,6 @@ local plug_map = {
 	["n|<leader>Wj"] = map_cu("SmartSwapDown"):with_silent():with_noremap():with_desc("window: Move window downward"),
 	["n|<leader>Wk"] = map_cu("SmartSwapUp"):with_silent():with_noremap():with_desc("window: Move window upward"),
 	["n|<leader>Wl"] = map_cu("SmartSwapRight"):with_silent():with_noremap():with_desc("window: Move window rightward"),
-
-	-- Plugin: nvim-spectre
-	["n|<leader>Ss"] = map_callback(function()
-			require("spectre").toggle()
-		end)
-		:with_silent()
-		:with_noremap()
-		:with_desc("editn: Toggle search & replace panel"),
-	["n|<leader>Sp"] = map_callback(function()
-			require("spectre").open_visual({ select_word = true })
-		end)
-		:with_silent()
-		:with_noremap()
-		:with_desc("editn: search&replace current word (project)"),
-	["v|<leader>Sp"] = map_callback(function()
-			require("spectre").open_visual()
-		end)
-		:with_silent()
-		:with_noremap()
-		:with_desc("edit: search & replace current word (project)"),
-	["n|<leader>Sf"] = map_callback(function()
-			require("spectre").open_file_search({ select_word = true })
-		end)
-		:with_silent()
-		:with_noremap()
-		:with_desc("editn: search & replace current word (file)"),
 
 	-- Plugin: nvim-treehopper
 	["o|m"] = map_cu("lua require('tsht').nodes()"):with_silent():with_desc("jump: Operate across syntax tree"),

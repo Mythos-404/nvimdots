@@ -24,6 +24,7 @@ editor["altermo/ultimate-autopair.nvim"] = {
 	event = { "InsertEnter", "CmdlineEnter" },
 	config = require("editor.ultimate-autopair"),
 }
+
 editor["LunarVim/bigfile.nvim"] = {
 	lazy = false,
 	config = require("editor.bigfile"),
@@ -84,13 +85,15 @@ editor["echasnovski/mini.surround"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("editor.mini-surround"),
 }
+editor["monaqa/dial.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("editor.dial"),
+	dependencies = "nvim-lua/plenary.nvim",
+}
 editor["tpope/vim-sleuth"] = {
 	lazy = true,
 	event = { "BufNewFile", "BufReadPost", "BufFilePost" },
-}
-editor["nvim-pack/nvim-spectre"] = {
-	lazy = true,
-	cmd = "Spectre",
 }
 editor["mrjones2014/smart-splits.nvim"] = {
 	lazy = true,
@@ -111,9 +114,9 @@ editor["kevinhwang91/nvim-ufo"] = {
 	},
 }
 
--- ----------------------------------------------------------------------
--- --                  :treesitter related plugins                    --
--- ----------------------------------------------------------------------
+----------------------------------------------------------------------
+--                  :treesitter related plugins                    --
+----------------------------------------------------------------------
 editor["nvim-treesitter/nvim-treesitter"] = {
 	lazy = true,
 	build = function()
@@ -130,10 +133,6 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 			"danymat/neogen",
 			config = require("editor.neogen"),
 		},
-		-- {
-		-- 	"andymass/vim-matchup",
-		--   init = require("editor.vim-matchup"),
-		-- },
 		{
 			"windwp/nvim-ts-autotag",
 			config = require("editor.autotag"),

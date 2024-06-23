@@ -1,6 +1,5 @@
 return function()
 	require("trailblazer").setup({
-		trail_mark_symbol_line_indicators_enabled = true,
 		trail_options = {
 			mark_symbol = "󰈿",
 			newest_mark_symbol = "󰋲",
@@ -10,16 +9,21 @@ return function()
 		},
 
 		force_mappings = {
-			n = {
+			ni = {
 				motions = {
 					new_trail_mark = "<A-n>",
 					track_back = "<A-b>",
 					move_to_nearest = "<A-B>",
 					toggle_trail_mark_list = "<A-m>",
-					peek_move_next_down = "<A-C-j>",
-					peek_move_previous_up = "<A-C-k>",
+					peek_move_next_down = "<A-J>",
+					peek_move_previous_up = "<A-K>",
 				},
-				actions = {},
+				actions = {
+					set_trail_mark_select_mode = "<A-t>",
+					set_trail_mark_stack_sort_mode = "<A-r>",
+					switch_to_next_trail_mark_stack = "<A-.>",
+					switch_to_previous_trail_mark_stack = "<A-,>",
+				},
 			},
 		},
 	})

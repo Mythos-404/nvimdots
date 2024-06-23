@@ -7,34 +7,6 @@ local map_callback = bind.map_callback
 require("keymap.helpers")
 
 local plug_map = {
-	-- Plugin: dial
-	["n|<C-a>"] = map_callback(function()
-		require("dial.map").manipulate("increment", "normal")
-	end),
-	["n|<C-x>"] = map_callback(function()
-		require("dial.map").manipulate("decrement", "normal")
-	end),
-	["v|<C-a>"] = map_callback(function()
-		require("dial.map").manipulate("increment", "visual")
-	end),
-	["v|<C-x>"] = map_callback(function()
-		require("dial.map").manipulate("decrement", "visual")
-	end),
-	["n|g<C-a>"] = map_callback(function()
-		require("dial.map").manipulate("increment", "gnormal")
-	end),
-	["n|g<C-x>"] = map_callback(function()
-		require("dial.map").manipulate("decrement", "gnormal")
-	end),
-	["v|g<C-a>"] = map_callback(function()
-		require("dial.map").manipulate("increment", "gvisual")
-	end),
-	["v|g<C-x>"] = map_callback(function()
-		require("dial.map").manipulate("decrement", "gvisual")
-	end),
-	["n|<A-C-a>"] = map_cmd(require("dial.map").inc_normal("extra")):with_noremap(),
-	["n|<A-C-x>"] = map_cmd(require("dial.map").dec_normal("extra")):with_noremap(),
-
 	-- Plugin: nvim-tree
 	["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
 	["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
@@ -207,14 +179,7 @@ local plug_map = {
 		:with_silent()
 		:with_desc("todo: Jump prev todo comment"),
 
-	-- Public: dropbar.nvim
-	["n|<C-m>"] = map_callback(function()
-			require("dropbar.api").pick()
-		end)
-		:with_noremap()
-		:with_silent()
-		:with_desc("tool: Dropbar Pick"),
-
+	-- Plugin: rip-substitute.nvim
 	["nv|S"] = map_callback(function()
 		require("rip-substitute").sub()
 	end):with_silent(),
