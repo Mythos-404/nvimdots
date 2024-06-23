@@ -90,31 +90,49 @@ return function()
 	end
 
 	local leader = " "
+	local icons = {
+		documents = require("modules.utils.icons").get("documents", true),
+		git = require("modules.utils.icons").get("git", true),
+		ui = require("modules.utils.icons").get("ui", true),
+		misc = require("modules.utils.icons").get("misc", true),
+	}
+
 	dashboard.section.buttons.val = {
-		button("space f d", " Project find", leader, nil, {
-			noremap = true,
-			silent = true,
-			nowait = true,
-			callback = function()
-				require("search").open({ collection = "workspace" })
-			end,
-		}),
-		button("space f f", "󰮗 File find", leader, nil, {
-			noremap = true,
-			silent = true,
-			nowait = true,
-			callback = function()
-				require("search").open({ collection = "file" })
-			end,
-		}),
-		button("space f w", " Word find", leader, nil, {
-			noremap = true,
-			silent = true,
-			nowait = true,
-			callback = function()
-				require("telescope.builtin").live_grep()
-			end,
-		}),
+		button(
+			"space f f",
+			icons.documents.FileFind .. "Find files",
+			leader,
+			nil,
+			{ noremap = true, silent = true, nowait = true }
+		),
+		button(
+			"space f d",
+			icons.ui.FolderWithHeart .. "Retrieve dossiers",
+			leader,
+			nil,
+			{ noremap = true, silent = true, nowait = true }
+		),
+		button(
+			"space f p",
+			icons.documents.Word .. "Find patterns",
+			leader,
+			nil,
+			{ noremap = true, silent = true, nowait = true }
+		),
+		button(
+			"space f g",
+			icons.git.Git .. "Locate Git objects",
+			leader,
+			nil,
+			{ noremap = true, silent = true, nowait = true }
+		),
+		button(
+			"space f m",
+			icons.misc.Ghost .. "Miscellaneous artifacts",
+			leader,
+			nil,
+			{ noremap = true, silent = true, nowait = true }
+		),
 	}
 	dashboard.section.buttons.opts.hl = "AlphaButtons"
 

@@ -3,6 +3,7 @@ return function()
 	local extensions = require("telescope").extensions
 	require("search").setup({
 		collections = {
+			-- Search using filenames
 			file = {
 				initial_tab = 1,
 				tabs = {
@@ -29,9 +30,16 @@ return function()
 							builtin.oldfiles()
 						end,
 					},
+					{
+						name = "Buffers",
+						tele_func = function()
+							builtin.buffers()
+						end,
+					},
 				},
 			},
-			live_grep = {
+			-- Search using patterns
+			pattern = {
 				initial_tab = 1,
 				tabs = {
 					{
@@ -49,6 +57,7 @@ return function()
 					},
 				},
 			},
+			-- Search Git objects (branches, commits)
 			git = {
 				initial_tab = 1,
 				tabs = {
@@ -78,15 +87,10 @@ return function()
 					},
 				},
 			},
-			workspace = {
+			-- Retrieve dossiers
+			dossier = {
 				initial_tab = 1,
 				tabs = {
-					{
-						name = "Buffers",
-						tele_func = function()
-							builtin.buffers()
-						end,
-					},
 					{
 						name = "Sessions",
 						tele_func = function()
@@ -107,13 +111,14 @@ return function()
 					},
 				},
 			},
+			-- Miscellaneous
 			misc = {
 				initial_tab = 1,
 				tabs = {
 					{
-						name = "Tode",
+						name = "Notify",
 						tele_func = function()
-							pcall(vim.cmd.TodoTelescope)
+							extensions.notify.notify()
 						end,
 					},
 					{
