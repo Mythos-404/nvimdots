@@ -273,11 +273,7 @@ end
 function M.get_indent()
 	---@type boolean, string
 	local result, indent_info = pcall(vim.fn.SleuthIndicator)
-	if not result then
-		return "4"
-	end
-
-	return indent_info:match("%d")
+	return result and indent_info:match("%d") or "4"
 end
 
 return M
