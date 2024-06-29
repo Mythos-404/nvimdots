@@ -35,6 +35,6 @@ plugin_clear *$names:
     eza --git --icons $HOME/.local/share/nvim/site/lazy
 
 @plugin_update:
-    nvim --headless "+Lazy! update" +qa
+    nvim --headless "+Lazy! update" +qa > /dev/null
     git add ./lazy-lock.json && git commit -m "chore(lockfile): update lazy-lock file"
     echo Update plugin Done!
