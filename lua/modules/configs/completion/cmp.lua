@@ -49,7 +49,6 @@ return function()
 			comparators = {
 				compare.offset, -- Items closer to cursor will have lower priority
 				compare.exact,
-				compare.lsp_scores,
 				compare.sort_text,
 				compare.score,
 				compare.recently_used,
@@ -64,6 +63,7 @@ return function()
 						return true
 					end
 				end,
+				compare.lsp_scores,
 				compare.kind,
 				compare.length,
 				compare.order,
@@ -146,6 +146,17 @@ return function()
 					require("luasnip").jump(-1)
 				else
 					fallback()
+				end
+			end, { "i", "s" }),
+			["<C-s>"] = cmp.mapping.complete({ config = { sources = { { name = "luasnip" } } }, { "i", "s" } }),
+			["<C-j>"] = cmp.mapping(function()
+				if require("luasnip").choice_active() then
+					require("luasnip").change_choice(1)
+				end
+			end, { "i", "s" }),
+			["<C-k>"] = cmp.mapping(function()
+				if require("luasnip").choice_active() then
+					require("luasnip").change_choice(-1)
 				end
 			end, { "i", "s" }),
 		}),
