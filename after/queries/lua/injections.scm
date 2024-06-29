@@ -25,3 +25,22 @@
   (comment
     (comment_content) @injection.language)
   (#gsub! @injection.language "^> INJECT: ([%w_]+)$" "%1"))
+(_
+  (string
+    (string_content) @injection.content)
+  .
+  (comment
+    (comment_content) @injection.language)
+  (#gsub! @injection.language "^> INJECT: ([%w_]+)$" "%1"))
+(_
+  (string
+    (string_content) @injection.content)
+  .
+  (comment
+    (comment_content) @injection.language)
+  (#gsub! @injection.language "^ INJECT: ([%w_]+)$" "%1"))
+
+(variable_list
+  (identifier) @query (#lua-match? @query "^query"))
+
+(string content: _ @query (#lua-match? @query "^%s*;+%s?query"))
