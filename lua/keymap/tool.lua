@@ -188,11 +188,11 @@ local plug_map = {
 	end):with_silent(),
 
 	-- Plugin: traduire.nvim
-	["v|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.api.to_cn()<CR>")
+	["v|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.user.to_cn()<CR>")
 		:with_noremap()
 		:with_silent()
 		:with_desc("translate: To CN"),
-	["n|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.api.to_en()<CR>")
+	["n|<A-C-t>"] = map_cmd("<Cmd>lua Traduire.user.to_en()<CR>")
 		:with_noremap()
 		:with_silent()
 		:with_desc("translate: To EN"),
