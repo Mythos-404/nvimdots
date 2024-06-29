@@ -8,9 +8,7 @@ return function()
 		-- Table with textobject id as fields, textobject specification as values.
 		-- Also use this to disable builtin textobjects. See |MiniAi.config|.
 		custom_textobjects = {
-			q = { "[`'\"]().-()[`'\"]" },
 			x = { " %w+=[\"']().-()[\"']" },
-			t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
 			g = extra_ai_gen_spec.diagnostic(),
 			I = extra_ai_gen_spec.indent(),
 			D = extra_ai_gen_spec.diagnostic(),
