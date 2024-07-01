@@ -34,7 +34,7 @@ local function load_options()
 		hidden = true,
 		history = 2000,
 		ignorecase = true,
-		inccommand = "nosplit",
+		inccommand = "split",
 		incsearch = true,
 		infercase = true,
 		jumpoptions = "stack",
@@ -117,7 +117,7 @@ local function load_options()
 	end
 
 	for name, value in pairs(global_local) do
-		vim.o[name] = value
+		vim.api.nvim_set_option_value(name, value, {})
 	end
 
 	-- Fix sqlite3 missing-lib issue on Windows
