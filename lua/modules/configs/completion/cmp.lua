@@ -32,6 +32,10 @@ return function()
 
 	local cmp = require("cmp")
 	cmp.setup({
+		enabled = function()
+			return vim.bo.buftype ~= "prompt" or require("cmp_dap").is_dap_buffer()
+		end,
+
 		preselect = cmp.PreselectMode.None,
 		window = {
 			completion = {
@@ -84,12 +88,13 @@ return function()
 					orgmode = "[ORG]",
 					nvim_lsp = "[LSP]",
 					nvim_lua = "[LUA]",
-					path = "[PATH]",
+					async_path = "[PATH]",
 					tmux = "[TMUX]",
 					treesitter = "[TS]",
 					latex_symbols = "[LTEX]",
 					luasnip = "[SNIP]",
 					spell = "[SPELL]",
+					cmdline = "[CMDLINE]",
 				}, {
 					__index = function()
 						return "[BTN]" -- builtin/unknown source names
@@ -114,25 +119,14 @@ return function()
 		},
 		-- You can set mappings if you want
 		mapping = cmp.mapping.preset.insert({
-			["<C-p>"] = cmp.mapping.select_prev_item(),
-			["<C-n>"] = cmp.mapping.select_next_item(),
+			["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+			["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
 			["<C-b>"] = cmp.mapping.scroll_docs(-4),
 			["<C-f>"] = cmp.mapping.scroll_docs(4),
-			["<C-w>"] = cmp.mapping.close(),
-			["<CR>"] = cmp.mapping({
-				i = function(fallback)
-					if cmp.visible() and cmp.get_active_entry() then
-						cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-					else
-						fallback()
-					end
-				end,
-				s = cmp.mapping.confirm({ select = true }),
-				-- c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-			}),
+			["<C-w>"] = cmp.mapping.abort(),
 			["<Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
-					cmp.select_next_item()
+					cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 				elseif require("luasnip").expand_or_locally_jumpable() then
 					require("luasnip").expand_or_jump()
 				else
@@ -141,13 +135,35 @@ return function()
 			end, { "i", "s" }),
 			["<S-Tab>"] = cmp.mapping(function(fallback)
 				if cmp.visible() then
-					cmp.select_prev_item()
+					cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
 				elseif require("luasnip").jumpable(-1) then
 					require("luasnip").jump(-1)
 				else
 					fallback()
 				end
 			end, { "i", "s" }),
+			["<CR>"] = cmp.mapping({
+				i = function(fallback)
+					if cmp.visible() and cmp.get_active_entry() then
+						cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = false })
+					else
+						fallback()
+					end
+				end,
+				s = cmp.mapping.confirm({ select = true }),
+				c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = false }),
+			}),
+			["<C-CR>"] = cmp.mapping({
+				i = function(fallback)
+					if cmp.visible() and cmp.get_active_entry() then
+						cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+					else
+						fallback()
+					end
+				end,
+				s = cmp.mapping.confirm({ select = true }),
+				c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+			}),
 			["<C-s>"] = cmp.mapping.complete({ config = { sources = { { name = "luasnip" } } }, { "i", "s" } }),
 			["<C-j>"] = cmp.mapping(function()
 				if require("luasnip").choice_active() then
@@ -179,10 +195,11 @@ return function()
 				name = "buffer",
 				option = {
 					get_bufnrs = function()
-						return vim.api.nvim_list_bufs()
+						return vim.api.nvim_buf_line_count(0) < 7500 and vim.api.nvim_list_bufs() or {}
 					end,
 				},
 			},
+			{ name = "latex_symbols" },
 		},
 		experimental = {
 			ghost_text = {
@@ -191,13 +208,21 @@ return function()
 		},
 	})
 
+	cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+		sources = {
+			{ name = "dap" },
+		},
+	})
+
 	local cmdline_maps = vim.tbl_deep_extend("force", cmp.mapping.preset.cmdline(), {})
 	-- `/` cmdline setup.
 	cmp.setup.cmdline({ "/", "?" }, {
 		mapping = cmdline_maps,
-		sources = {
+		sources = cmp.config.sources({
+			{ name = "nvim_lsp_document_symbol" },
+		}, {
 			{ name = "buffer" },
-		},
+		}),
 	})
 	-- `:` cmdline setup.
 	cmp.setup.cmdline(":", {

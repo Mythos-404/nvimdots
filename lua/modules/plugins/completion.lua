@@ -53,6 +53,7 @@ completion["hrsh7th/nvim-cmp"] = {
 			build = "make install_jsregexp",
 			config = require("completion.luasnip"),
 		},
+		{ "rcarriga/cmp-dap" },
 		{ "f3fora/cmp-spell" },
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-cmdline" },
@@ -61,6 +62,8 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "andersevenrud/cmp-tmux" },
 		{ "saadparwaiz1/cmp_luasnip" },
 		{ "FelipeLema/cmp-async-path" },
+		{ "kdheepak/cmp-latex-symbols" },
+		{ "hrsh7th/cmp-nvim-lsp-document-symbol" },
 		{ "ray-x/cmp-treesitter", commit = "c8e3a74" },
 	},
 }
