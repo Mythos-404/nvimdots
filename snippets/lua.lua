@@ -33,7 +33,16 @@ local function get_treesitte_query_parse(lang, query_str)
 end
 
 return {
-	s({ trig = "#!", dscr = "Lua shebang" }, t("!/usr/bin/env lua")),
+	s(
+		{ trig = "snip", desc = "Luasnip snippets" },
+		fmta([[s({ trig = "<>", decs = "<>" }, <>)]], {
+			i(1),
+			i(2),
+			i(0),
+		})
+	),
+
+	s({ trig = "#!", desc = "Lua shebang" }, t("!/usr/bin/env lua")),
 
 	s({ trig = "rt" }, t("return ")),
 
@@ -52,7 +61,7 @@ return {
 	),
 
 	s(
-		{ trig = "ll", desc = "local variable" },
+		{ trig = "ll", desc = "Local variable" },
 		c(1, {
 			fmt([[local {name} = {}]], {
 				i(1),
@@ -73,7 +82,7 @@ return {
 	),
 
 	s(
-		{ trig = "inject", desc = "inject language highlighting" },
+		{ trig = "inject", desc = "Inject language highlighting" },
 		fmt(
 			"--> INJECT: {}",
 			(function()
@@ -92,7 +101,7 @@ return {
 	),
 
 	s(
-		{ trig = "mfn", desc = "modlue function" },
+		{ trig = "mfn", desc = "Modlue function" },
 		fmt("function {module_name}.{}({})\n{}\nend", {
 			i(2, "name"),
 			i(3, "args"),

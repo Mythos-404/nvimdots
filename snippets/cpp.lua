@@ -6,7 +6,7 @@ end
 
 return {
 	s(
-		{ trig = "main", dscr = "main function" },
+		{ trig = "main", desc = "Main function" },
 		fmta("int main(/*int argc, char *argv[]*/)\n{\n<>\n}", {
 			sn(0, { t(indent_str()), i(1) }),
 		})

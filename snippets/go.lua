@@ -5,9 +5,11 @@ local function indent_str()
 end
 
 return {
+	s({ trig = "rt" }, t("return ")),
+
 	s(
 		{ trig = "main", desc = "Main function" },
-		fmta("int main(/*int argc, char *argv[]*/)\n{\n<>\n}", {
+		fmta("func main() {\n<>\n}", {
 			sn(0, { t(indent_str()), i(1) }),
 		})
 	),

@@ -61,7 +61,7 @@ end
 return {
 	s({
 		trig = "adt",
-		dscr = "Algebraic data type",
+		desc = "Algebraic data type",
 	}, {
 		t("data "),
 		i(1, "Type"),
@@ -106,7 +106,7 @@ return {
 
 	s({
 		trig = "new",
-		dscr = "newtype",
+		desc = "Newtype",
 	}, {
 		t("newtype "),
 		i(1, "Type"),
@@ -125,7 +125,7 @@ return {
 
 	s({
 		trig = "rec",
-		dscr = "Record",
+		desc = "Record",
 	}, {
 		t("data "),
 		i(1, "Type"),
@@ -194,7 +194,7 @@ return {
 
 	s({
 		trig = "cls",
-		dscr = "Typeclass",
+		desc = "Typeclass",
 	}, {
 		t("class "),
 		i(1),
@@ -206,7 +206,7 @@ return {
 	s(
 		{
 			trig = "ins",
-			dscr = "Typeclass instance",
+			desc = "Typeclass instance",
 		},
 		fmt([[instance {} {} {}]], {
 			i(1, "Class"),
@@ -225,12 +225,12 @@ return {
 	----------------------------------------------------------------
 	s({
 		trig = [[\]],
-		dscr = "Lambda",
+		desc = "Lambda",
 	}, { t([[\]]), i(1, "_"), t(" -> ") }),
 
 	s({
 		trig = "fn",
-		dscr = "Function and type signature",
+		desc = "Function and type signature",
 	}, {
 		i(1, "someFunc"),
 		t(" :: "),
@@ -239,7 +239,7 @@ return {
 
 	s({
 		trig = "fnc",
-		dscr = "Function and type signature",
+		desc = "Function and type signature",
 	}, {
 		i(1, "someFunc"),
 		d(2, function()
@@ -251,6 +251,6 @@ return {
 	----------------------------------------------------------------
 	s({
 		trig = "if",
-		dscr = "If expression (single line)",
+		desc = "If expression (single line)",
 	}, { fmt([[if {} then {} else {} ]], { i(1), i(2), i(0) }) }),
 }

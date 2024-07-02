@@ -2,7 +2,7 @@
 
 return {
 	s(
-		{ trig = "#!", dscr = "shebang" },
+		{ trig = "#!", desc = "Bash shebang" },
 		fmt([[#!/usr/bin/env bash {}]], {
 			c(1, {
 				t("-eo pipefail"),
