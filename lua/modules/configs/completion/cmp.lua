@@ -95,6 +95,8 @@ return function()
 					luasnip = "[SNIP]",
 					spell = "[SPELL]",
 					cmdline = "[CMDLINE]",
+					dap = "[DAP]",
+					nvim_lsp_document_symbol = "[SYMBOL]",
 				}, {
 					__index = function()
 						return "[BTN]" -- builtin/unknown source names

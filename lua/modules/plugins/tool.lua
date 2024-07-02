@@ -141,6 +141,10 @@ tool["mfussenegger/nvim-dap"] = {
 			dependencies = { "nvim-neotest/nvim-nio" },
 		},
 		{
+			"LiadOz/nvim-dap-repl-highlights",
+			config = require("tool.dap.dap-repl-highlights"),
+		},
+		{
 			"theHamsta/nvim-dap-virtual-text",
 			config = require("tool.dap.dap-virtual-text"),
 		},
