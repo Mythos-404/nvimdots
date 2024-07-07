@@ -89,7 +89,6 @@ tool["nvim-telescope/telescope.nvim"] = {
 		{ "debugloop/telescope-undo.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim" },
 		{ "nvim-telescope/telescope-live-grep-args.nvim" },
-		{ "nvim-tree/nvim-web-devicons", config = require("tool.web-devicons") },
 		{ "FabianWirth/search.nvim", config = require("tool.search") },
 		{
 			"Mythos-404/project.nvim",

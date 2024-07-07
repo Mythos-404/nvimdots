@@ -66,5 +66,9 @@ ui["m-demare/hlargs.nvim"] = {
 	event = "BufReadPost",
 	config = require("ui.hlargs"),
 }
+ui["echasnovski/mini.icons"] = {
+	lazy = true,
+	init = require("ui.mini-icons"),
+}
 
 return ui
