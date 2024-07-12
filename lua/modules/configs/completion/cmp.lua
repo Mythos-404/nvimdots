@@ -53,9 +53,6 @@ return function()
 			comparators = {
 				compare.offset, -- Items closer to cursor will have lower priority
 				compare.exact,
-				compare.sort_text,
-				compare.score,
-				compare.recently_used,
 				function(entry1, entry2)
 					local _, entry1_under = entry1.completion_item.label:find("^_+")
 					local _, entry2_under = entry2.completion_item.label:find("^_+")
@@ -68,6 +65,9 @@ return function()
 					end
 				end,
 				compare.lsp_scores,
+				compare.sort_text,
+				compare.score,
+				compare.recently_used,
 				compare.kind,
 				compare.length,
 				compare.order,
@@ -107,6 +107,10 @@ return function()
 				local truncated_label = vim.fn.strcharpart(label, 0, 80)
 				if truncated_label ~= label then
 					vim_item.abbr = truncated_label .. "..."
+				end
+
+				if entry.source.name == "nvim_lsp" then
+					vim_item.dup = 0
 				end
 
 				return vim_item
@@ -153,7 +157,6 @@ return function()
 					end
 				end,
 				s = cmp.mapping.confirm({ select = true }),
-				c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = false }),
 			}),
 			["<C-CR>"] = cmp.mapping({
 				i = function(fallback)
@@ -201,7 +204,6 @@ return function()
 					end,
 				},
 			},
-			{ name = "latex_symbols" },
 		},
 		experimental = {
 			ghost_text = {
@@ -213,6 +215,11 @@ return function()
 	cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
 		sources = {
 			{ name = "dap" },
+		},
+	})
+	cmp.setup.filetype({ "markdown" }, {
+		sources = {
+			{ name = "latex_symbols" },
 		},
 	})
 
