@@ -71,6 +71,30 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("ModeChanged", {
+	pattern = {
+		"V:n",
+		"n:V",
+		"v:n",
+		"n:v",
+	},
+	group = vim.api.nvim_create_augroup("user/keep_yank_position", { clear = true }),
+	callback = function(ev)
+		local match = ev.match
+		if vim.tbl_contains({ "n:V", "n:v" }, match) then
+			vim.b.user_yank_last_pos = vim.api.nvim_win_get_cursor(0)
+			return
+		end
+		if vim.v.operator == "y" then
+			local last_pos = vim.b.user_yank_last_pos
+			if last_pos then
+				vim.api.nvim_win_set_cursor(0, last_pos)
+			end
+		end
+		vim.b.user_yank_last_pos = nil
+	end,
+})
+
 function autocmd.load_autocmds()
 	local definitions = {
 		lazy = {},
