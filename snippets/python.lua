@@ -25,8 +25,8 @@ return {
 	s(
 		{ trig = "imp", desc = "Import module" },
 		c(1, {
-			t("import "),
-			fmt("from {} import ", { i(1) }),
+			fmt("import {}", { i(1) }),
+			fmt("from {} import {}", { i(1), i(0) }),
 		})
 	),
 
@@ -70,14 +70,12 @@ return {
 	s(
 		{ trig = "wt", desc = "With block" },
 		c(1, {
-			fmt("with {} as {}:\n{}", {
+			fmt("with {}:\n{}", {
 				i(1, "exp"),
-				i(2, "name"),
 				t(indent_str()),
 			}),
-			fmt("async with {} as {}:\n{}", {
+			fmt("async with {}:\n{}", {
 				i(1, "exp"),
-				i(2, "name"),
 				t(indent_str()),
 			}),
 		})
@@ -97,8 +95,8 @@ return {
 				t(indent_str()),
 			}),
 			fmt("async def {}({}){}: \n{}", {
-				i(1),
-				i(2),
+				i(1, "name"),
+				i(2, "args"),
 				c(3, {
 					t(),
 					sn(nil, { t(" -> "), i(1, "type") }),
@@ -110,9 +108,28 @@ return {
 
 	s(
 		{ trig = "dcls", desc = "Data class block" },
-		fmt("@dataclss()\nclass {}:\n{}", {
+		fmt("@dataclass()\nclass {}:\n{}", {
 			i(1, "Name"),
-			t(indent_str()),
+			f(function()
+				local query = vim.treesitter.query.parse(
+					"python",
+					[[
+                    ((import_from_statement
+                        (dotted_name
+                            (identifier)) @_mod_name
+                        (dotted_name
+                            (identifier) @_imp_name))
+                        (#eq? @_mod_name "dataclasses")
+                        (#eq? @_imp_name "dataclass"))
+                    ]]
+				)
+				local tree = vim.treesitter.get_parser():parse(true)[1]
+				for _, _, _ in query:iter_matches(tree:root(), 0) do
+					return indent_str()
+				end
+				vim.fn.append(0, "from dataclasses import dataclass")
+				return indent_str()
+			end),
 		})
 	),
 	s(
@@ -166,7 +183,7 @@ return {
 			query = expr_query,
 			query_lang = "python",
 		},
-	}, fmt("print({})", { l(l.LS_TSMATCH) })),
+	}, fmta("print(f'{<> = }')", { l(l.LS_TSMATCH) })),
 
 	tsp(
 		{

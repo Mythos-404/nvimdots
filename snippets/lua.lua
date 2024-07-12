@@ -49,6 +49,7 @@ return {
 	s(
 		{ trig = "req", desc = "Import file" },
 		c(1, {
+			fmt([[require("{}")]], { i(1) }),
 			fmt([[local {name} = require("{}")]], {
 				i(1),
 				name = d(2, function(args)
@@ -56,7 +57,6 @@ return {
 					return sn(nil, i(1, args[#args]))
 				end, { 1 }, {}),
 			}),
-			fmt([[require("{}")]], { i(1) }),
 		})
 	),
 
@@ -148,8 +148,8 @@ return {
 			matchTSNode = match_tsnode,
 		},
 		c(1, {
-			fmt("vim.print({})", { l(l.LS_TSMATCH) }),
-			fmt("print({})", { l(l.LS_TSMATCH) }),
+			fmt("vim.print({})", { dl(1, l.LS_TSMATCH) }),
+			fmt("print({})", { dl(1, l.LS_TSMATCH) }),
 		})
 	),
 

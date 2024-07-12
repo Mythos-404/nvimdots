@@ -36,7 +36,6 @@ local function build_function_snippet(multiline)
 		table.insert(end_snip, i(idx, "undefined"))
 		table.insert(choices, sn(nil, end_snip))
 		local function wrapper(a, p, os)
-			-- XXX: For some reason, user_args is not passed down.
 			local updated_user_args = {
 				name = user_args.name,
 				arg_count = user_args.arg_count + 1,
