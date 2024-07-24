@@ -178,7 +178,6 @@ settings["neovide_config"] = {
 	cursor_vfx_mode = "pixiedust",
 	no_idle = true,
 	hide_mouse_when_typing = true,
-	transparency = 0.85,
 	fullscreen = false,
 	cursor_animation_length = 0.03,
 	cursor_trail_length = 0.05,
