@@ -6,73 +6,73 @@ return function()
 		cmp = require("modules.utils.icons").get("cmp", true),
 	}
 
-	require("which-key").register({
-		["<leader>"] = {
-			b = {
-				name = icons.ui.Buffer .. " Buffer",
-			},
-			d = {
-				name = icons.ui.Bug .. " Debug",
-			},
-			f = {
-				name = icons.ui.Telescope .. " Fuzzy Find",
-			},
-			g = {
-				name = icons.git.Git .. "Git",
-			},
-			l = {
-				name = icons.misc.LspAvailable .. " Lsp",
-			},
-			n = {
-				name = icons.ui.FolderOpen .. " Nvim Tree",
-			},
-			p = {
-				name = icons.ui.Package .. " Package",
-			},
-			s = {
-				name = icons.cmp.tmux .. "Session",
-			},
-			S = {
-				name = icons.ui.Search .. " Search",
-			},
-			W = {
-				name = icons.ui.Window .. " Window",
-			},
-			R = {
-				e = { name = icons.misc.Refactor .. " Extract" },
-				l = { name = icons.misc.Refactor .. " InLine" },
-				name = icons.misc.Refactor .. " Refactor",
-			},
-		},
-	})
-
 	require("which-key").setup({
+		preset = "helix",
+		delay = vim.o.timeoutlen,
+		triggers = {
+			{ "<auto>", mode = "nixso" },
+		},
 		plugins = {
-			marks = false,
-			registers = false,
+			marks = true,
+			registers = true,
+			spelling = {
+				enabled = true,
+				suggestions = 20,
+			},
 			presets = {
-				operators = false,
 				motions = false,
-				text_objects = false,
-				windows = false,
-				nav = false,
+				operators = false,
+				text_objects = true,
+				windows = true,
+				nav = true,
 				z = true,
 				g = true,
 			},
 		},
-
+		win = {
+			wo = { winblend = 0 },
+		},
+		expand = 1,
 		icons = {
+			group = "",
+			rules = false,
+			colors = true,
 			breadcrumb = icons.ui.Separator,
 			separator = icons.misc.Vbar,
-			group = "",
+			keys = {
+				C = "C-",
+				M = "A-",
+				S = "S-",
+				BS = "<BS> ",
+				CR = "<CR> ",
+				NL = "<NL> ",
+				Esc = "<Esc> ",
+				Tab = "<Tab> ",
+				Up = "<Up> ",
+				Down = "<Down> ",
+				Left = "<Left> ",
+				Right = "<Right> ",
+				Space = "<Space> ",
+				ScrollWheelUp = "<ScrollWheelUp> ",
+				ScrollWheelDown = "<ScrollWheelDown> ",
+			},
 		},
+		spec = {
+			{ "<leader>b", group = "Buffer", icon = icons.ui.Buffer },
+			{ "<leader>d", group = "Debug", icon = icons.ui.Bug },
+			{ "<leader>f", group = "Fuzzy Find", icon = icons.ui.Telescope },
+			{ "<leader>g", group = "Git", icon = icons.git.Git },
+			{ "<leader>l", group = "Lsp", icon = icons.misc.LspAvailable },
+			{ "<leader>n", group = "Nvim Tree", icon = icons.ui.FolderOpen },
+			{ "<leader>p", group = "Package", icon = icons.ui.Package },
+			{ "<leader>S", group = "Search", icon = icons.ui.Search },
+			{ "<leader>s", group = "Session", icon = icons.cmp.tmux },
+			{ "<leader>W", group = "Window", icon = icons.ui.Window },
 
-		window = {
-			border = "none",
-			position = "bottom",
-			margin = { 1, 0, 1, 0 },
-			padding = { 1, 1, 1, 1 },
-			winblend = 0,
+			{ "<leader>R", group = "Refactor", icon = "" },
+
+			{ "<leader>r", mode = "nx", icon = icons.misc.CodeRunAll },
+			{ "<leader>o", icon = icons.ui.Pencil },
 		},
 	})
 end

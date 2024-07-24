@@ -167,6 +167,7 @@ local data = {
 		Added = "",
 		Campass = "󰀹",
 		Code = "",
+		CodeRunAll = "",
 		Gavel = "",
 		Ghost = "󰊠",
 		Glass = "󰂖",
