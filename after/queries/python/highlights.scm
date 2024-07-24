@@ -2,7 +2,6 @@
 
 ;; Math Operators
 ("lambda" @keyword.function (#set! conceal "λ"))
-("del" @keyword  (#set! conceal "󰆴"))
 
 ;; Important builtins
 (((attribute) @constant) (#eq? @constant "math\.pi") (#set! conceal "π"))

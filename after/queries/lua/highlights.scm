@@ -9,12 +9,12 @@
 (function_call
   name: (dot_index_expression) @_method
   arguments: (arguments
-    .
-    (_)
-    .
-    (string
-      (string_content) @string.regexp))
+              .
+              (_)
+              .
+              (string
+                (string_content) @string.regexp))
   (#any-of? @_method "vim.split" "vim.gsplit"))
 
-(((dot_index_expression) @field (#eq? @field "vim.g"   )) (#set! conceal "G"))
-(((dot_index_expression) @field (#eq? @field "vim.env" )) (#set! conceal "$"))
+(((dot_index_expression) @field (#eq? @field "vim.g"))   (#set! conceal "G"))
+(((dot_index_expression) @field (#eq? @field "vim.env")) (#set! conceal "$"))
