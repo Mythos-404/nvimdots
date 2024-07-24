@@ -69,5 +69,19 @@ lang["jbyuki/one-small-step-for-vimkind"] = {
 	lazy = true,
 	ft = { "lua" },
 }
+lang["Mythos-404/parinfer-rust"] = {
+	lazy = true,
+	ft = {
+		"query",
+		"fennel",
+		"scheme",
+		"clojure",
+		"lisp",
+		"hy",
+		"yuck",
+		"dune",
+	},
+	build = "cargo build --release",
+}
 
 return lang
