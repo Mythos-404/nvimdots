@@ -83,5 +83,15 @@ lang["Mythos-404/parinfer-rust"] = {
 	},
 	build = "cargo build --release",
 }
+lang["fei6409/log-highlight.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	ft = { "log" },
+	config = true,
+}
+lang["OXY2DEV/helpview.nvim"] = {
+	lazy = true,
+	ft = "help",
+}
 
 return lang
