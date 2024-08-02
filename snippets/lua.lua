@@ -135,7 +135,7 @@ return {
 					return x_upper > y_upper
 				end)
 
-				return sn(1, c(1, vim.list_extend({ i(1) }, vim.tbl_map(t, m_name))))
+				return sn(1, c(1, vim.tbl_map(t, m_name)))
 			end),
 		})
 	),
@@ -166,14 +166,14 @@ return {
 				i(2, "v"),
 				l(l.LS_TSMATCH),
 				t(indent_str()),
-				i(0),
+				i(3),
 			}),
 			fmt("for {}, {} in ipairs({}) do\n{}{}\nend", {
 				i(1, "i"),
 				i(2, "v"),
 				l(l.LS_TSMATCH),
 				t(indent_str()),
-				i(0),
+				i(3),
 			}),
 		})
 	),

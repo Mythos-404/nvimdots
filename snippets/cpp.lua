@@ -11,4 +11,6 @@ return {
 			sn(0, { t(indent_str()), i(1) }),
 		})
 	),
+
+	s({ trig = "rt" }, fmt("return {};", i(0))),
 }
