@@ -42,7 +42,8 @@ ui["j-hui/fidget.nvim"] = {
 	config = require("ui.fidget"),
 }
 ui["Bekaboo/dropbar.nvim"] = {
-	lazy = false,
+	lazy = true,
+	event = "VeryLazy",
 	config = require("ui.dropbar"),
 }
 ui["lukas-reineke/indent-blankline.nvim"] = {
@@ -67,10 +68,11 @@ ui["m-demare/hlargs.nvim"] = {
 }
 ui["echasnovski/mini.icons"] = {
 	lazy = true,
-	event = "BufReadPost",
+	event = "VeryLazy",
 	config = require("ui.mini-icons"),
 }
 ui["stevearc/dressing.nvim"] = {
+	event = "VeryLazy",
 	config = require("ui.dressing"),
 }
 
