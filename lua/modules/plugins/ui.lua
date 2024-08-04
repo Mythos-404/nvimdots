@@ -69,5 +69,8 @@ ui["echasnovski/mini.icons"] = {
 	lazy = true,
 	init = require("ui.mini-icons"),
 }
+ui["stevearc/dressing.nvim"] = {
+	config = require("ui.dressing"),
+}
 
 return ui
