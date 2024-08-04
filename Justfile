@@ -5,6 +5,7 @@ default: format
 alias f := format
 alias l := lines
 alias pu := plugin_update
+alias pf := plugin_clear_fzf
 alias pl := plugin_list
 alias pc := plugin_clear
 
@@ -20,6 +21,9 @@ stylua := if `command -v stylua &>> /dev/null;echo $?` != "0" { mason_bins + "/s
 @lines:
     {{ if `command -v tokei &>> /dev/null;echo $?` != "0" { error("no install tokei") } else { "" } }}
     tokei
+
+@plugin_clear_fzf:
+    just plugin_clear $(just plugin_list | fzf -m)
 
 plugin_clear *$names:
     #!/usr/bin/env bash
