@@ -67,7 +67,8 @@ ui["m-demare/hlargs.nvim"] = {
 }
 ui["echasnovski/mini.icons"] = {
 	lazy = true,
-	init = require("ui.mini-icons"),
+	event = "BufReadPost",
+	config = require("ui.mini-icons"),
 }
 ui["stevearc/dressing.nvim"] = {
 	config = require("ui.dressing"),
