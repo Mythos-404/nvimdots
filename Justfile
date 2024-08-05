@@ -11,11 +11,10 @@ alias pc := plugin_clear
 
 home_dir := env_var("HOME")
 mason_bins := home_dir + "/.local/share/nvim/mason/bin"
-
 stylua := if `command -v stylua &>> /dev/null;echo $?` != "0" { mason_bins + "/stylua" } else { "stylua" }
 
 @format:
-    {{stylua}} -f "{{ invocation_directory() }}/stylua.toml" .
+    {{ stylua }} -f "{{ invocation_directory() }}/stylua.toml" .
     echo Format Done!
 
 @lines:
