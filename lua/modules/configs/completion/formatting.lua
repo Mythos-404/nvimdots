@@ -34,7 +34,7 @@ end, { nargs = 1, complete = "filetype" })
 function M.enable_format_on_save(is_configured)
 	local opts = { pattern = "*", timeout = 800 }
 	vim.api.nvim_create_augroup("format_on_save", { clear = true })
-	vim.api.nvim_create_autocmd("BufWritePost", {
+	vim.api.nvim_create_autocmd("BufWritePre", {
 		group = "format_on_save",
 		pattern = opts.pattern,
 		callback = function()
@@ -123,14 +123,14 @@ function M.format(opts)
 	end
 
 	conform.format({
-		async = true,
+		async = false,
 		quiet = true,
 		bufnr = bufnr,
 		timeout_ms = opts.timeout_ms,
 	}, function(err)
 		local clients_name = table.concat(
 			vim.iter(conform.list_formatters(bufnr)):fold({}, function(acc, client)
-				acc[#acc] = client.name
+				table.insert(acc, client.name)
 				return acc
 			end),
 			", "

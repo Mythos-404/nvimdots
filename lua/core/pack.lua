@@ -34,7 +34,7 @@ function Lazy:load_plugins()
 			for _, f in ipairs(plugins_list) do
 				-- fill list with `plugins/*.lua`'s path used for later `require` like this:
 				-- list[#list + 1] = "plugins/completion.lua"
-				list[#list + 1] = f:sub(#modules_dir - 6, -1)
+				table.insert(list, f:sub(#modules_dir - 6, -1))
 			end
 		end
 		return list
@@ -49,7 +49,7 @@ function Lazy:load_plugins()
 		local modules = require(m:sub(0, #m - 4))
 		if type(modules) == "table" then
 			for name, conf in pairs(modules) do
-				self.modules[#self.modules + 1] = vim.tbl_extend("force", { name }, conf)
+				table.insert(self.modules, vim.tbl_extend("force", { name }, conf))
 			end
 		end
 	end
