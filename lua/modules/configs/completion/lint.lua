@@ -4,7 +4,7 @@ return function()
 	lint.linters_by_ft = {
 		yaml = { "actionlint" },
 
-		python = { "ruff" },
+		-- python = { "ruff" },
 
 		sh = { "shellcheck" },
 		bash = { "shellcheck" },
