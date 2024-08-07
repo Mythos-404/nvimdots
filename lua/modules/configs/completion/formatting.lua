@@ -84,7 +84,11 @@ end
 function M.format(opts)
 	local conform = require("conform")
 	local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
-	local clients = conform.list_formatters(bufnr)
+	local clients = vim.iter(conform.list_formatters_to_run(bufnr))
+		:filter(function(client)
+			return client.name ~= "injected"
+		end)
+		:totable()
 	if #clients == 0 then
 		vim.notify(
 			"[LSP] Format request failed, no matching language servers.",
@@ -125,11 +129,12 @@ function M.format(opts)
 	conform.format({
 		async = false,
 		quiet = true,
+		lsp_format = "fallback",
 		bufnr = bufnr,
 		timeout_ms = opts.timeout_ms,
 	}, function(err)
-		local clients_name = table.concat(
-			vim.iter(conform.list_formatters(bufnr)):fold({}, function(acc, client)
+		local client_names = table.concat(
+			vim.iter(clients):fold({}, function(acc, client)
 				table.insert(acc, client.name)
 				return acc
 			end),
@@ -137,12 +142,12 @@ function M.format(opts)
 		)
 		if format_notify and not err then
 			vim.notify(
-				("[LSP] Format successfully with [%s]!"):format(clients_name),
+				("[LSP] Format successfully with [%s]!"):format(client_names),
 				vim.log.levels.INFO,
 				{ title = "LSP Format Success" }
 			)
 		else
-			vim.notify(("[LSP][%s] %s"):format(clients_name, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
+			vim.notify(("[LSP][%s] %s"):format(client_names, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
 		end
 	end)
 end

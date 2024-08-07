@@ -208,35 +208,30 @@ return function()
 
 		lsp = {
 			function()
+				local bufnr = vim.api.nvim_get_current_buf()
 				local buf_ft = vim.bo.filetype
-				local clients = vim.lsp.get_clients({ buffer = vim.api.nvim_get_current_buf() })
-				local lsp_lists = {}
-				local available_servers = {}
-				local is_null_lsp = vim.iter(clients):find(function(client)
-					return client.name == "null-ls"
-				end)
-
-				if next(clients) == nil then
-					return is_null_lsp and ("<%s>"):format(icons.misc.NoActiveLsp) or icons.misc.NoActiveLsp
-				end
-
-				for _, client in ipairs(clients) do
+				local clients = vim.lsp.get_clients({ buffer = bufnr })
+				local available_servers = vim.iter(clients):fold({}, function(acc, client)
 					local filetypes = client.config.filetypes
-					local client_name = client.name
 					if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-						-- avoid adding servers that already exists.
-						if not lsp_lists[client_name] and client_name ~= "null-ls" then
-							lsp_lists[client_name] = true
-							table.insert(available_servers, client_name)
-						end
+						table.insert(acc, client.name)
 					end
+					return acc
+				end)
+				local is_conform_run = #vim.iter(require("conform").list_formatters_to_run(bufnr))
+					:filter(function(client)
+						return client.name ~= "injected"
+					end)
+					:totable() ~= 0
+
+				if next(available_servers) == nil then
+					return is_conform_run and ("<%s>"):format(icons.misc.NoActiveLsp) or icons.misc.NoActiveLsp
 				end
 
-				return next(available_servers) == nil and icons.misc.NoActiveLsp
-					or (is_null_lsp and "%s<%s>" or "%s[%s]"):format(
-						icons.misc.LspAvailable,
-						table.concat(available_servers, ", ")
-					)
+				return (is_conform_run and "%s<%s>" or "%s[%s]"):format(
+					icons.misc.LspAvailable,
+					table.concat(available_servers, ", ")
+				)
 			end,
 			color = utils.gen_hl("blue", true, true, nil, "bold"),
 			cond = conditionals.has_enough_room,
