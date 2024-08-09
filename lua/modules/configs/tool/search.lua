@@ -12,6 +12,7 @@ return function()
 						tele_func = function(opts)
 							opts = opts or {}
 							if vim.fn.isdirectory(".git") == 1 then
+								opts.show_untracked = true
 								builtin.git_files(opts)
 							else
 								builtin.find_files(opts)
