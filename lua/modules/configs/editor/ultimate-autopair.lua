@@ -5,6 +5,8 @@ return function()
 				enable = true,
 				hopout = true,
 			},
+
+			{ "[=[", "]=]", ft = { "lua" } },
 		}),
 	})
 end

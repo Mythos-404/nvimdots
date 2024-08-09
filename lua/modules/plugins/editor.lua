@@ -24,7 +24,6 @@ editor["altermo/ultimate-autopair.nvim"] = {
 	event = { "InsertEnter", "CmdlineEnter" },
 	config = require("editor.ultimate-autopair"),
 }
-
 editor["LunarVim/bigfile.nvim"] = {
 	lazy = false,
 	config = require("editor.bigfile"),
