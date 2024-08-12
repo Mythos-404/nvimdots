@@ -89,7 +89,7 @@ function M.format(opts)
 			return client.name ~= "injected"
 		end)
 		:totable()
-	if #clients == 0 then
+	if next(clients) == nil then
 		vim.notify(
 			"[LSP] Format request failed, no matching language servers.",
 			vim.log.levels.WARN,
@@ -129,7 +129,7 @@ function M.format(opts)
 	conform.format({
 		async = false,
 		quiet = true,
-		lsp_format = "fallback",
+		lsp_format = true,
 		bufnr = bufnr,
 		timeout_ms = opts.timeout_ms,
 	}, function(err)

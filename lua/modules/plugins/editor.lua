@@ -108,10 +108,14 @@ editor["kevinhwang91/nvim-ufo"] = {
 		{ "kevinhwang91/promise-async" },
 		{
 			"luukvbaal/statuscol.nvim",
-			branch = "0.10",
 			config = require("editor.statuscol"),
 		},
 	},
+}
+editor["Vigemus/iron.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("editor.iron"),
 }
 
 ----------------------------------------------------------------------
@@ -129,6 +133,7 @@ editor["nvim-treesitter/nvim-treesitter"] = {
 	dependencies = {
 		{ "chrisgrieser/nvim-puppeteer" },
 		{ "mfussenegger/nvim-treehopper" },
+		{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		{
 			"danymat/neogen",
 			config = require("editor.neogen"),

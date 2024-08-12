@@ -196,6 +196,55 @@ local plug_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("translate: To EN"),
+
+	["n|<leader>cf"] = map_callback(function()
+			require("iron.core").send_file()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Send file"),
+	["n|<leader>cl"] = map_callback(function()
+			require("iron.core").send_line()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Send line"),
+	["v|<leader>cl"] = map_callback(function()
+			require("iron.core").visual_send()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Visual send"),
+	["n|<leader>cc"] = map_callback(function()
+			require("iron.core").run_motion("send_motion")
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Send motion"),
+	["n|<leader>cp"] = map_callback(function()
+			require("iron.core").send_paragraph()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Send paragraph"),
+	["n|<leader>c<CR>"] = map_callback(function()
+			require("iron.core").send(nil, string.char(13))
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Send <CR>"),
+	["n|<leader>cL"] = map_callback(function()
+			require("iron.core").send(nil, string.char(12))
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Send clear"),
+	["n|<leader>cq"] = map_callback(function()
+			require("iron.core").close_repl()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_desc("repl: Close repl"),
 }
 
 bind.nvim_load_mapping(plug_map)

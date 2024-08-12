@@ -58,21 +58,22 @@ return function()
 			},
 		},
 		spec = {
-			{ "<leader>b", group = "Buffer", icon = icons.ui.Buffer },
-			{ "<leader>d", group = "Debug", icon = icons.ui.Bug },
-			{ "<leader>f", group = "Fuzzy Find", icon = icons.ui.Telescope },
-			{ "<leader>g", group = "Git", icon = icons.git.Git },
-			{ "<leader>l", group = "Lsp", icon = icons.misc.LspAvailable },
-			{ "<leader>n", group = "Nvim Tree", icon = icons.ui.FolderOpen },
-			{ "<leader>p", group = "Package", icon = icons.ui.Package },
-			{ "<leader>S", group = "Search", icon = icons.ui.Search },
-			{ "<leader>s", group = "Session", icon = icons.cmp.tmux },
-			{ "<leader>W", group = "Window", icon = icons.ui.Window },
+			{ "<leader>b", mode = "n", group = "Buffer", icon = icons.ui.Buffer },
+			{ "<leader>d", mode = "n", group = "Debug", icon = icons.ui.Bug },
+			{ "<leader>f", mode = "n", group = "Fuzzy Find", icon = icons.ui.Telescope },
+			{ "<leader>g", mode = "n", group = "Git", icon = icons.git.Git },
+			{ "<leader>l", mode = "n", group = "Lsp", icon = icons.misc.LspAvailable },
+			{ "<leader>n", mode = "n", group = "Nvim Tree", icon = icons.ui.FolderOpen },
+			{ "<leader>p", mode = "n", group = "Package", icon = icons.ui.Package },
+			{ "<leader>S", mode = "n", group = "Search", icon = icons.ui.Search },
+			{ "<leader>s", mode = "n", group = "Session", icon = icons.cmp.tmux },
+			{ "<leader>W", mode = "n", group = "Window", icon = icons.ui.Window },
 
-			{ "<leader>R", group = "Refactor", icon = "" },
-
+			{ "<leader>R", mode = "nx", group = "Refactor", icon = "" },
+			{ "<leader>c", mode = "nx", group = "Repl", icon = "" },
 			{ "<leader>r", mode = "nx", icon = icons.misc.CodeRunAll },
-			{ "<leader>o", icon = icons.ui.Pencil },
+
+			{ "<leader>o", mode = "n", icon = icons.ui.Pencil },
 		},
 	})
 end

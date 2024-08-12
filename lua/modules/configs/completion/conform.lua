@@ -6,8 +6,8 @@ return function()
 		formatters_by_ft = {
 			awk = { "awk" },
 
-			bash = { "beautysh" },
-			sh = { "beautysh" },
+			bash = { "shfmt" },
+			sh = { "shfmt" },
 			zsh = { "beautysh" },
 
 			c = { "clang-format" },
@@ -41,7 +41,9 @@ return function()
 	conform.formatters.injected = {
 		options = {
 			ignore_errors = true,
-			lang_to_formatters = vim.tbl_extend("keep", {}, conform.formatters_by_ft),
+			lang_to_formatters = vim.tbl_extend("keep", {
+				["*"] = {},
+			}, conform.formatters_by_ft),
 		},
 	}
 	-- loader formatter config file
