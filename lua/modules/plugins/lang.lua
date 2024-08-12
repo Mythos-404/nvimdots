@@ -93,5 +93,10 @@ lang["OXY2DEV/helpview.nvim"] = {
 	lazy = true,
 	ft = "help",
 }
+lang["ii14/neorepl.nvim"] = {
+	lazy = true,
+	ft = "lua",
+	event = "VeryLazy",
+}
 
 return lang
