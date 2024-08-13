@@ -57,7 +57,6 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "f3fora/cmp-spell" },
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-cmdline" },
-		{ "hrsh7th/cmp-nvim-lua" },
 		{ "hrsh7th/cmp-nvim-lsp" },
 		{ "andersevenrud/cmp-tmux" },
 		{ "saadparwaiz1/cmp_luasnip" },
