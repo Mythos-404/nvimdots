@@ -6,7 +6,7 @@ local map_callback = bind.map_callback
 
 local core_map = {
 	-- Suckless
-	["n|<S-Tab>"] = map_cr("normal za"):with_noremap():with_silent():with_desc("edit: Toggle code fold"),
+	["n|<S-Tab>"] = map_cmd("za"):with_noremap():with_silent():with_desc("edit: Toggle code fold"),
 	["n|<C-s>"] = map_cu("write"):with_noremap():with_silent():with_desc("edit: Save file"),
 	["n|Y"] = map_cmd("y$"):with_desc("edit: Yank text to EOL"),
 	["n|D"] = map_cmd("d$"):with_desc("edit: Delete text to EOL"),
@@ -26,7 +26,7 @@ local core_map = {
 	["n|<A-h>"] = map_cr("vertical resize -3"):with_silent():with_desc("window: Resize -3 vertically"),
 	["n|<A-l>"] = map_cr("vertical resize +3"):with_silent():with_desc("window: Resize +3 vertically"),
 	["n|<A-j>"] = map_cr("resize -3"):with_silent():with_desc("window: Resize -3 horizontally"),
-	["n|<A-k>"] = map_cr("resize +3"):with_silent():with_desc("window: Resize +3 horizontally"),
+	["n|<A-k>"] = map_cr("resize +3"):with_silent():with_desc("window: Resize +2 horizontally"),
 	["n|<C-q>"] = map_cr("wq"):with_desc("edit: Save file and quit"),
 	["n|<A-S-q>"] = map_cr("q!"):with_desc("edit: Force quit"),
 	["n|<leader>o"] = map_cr("setlocal spell! spelllang=en_us"):with_desc("edit: Toggle spell check"),
