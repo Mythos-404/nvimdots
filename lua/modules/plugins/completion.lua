@@ -58,7 +58,6 @@ completion["hrsh7th/nvim-cmp"] = {
 		{ "hrsh7th/cmp-buffer" },
 		{ "hrsh7th/cmp-cmdline" },
 		{ "hrsh7th/cmp-nvim-lsp" },
-		{ "andersevenrud/cmp-tmux" },
 		{ "saadparwaiz1/cmp_luasnip" },
 		{ "FelipeLema/cmp-async-path" },
 		{ "kdheepak/cmp-latex-symbols" },

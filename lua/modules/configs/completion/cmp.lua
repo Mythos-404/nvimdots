@@ -88,7 +88,6 @@ return function()
 					orgmode = "[ORG]",
 					nvim_lsp = "[LSP]",
 					async_path = "[PATH]",
-					tmux = "[TMUX]",
 					treesitter = "[TS]",
 					latex_symbols = "[LTEX]",
 					luasnip = "[SNIP]",
@@ -192,7 +191,6 @@ return function()
 			{ name = "async_path" },
 			{ name = "treesitter" },
 			{ name = "spell" },
-			{ name = "tmux" },
 			{ name = "orgmode" },
 			{
 				name = "buffer",
