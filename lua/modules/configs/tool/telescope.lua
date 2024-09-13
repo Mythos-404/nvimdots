@@ -1,6 +1,5 @@
 return function()
 	local icons = { ui = require("modules.utils.icons").get("ui", true) }
-	local lga_actions = require("telescope-live-grep-args.actions")
 
 	require("telescope").setup({
 		defaults = {
@@ -63,13 +62,50 @@ return function()
 				show_unindexed = true,
 				ignore_patterns = { "*.git/*", "*/tmp/*" },
 			},
-			live_grep_args = {
-				auto_quoting = true, -- enable/disable auto-quoting
-				-- define mappings, e.g.
-				mappings = { -- extend mappings
-					i = {
-						["<C-k>"] = lga_actions.quote_prompt(),
-						["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+			egrepify = {
+				lnum = true,
+				col = false,
+				results_ts_hl = true,
+				prefixes = {
+					-- ADDED ! to invert matches
+					-- example prompt: ! sorter
+					-- matches all lines that do not comprise sorter
+					-- rg --invert-match -- sorter
+					["!"] = {
+						flag = "invert-match",
+					},
+
+					-- #$REMAINDER
+					-- # is caught prefix
+					-- `input` becomes $REMAINDER
+					-- in the above example #lua,md -> input: lua,md
+					["#"] = {
+						flag = "glob",
+						cb = function(input)
+							return string.format([[*.{%s}]], input)
+						end,
+					},
+
+					-- filter for (partial) folder names
+					-- example prompt: >conf $MY_PROMPT
+					-- searches with ripgrep prompt $MY_PROMPT in paths that have "conf" in folder
+					-- i.e. rg --glob="**/conf*/**" -- $MY_PROMPT
+					[">"] = {
+						flag = "glob",
+						cb = function(input)
+							return string.format([[**/{%s}*/**]], input)
+						end,
+					},
+
+					-- filter for (partial) file names
+					-- example prompt: &egrep $MY_PROMPT
+					-- searches with ripgrep prompt $MY_PROMPT in paths that have "egrep" in file name
+					-- i.e. rg --glob="*egrep*" -- $MY_PROMPT
+					["&"] = {
+						flag = "glob",
+						cb = function(input)
+							return string.format([[*{%s}*]], input)
+						end,
 					},
 				},
 			},
@@ -105,7 +141,7 @@ return function()
 
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("fzf")
-	require("telescope").load_extension("live_grep_args")
+	require("telescope").load_extension("egrepify")
 	require("telescope").load_extension("notify")
 	require("telescope").load_extension("projects")
 	require("telescope").load_extension("undo")

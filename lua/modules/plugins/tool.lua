@@ -87,8 +87,8 @@ tool["nvim-telescope/telescope.nvim"] = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "jvgrootveld/telescope-zoxide" },
 		{ "debugloop/telescope-undo.nvim" },
+		{ "fdschmidt93/telescope-egrepify.nvim" },
 		{ "nvim-telescope/telescope-frecency.nvim" },
-		{ "nvim-telescope/telescope-live-grep-args.nvim" },
 		{ "FabianWirth/search.nvim", config = require("tool.search") },
 		{
 			"Mythos-404/project.nvim",

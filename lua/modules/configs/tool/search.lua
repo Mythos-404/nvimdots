@@ -46,7 +46,7 @@ return function()
 					{
 						name = "Word in project",
 						tele_func = function()
-							extensions.live_grep_args.live_grep_args()
+							extensions.egrepify.egrepify({})
 						end,
 					},
 					{
