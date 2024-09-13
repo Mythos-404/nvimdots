@@ -43,8 +43,9 @@ completion["mfussenegger/nvim-lint"] = {
 	event = { "CursorHold", "CursorHoldI" },
 	config = require("completion.lint"),
 }
-completion["hrsh7th/nvim-cmp"] = {
+completion["yioneko/nvim-cmp"] = {
 	lazy = true,
+	branch = "perf",
 	event = { "InsertEnter", "CmdlineEnter" },
 	config = require("completion.cmp"),
 	dependencies = {
