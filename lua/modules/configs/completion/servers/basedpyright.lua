@@ -1,4 +1,5 @@
 return {
+	cmd_env = { LANG = "zh-cn" },
 	settings = {
 		basedpyright = {
 			disableOrganizeImports = true,
