@@ -6,7 +6,6 @@ end
 
 local match_tsnode = {
 	query = [[
-		;;query
 		[
 			(function_call)
 			(identifier)
@@ -14,7 +13,7 @@ local match_tsnode = {
 			(dot_index_expression)
 			(bracket_index_expression)
 		] @prefix
-	]],
+	]], --> INJECT: query
 	query_lang = "lua",
 }
 

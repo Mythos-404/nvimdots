@@ -15,34 +15,28 @@
 ;; local exec_lua = [[
 ;;     print("test")
 ;; ]] --> INJECT: lua
-(_
-  (variable_declaration
-    (assignment_statement
-      (expression_list
+(
+  [
+    (_
+      (variable_declaration
+        (assignment_statement
+          (expression_list
+            (string
+              (string_content) @injection.content))))
+     .
+     (comment
+       (comment_content) @injection.language))
+    (_
+      (string
+        (string_content) @injection.content)
+      .
+      (comment
+        (comment_content) @injection.language))
+    (_
+      (field
         (string
-          (string_content) @injection.content))))
-  .
-  (comment
-    (comment_content) @injection.language)
- (#gsub! @injection.language "^> INJECT: ([%w_]+)$" "%1"))
-(_
-  (string
-    (string_content) @injection.content)
-  .
-  (comment
-    (comment_content) @injection.language)
- (#gsub! @injection.language "^> INJECT: ([%w_]+)$" "%1"))
-(_
-  (string
-     (string_content) @injection.content)
-  .
-  (comment
-    (comment_content) @injection.language)
- (#gsub! @injection.language "^ INJECT: ([%w_]+)$" "%1"))
-
-(variable_list
-  (identifier) @query
- (#lua-match? @query "^query"))
-
-(string content: _ @query
- (#lua-match? @query "^%s*;+%s?query"))
+          (string_content) @injection.content))
+      .
+      (comment
+        (comment_content) @injection.language))]
+  (#gsub! @injection.language "^> INJECT: ([%w_]+)$" "%1"))
