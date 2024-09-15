@@ -2,6 +2,10 @@ return function()
 	local builtin = require("telescope.builtin")
 	local extensions = require("telescope").extensions
 	require("search").setup({
+		mappings = {
+			next = "<A-i>",
+			prev = "<A-o>",
+		},
 		collections = {
 			-- Search using filenames
 			file = {
