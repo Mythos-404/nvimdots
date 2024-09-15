@@ -1,10 +1,15 @@
 return function()
 	local lint = require("lint")
 
-	lint.linters_by_ft = {
-		yaml = { "actionlint" },
+	vim.filetype.add({
+		pattern = {
+			[".*/.github/workflows/.*%.yml"] = "yaml.ghaction",
+			[".*/.github/workflows/.*%.yaml"] = "yaml.ghaction",
+		},
+	})
 
-		-- python = { "ruff" },
+	lint.linters_by_ft = {
+		ghaction = { "actionlint" },
 
 		sh = { "shellcheck" },
 		bash = { "shellcheck" },
