@@ -2,6 +2,7 @@ return function()
 	local types = require("luasnip.util.types")
 	require("luasnip").config.set_config({
 		history = true,
+		enable_autosnippets = true,
 		update_events = "TextChanged,TextChangedI",
 		delete_check_events = "TextChanged,InsertLeave",
 		store_selection_keys = "<Tab>",

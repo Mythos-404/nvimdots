@@ -144,6 +144,7 @@ return {
 			trig = ".p",
 			desc = "Expands expression to print(<exp>)",
 			reparseBuffer = "live",
+			wordTrig = false,
 			matchTSNode = match_tsnode,
 		},
 		c(1, {
@@ -157,6 +158,7 @@ return {
 			trig = ".pairs",
 			desc = "Expands expression to for <key>, <var> in pairs(<exp>) or ipairs(<exp>) dp ... end",
 			reparseBuffer = "live",
+			wordTrig = false,
 			matchTSNode = match_tsnode,
 		},
 		c(1, {
@@ -181,6 +183,7 @@ return {
 		trig = ".isnot",
 		desc = "Expands expression to if not <exp> then ... end",
 		reparseBuffer = "live",
+		wordTrig = false,
 		matchTSNode = match_tsnode,
 	}, fmt("if not {} then\n{}{}\nend", { l(l.LS_TSMATCH), t(indent_str()), i(0) })),
 }
