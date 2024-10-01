@@ -13,16 +13,16 @@ return function()
 			c = { "clang-format" },
 			cpp = { "clang-format" },
 
-			vue = { "prettier" },
+			vue = { "prettier", "injected" },
 			typescript = { "prettier" },
 			javascript = { "prettier" },
 			typescriptreact = { "prettier" },
 			javascriptreact = { "prettier" },
 			yaml = { "prettier" },
-			html = { "prettier" },
+			html = { "prettier", "injected" },
 			css = { "prettier" },
 			scss = { "prettier" },
-			markdown = { "prettier" },
+			markdown = { "prettier", "injected" },
 			json = { "prettier" },
 			jsonc = { "prettier" },
 
@@ -30,20 +30,16 @@ return function()
 
 			rust = { "rustfmt" },
 
-			python = { "ruff_format", "ruff_organize_imports" },
+			python = { "ruff_format", "ruff_organize_imports", "injected" },
 
-			lua = { "stylua" },
-
-			["*"] = { "injected" },
+			lua = { "stylua", "injected" },
 		},
 	})
 
 	conform.formatters.injected = {
 		options = {
 			ignore_errors = true,
-			lang_to_formatters = vim.tbl_extend("keep", {
-				["*"] = {},
-			}, conform.formatters_by_ft),
+			lang_to_formatters = vim.tbl_extend("keep", {}, conform.formatters_by_ft),
 		},
 	}
 	-- loader formatter config file
