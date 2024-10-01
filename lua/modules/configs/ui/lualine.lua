@@ -266,6 +266,25 @@ return function()
 			cond = conditionals.has_enough_room,
 		},
 
+		xmake = {
+			function()
+				if not vim.g.loaded_xmake then
+					return ""
+				end
+				local Info = require("xmake.info")
+				if Info.mode.current == "" then
+					return "Xmake: Not Build Mode"
+				end
+				if Info.target.current == "" then
+					return "Xmake: Not Select Target"
+				end
+				return ("%s(%s)"):format(Info.target.current, Info.mode.current)
+			end,
+
+			color = utils.gen_hl("green", true, true),
+			cond = conditionals.has_enough_room,
+		},
+
 		tabwidth = {
 			function()
 				return icons.ui.Tab .. require("modules.utils").get_indent()
@@ -402,6 +421,7 @@ return function()
 			lualine_y = {
 				components.separator,
 				components.python_venv,
+				components.xmake,
 				components.cwd,
 			},
 			lualine_z = {

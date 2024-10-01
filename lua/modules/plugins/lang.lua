@@ -47,14 +47,18 @@ lang["AckslD/nvim-FeMaco.lua"] = {
 	config = require("lang.femaco"),
 }
 lang["chrisbra/csv.vim"] = {
-	lazy = true,
+	lazy = false,
 	ft = "csv",
 }
 lang["Mythos-404/xmake.nvim"] = {
 	lazy = true,
 	event = "BufReadPost xmake.lua",
 	config = require("lang.xmake"),
-	dependencies = { "MunifTanjim/nui.nvim" },
+}
+lang["Civitasv/cmake-tools.nvim"] = {
+	lazy = true,
+	ft = "cmake",
+	config = require("lang.cmake-tool"),
 }
 lang["fabridamicelli/cronex.nvim"] = {
 	lazy = true,
@@ -97,6 +101,15 @@ lang["ii14/neorepl.nvim"] = {
 	lazy = true,
 	ft = "lua",
 	event = "VeryLazy",
+}
+lang["akinsho/flutter-tools.nvim"] = {
+	lazy = true,
+	ft = "dart",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"stevearc/dressing.nvim",
+	},
+	config = true,
 }
 
 return lang
