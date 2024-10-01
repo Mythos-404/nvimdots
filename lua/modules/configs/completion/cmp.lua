@@ -235,7 +235,7 @@ return function()
 		sources = cmp.config.sources({
 			{ name = "async_path" },
 		}, {
-			{ name = "cmdline" },
+			{ name = "cmdline", option = { ignore_cmds = {} } },
 		}),
 	})
 end
