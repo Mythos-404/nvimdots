@@ -129,7 +129,7 @@ function M.format(opts)
 	conform.format({
 		async = false,
 		quiet = true,
-		lsp_format = true,
+		lsp_format = "fallback",
 		bufnr = bufnr,
 		timeout_ms = opts.timeout_ms,
 	}, function(err)
