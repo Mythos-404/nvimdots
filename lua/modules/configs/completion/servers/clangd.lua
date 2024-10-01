@@ -55,7 +55,7 @@ return function(options)
 			"--header-insertion=iwyu",
 			"--limit-references=3000",
 			"--limit-results=350",
-			"--compile-commands-dir=.vscode",
+			"--compile-commands-dir=build",
 		},
 		commands = {
 			ClangdSwitchSourceHeader = {
