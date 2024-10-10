@@ -13,22 +13,24 @@ return function()
 			c = { "clang-format" },
 			cpp = { "clang-format" },
 
-			vue = { "prettier", "injected" },
-			typescript = { "prettier" },
-			javascript = { "prettier" },
-			typescriptreact = { "prettier" },
-			javascriptreact = { "prettier" },
-			yaml = { "prettier" },
-			html = { "prettier", "injected" },
-			css = { "prettier" },
-			scss = { "prettier" },
-			markdown = { "prettier", "injected" },
-			json = { "prettier" },
-			jsonc = { "prettier" },
+			vue = { "prettierd", "injected" },
+			typescript = { "prettierd" },
+			javascript = { "prettierd" },
+			typescriptreact = { "prettierd" },
+			javascriptreact = { "prettierd" },
+			yaml = { "prettierd" },
+			html = { "prettierd", "injected" },
+			css = { "prettierd" },
+			scss = { "prettierd" },
+			markdown = { "prettierd", "injected" },
+			json = { "prettierd" },
+			jsonc = { "prettierd" },
 
 			just = { "just" },
 
 			rust = { "rustfmt" },
+
+			go = { "goimports", "gofumpt" },
 
 			python = { "ruff_format", "ruff_organize_imports", "injected" },
 
