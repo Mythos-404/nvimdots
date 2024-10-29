@@ -18,6 +18,8 @@ return function()
 				i = { "@block.inner", "@conditional.inner", "@loop.inner" },
 			}, {}),
 			C = gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
+
+			r = gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
 		},
 
 		-- Module mappings. Use `''` (empty string) to disable one.
