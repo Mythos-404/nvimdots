@@ -1,3 +1,3 @@
 return function()
-	require("femaco").setup()
+    require("femaco").setup()
 end

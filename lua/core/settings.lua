@@ -21,7 +21,7 @@ settings["format_notify"] = true
 --- NOTE: Directories are automatically normalized. |vim.fs.normalize()|
 ---@type string[]
 settings["format_disabled_dirs"] = {
-	"/node_modules/",
+    "/node_modules/",
 }
 
 -- Filetypes in this list will skip lsp formatting if rhs is true.
@@ -76,13 +76,13 @@ settings["external_browser"] = "chrome-cli open"
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
 ---@type string[]
 settings["lsp_deps"] = {
-	"bashls",
-	"clangd",
-	"html",
-	"jsonls",
-	"lua_ls",
-	"basedpyright",
-	"gopls",
+    "bashls",
+    "clangd",
+    "html",
+    "jsonls",
+    "lua_ls",
+    "basedpyright",
+    "gopls",
 }
 
 -- Set the Debug Adapter Protocol (DAP) clients that will be installed and configured during bootstrap here.
@@ -90,9 +90,9 @@ settings["lsp_deps"] = {
 -- https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
 ---@type string[]
 settings["dap_deps"] = {
-	"codelldb", -- C-Family
-	"delve", -- Go
-	"python", -- Python (debugpy)
+    "codelldb", -- C-Family
+    "delve", -- Go
+    "python", -- Python (debugpy)
 }
 
 -- Set the Treesitter parsers that will be installed during bootstrap here.
@@ -100,35 +100,35 @@ settings["dap_deps"] = {
 -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
 ---@type string[]
 settings["treesitter_deps"] = {
-	"bash",
-	"c",
-	"cpp",
-	"css",
-	"go",
-	"gomod",
-	"html",
-	"javascript",
-	"json",
-	"jsonc",
-	"latex",
-	"lua",
-	"make",
-	"markdown",
-	"markdown_inline",
-	"python",
-	"rust",
-	"typescript",
-	"vimdoc",
-	"vue",
-	"yaml",
+    "bash",
+    "c",
+    "cpp",
+    "css",
+    "go",
+    "gomod",
+    "html",
+    "javascript",
+    "json",
+    "jsonc",
+    "latex",
+    "lua",
+    "make",
+    "markdown",
+    "markdown_inline",
+    "python",
+    "rust",
+    "typescript",
+    "vimdoc",
+    "vue",
+    "yaml",
 }
 
 -- Set the options for neovim's gui clients like `neovide` and `neovim-qt` here.
 -- NOTE: Currently, only the following options related to the GUI are supported. Other entries will be IGNORED.
 ---@type { font_name: string, font_size: number }
 settings["gui_config"] = {
-	font_name = "IosevkaFromMythos\\_404",
-	font_size = 13,
+    font_name = "IosevkaFromMythos\\_404",
+    font_size = 13,
 }
 
 -- Set the options specific to `neovide` here.
@@ -137,20 +137,20 @@ settings["gui_config"] = {
 -- https://neovide.dev/configuration.html
 ---@type table<string, boolean|number|string>
 settings["neovide_config"] = {
-	remember_window_size = false, -- NOTE: If true, hyprland will always be in full screen state.
+    remember_window_size = false, -- NOTE: If true, hyprland will always be in full screen state.
 
-	refresh_rate = 150,
-	cursor_vfx_mode = "pixiedust",
-	no_idle = true,
-	hide_mouse_when_typing = true,
-	fullscreen = false,
-	cursor_animation_length = 0.03,
-	cursor_trail_length = 0.05,
-	cursor_antialiasing = true,
-	cursor_vfx_opacity = 200.0,
-	cursor_vfx_particle_lifetime = 1.4,
-	cursor_vfx_particle_speed = 20.0,
-	cursor_vfx_particle_density = 7.0,
+    refresh_rate = 150,
+    cursor_vfx_mode = "pixiedust",
+    no_idle = true,
+    hide_mouse_when_typing = true,
+    fullscreen = false,
+    cursor_animation_length = 0.03,
+    cursor_trail_length = 0.05,
+    cursor_antialiasing = true,
+    cursor_vfx_opacity = 200.0,
+    cursor_vfx_particle_lifetime = 1.4,
+    cursor_vfx_particle_speed = 20.0,
+    cursor_vfx_particle_density = 7.0,
 }
 
 return settings

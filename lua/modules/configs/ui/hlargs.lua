@@ -1,3 +1,3 @@
 return function()
-	require("hlargs").setup()
+    require("hlargs").setup()
 end

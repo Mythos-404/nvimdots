@@ -1,3 +1,3 @@
 return function()
-	require("xmake").setup()
+    require("xmake").setup()
 end
