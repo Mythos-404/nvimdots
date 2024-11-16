@@ -13,4 +13,12 @@ return {
             sn(0, { t(indent_str()), i(1) }),
         })
     ),
+
+    s(
+        { trig = "cl", desc = "Call Function" },
+        fmt("{}({})", {
+            i(0),
+            l(l.TM_SELECTED_TEXT),
+        })
+    ),
 }

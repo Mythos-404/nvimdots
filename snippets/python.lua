@@ -23,6 +23,14 @@ return {
     s({ trig = "rt" }, t("return ")),
 
     s(
+        { trig = "cl", desc = "Call Function" },
+        fmt("{}({})", {
+            i(0),
+            l(l.TM_SELECTED_TEXT),
+        })
+    ),
+
+    s(
         { trig = "imp", desc = "Import module" },
         c(1, {
             fmt("import {}", { i(1) }),
@@ -147,21 +155,15 @@ return {
             d(2, function(args)
                 ---@type string
                 args = args[1][1]
-                if #args == 0 then
-                    return indent_line("pass")
-                end
+                if #args == 0 then return indent_line("pass") end
 
                 local tab = {}
                 local cnt = 1
                 for arg in (args):gmatch(" ?([^,]?:) ?") do
-                    if #arg == 0 then
-                        goto continue
-                    end
+                    if #arg == 0 then goto continue end
 
                     local colon = arg:find(":")
-                    if colon then
-                        arg = arg:sub(1, colon - 1)
-                    end
+                    if colon then arg = arg:sub(1, colon - 1) end
                     table.insert(tab, t({ "", indent_line("self.") }))
                     table.insert(tab, r(cnt, tostring(cnt), i(nil, arg)))
                     table.insert(tab, t(" = "))

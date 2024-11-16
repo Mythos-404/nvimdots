@@ -46,15 +46,20 @@ return {
     s({ trig = "rt" }, t("return ")),
 
     s(
+        { trig = "cl", desc = "Call Function" },
+        fmt("{}({})", {
+            i(0),
+            l(l.TM_SELECTED_TEXT),
+        })
+    ),
+
+    s(
         { trig = "req", desc = "Import file" },
         c(1, {
             fmt([[require("{}")]], { i(1) }),
-            fmt([[local {name} = require("{}")]], {
+            fmt([[local {} = require("{}")]], {
+                i(0),
                 i(1),
-                name = d(2, function(args)
-                    args = vim.split(args[1][1], "%.")
-                    return sn(nil, i(1, args[#args]))
-                end, { 1 }, {}),
             }),
         })
     ),
@@ -62,20 +67,14 @@ return {
     s(
         { trig = "ll", desc = "Local variable" },
         c(1, {
-            fmt([[local {name} = {}]], {
+            fmt([[local {} = {}]], {
+                i(0),
                 i(1),
-                name = d(2, function(args)
-                    args = vim.split(args[1][1], "%.")
-                    return sn(nil, i(1, args[#args]))
-                end, { 1 }),
             }),
-            fmt([[local {names} = pcall({})]], {
+            fmt([[local {}, {} = pcall({})]], {
+                i(0),
+                i(2),
                 i(1),
-                names = d(2, function(args)
-                    args = vim.split(vim.split(args[1][1], ",")[1], "%.")
-                    args = args[#args]
-                    return sn(nil, fmt("{}, {}", { i(2, ("is_%s"):format(args)), i(1, args) }))
-                end, { 1 }),
             }),
         })
     ),
@@ -92,6 +91,7 @@ return {
                         vim.tbl_map(t, {
                             "lua",
                             "query",
+                            "json",
                         })
                     )
                 )
@@ -128,9 +128,7 @@ return {
                     local y_upper = y:find("^%u+")
                     x_upper = x_upper or 0
                     y_upper = y_upper or 0
-                    if x_upper == y_upper then
-                        return false
-                    end
+                    if x_upper == y_upper then return false end
                     return x_upper > y_upper
                 end)
 
