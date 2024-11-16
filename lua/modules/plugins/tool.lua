@@ -1,16 +1,10 @@
 local tool = {}
 local is_windows = require("core.global").is_windows
 
-tool["nvim-tree/nvim-tree.lua"] = {
-    lazy = true,
-    cmd = {
-        "NvimTreeToggle",
-        "NvimTreeOpen",
-        "NvimTreeFindFile",
-        "NvimTreeFindFileToggle",
-        "NvimTreeRefresh",
-    },
-    config = require("tool.nvim-tree"),
+tool["echasnovski/mini.files"] = {
+    lazy = false,
+    version = false,
+    config = require("tool.mini-files"),
 }
 tool["folke/trouble.nvim"] = {
     lazy = true,
@@ -74,6 +68,19 @@ tool["traduire.nvim"] = {
     dev = true,
     config = true,
     opt = {},
+}
+tool["meznaric/key-analyzer.nvim"] = {
+    lazy = true,
+    event = "VeryLazy",
+    cmd = "KeyAnalyzer",
+    config = require("tool.key-analyzer"),
+}
+tool["mikesmithgh/kitty-scrollback.nvim"] = {
+    version = "*",
+    lazy = true,
+    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    event = { "User KittyScrollbackLaunch" },
+    config = require("tool.kitty-scrollback"),
 }
 
 ----------------------------------------------------------------------
