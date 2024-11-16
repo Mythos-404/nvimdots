@@ -52,6 +52,7 @@ lang["chrisbra/csv.vim"] = {
 }
 lang["Mythos-404/xmake.nvim"] = {
     lazy = true,
+    dev = true,
     event = "BufReadPost xmake.lua",
     config = require("lang.xmake"),
 }
@@ -97,10 +98,11 @@ lang["OXY2DEV/helpview.nvim"] = {
     lazy = true,
     ft = "help",
 }
-lang["ii14/neorepl.nvim"] = {
+lang["YaroSpace/lua-console.nvim"] = {
     lazy = true,
     ft = "lua",
     event = "VeryLazy",
+    config = require("lang.lua-console"),
 }
 lang["akinsho/flutter-tools.nvim"] = {
     lazy = true,
