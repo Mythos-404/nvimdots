@@ -124,9 +124,7 @@ editor["Vigemus/iron.nvim"] = {
 editor["nvim-treesitter/nvim-treesitter"] = {
     lazy = true,
     build = function()
-        if #vim.api.nvim_list_uis() > 0 then
-            vim.api.nvim_command([[ TSUpdate ]])
-        end
+        if #vim.api.nvim_list_uis() > 0 then vim.api.nvim_command([[ TSUpdate ]]) end
     end,
     event = "BufReadPre",
     config = require("editor.treesitter"),
@@ -153,10 +151,6 @@ editor["nvim-treesitter/nvim-treesitter"] = {
         {
             "brenoprata10/nvim-highlight-colors",
             config = require("editor.highlight-colors"),
-        },
-        {
-            "nvim-treesitter/nvim-treesitter-context",
-            config = require("editor.ts-context"),
         },
         {
             "JoosepAlviste/nvim-ts-context-commentstring",
