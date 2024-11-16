@@ -103,13 +103,9 @@ return function()
 
                 local label = vim_item.abbr
                 local truncated_label = vim.fn.strcharpart(label, 0, 80)
-                if truncated_label ~= label then
-                    vim_item.abbr = truncated_label .. "..."
-                end
+                if truncated_label ~= label then vim_item.abbr = truncated_label .. "..." end
 
-                if entry.source.name == "nvim_lsp" then
-                    vim_item.dup = 0
-                end
+                if entry.source.name == "nvim_lsp" then vim_item.dup = 0 end
 
                 return vim_item
             end,
@@ -169,14 +165,10 @@ return function()
             }),
             ["<C-s>"] = cmp.mapping.complete({ config = { sources = { { name = "luasnip" } } }, { "i", "s" } }),
             ["<C-j>"] = cmp.mapping(function()
-                if require("luasnip").choice_active() then
-                    require("luasnip").change_choice(1)
-                end
+                if require("luasnip").choice_active() then require("luasnip").change_choice(1) end
             end, { "i", "s" }),
             ["<C-k>"] = cmp.mapping(function()
-                if require("luasnip").choice_active() then
-                    require("luasnip").change_choice(-1)
-                end
+                if require("luasnip").choice_active() then require("luasnip").change_choice(-1) end
             end, { "i", "s" }),
         }),
         snippet = {

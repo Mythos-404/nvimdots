@@ -1,3 +1,7 @@
 return function()
-    require("xmake").setup()
+    require("xmake").setup({
+        lsp = {
+            language = "zh-cn",
+        },
+    })
 end

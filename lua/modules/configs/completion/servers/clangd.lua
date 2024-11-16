@@ -4,9 +4,7 @@ local function switch_source_header_splitcmd(bufnr, splitcmd)
     local params = { uri = vim.uri_from_bufnr(bufnr) }
     if clangd_client then
         clangd_client.request("textDocument/switchSourceHeader", params, function(err, result)
-            if err then
-                error(tostring(err))
-            end
+            if err then error(tostring(err)) end
             if not result then
                 vim.notify("Corresponding file can’t be determined", vim.log.levels.ERROR, { title = "LSP Error!" })
                 return
@@ -26,9 +24,7 @@ local function get_binary_path_list(binaries)
     local path_list = {}
     for _, binary in ipairs(binaries) do
         local path = vim.fn.exepath(binary)
-        if path ~= "" then
-            table.insert(path_list, path)
-        end
+        if path ~= "" then table.insert(path_list, path) end
     end
     return table.concat(path_list, ",")
 end

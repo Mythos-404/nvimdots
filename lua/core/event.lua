@@ -87,9 +87,7 @@ vim.api.nvim_create_autocmd("ModeChanged", {
         end
         if vim.v.operator == "y" then
             local last_pos = vim.b.user_yank_last_pos
-            if last_pos then
-                vim.api.nvim_win_set_cursor(0, last_pos)
-            end
+            if last_pos then vim.api.nvim_win_set_cursor(0, last_pos) end
         end
         vim.b.user_yank_last_pos = nil
     end,

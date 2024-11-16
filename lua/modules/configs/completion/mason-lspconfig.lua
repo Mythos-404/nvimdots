@@ -34,9 +34,7 @@ M.setup = function()
     ---A handler to setup all servers defined under `completion/servers/*.lua`
     ---@param lsp_name string
     local function mason_lsp_handler(lsp_name)
-        if lsp_name == "rust_analyzer" or lsp_name == "hls" then
-            return
-        end
+        if lsp_name == "rust_analyzer" or lsp_name == "hls" then return end
 
         local ok, custom_handler = pcall(require, "completion.servers." .. lsp_name)
         if not ok then

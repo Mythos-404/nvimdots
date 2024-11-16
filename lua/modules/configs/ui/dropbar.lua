@@ -3,9 +3,7 @@ local function dropbar_call(call_back)
     return function()
         local menu = require("dropbar.api").get_current_dropbar_menu()
 
-        if not menu then
-            return
-        end
+        if not menu then return end
 
         call_back(menu)
     end
@@ -15,9 +13,7 @@ local function open_bar(menu)
     local cursor = vim.api.nvim_win_get_cursor(menu.win)
     local component = menu.entries[cursor[1]]:first_clickable(cursor[2])
 
-    if component then
-        menu:click_on(component, nil, 1, "l")
-    end
+    if component then menu:click_on(component, nil, 1, "l") end
 end
 
 local function exit_bar(menu)

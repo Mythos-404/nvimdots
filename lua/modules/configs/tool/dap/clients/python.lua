@@ -56,9 +56,7 @@ return function()
                 -- Prefer the venv that is defined by the designated environment variable.
                 local cwd, venv = vim.fn.getcwd(), os.getenv("VIRTUAL_ENV")
                 local python = venv and (is_windows and venv .. "/Scripts/pythonw.exe" or venv .. "/bin/python") or ""
-                if vim.fn.executable(python) == 1 then
-                    return python
-                end
+                if vim.fn.executable(python) == 1 then return python end
 
                 -- Otherwise, fall back to check if there are any local venvs available.
                 venv = vim.fn.isdirectory(cwd .. "/venv") == 1 and cwd .. "/venv" or cwd .. "/.venv"

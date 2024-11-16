@@ -38,3 +38,12 @@ _G._toggle_lazygit = function()
         vim.notify("Command [lazygit] not found!", vim.log.levels.ERROR, { title = "toggleterm.nvim" })
     end
 end
+
+_G._mini_file_open = function()
+    if not MiniFiles.close() then
+        local file = vim.api.nvim_buf_get_name(0)
+        local file_exists = vim.fn.filereadable(file) ~= 0
+        MiniFiles.open(file_exists and file or nil)
+        MiniFiles.reveal_cwd()
+    end
+end

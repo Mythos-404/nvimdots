@@ -39,9 +39,7 @@ function mapping.gitsigns(buf)
     local actions = require("gitsigns.actions")
     local map = {
         ["n|]g"] = bind.map_callback(function()
-            if vim.wo.diff then
-                return "]g"
-            end
+            if vim.wo.diff then return "]g" end
             vim.schedule(function()
                 actions.next_hunk()
             end)
@@ -51,9 +49,7 @@ function mapping.gitsigns(buf)
             :with_expr()
             :with_desc("git: Goto next hunk"),
         ["n|[g"] = bind.map_callback(function()
-            if vim.wo.diff then
-                return "[g"
-            end
+            if vim.wo.diff then return "[g" end
             vim.schedule(function()
                 actions.prev_hunk()
             end)

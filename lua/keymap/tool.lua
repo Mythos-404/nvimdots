@@ -7,10 +7,13 @@ local map_callback = bind.map_callback
 require("keymap.helpers")
 
 local plug_map = {
-    -- Plugin: nvim-tree
-    ["n|<C-n>"] = map_cr("NvimTreeToggle"):with_noremap():with_silent():with_desc("filetree: Toggle"),
-    ["n|<leader>nf"] = map_cr("NvimTreeFindFile"):with_noremap():with_silent():with_desc("filetree: Find file"),
-    ["n|<leader>nr"] = map_cr("NvimTreeRefresh"):with_noremap():with_silent():with_desc("filetree: Refresh"),
+    -- Plugin: mini.files
+    ["n|<C-n>"] = map_callback(function()
+            _mini_file_open()
+        end)
+        :with_noremap()
+        :with_silent()
+        :with_desc("files: Toggle"),
 
     -- Plugin: sniprun
     ["v|<leader>r"] = map_cr("SnipRun"):with_noremap():with_silent():with_desc("tool: Run code by range"),
@@ -197,49 +200,50 @@ local plug_map = {
         :with_silent()
         :with_desc("translate: To EN"),
 
-    ["n|<leader>cf"] = map_callback(function()
+    -- iron.nvim
+    ["n|<C-c><C-f>"] = map_callback(function()
             require("iron.core").send_file()
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Send file"),
-    ["n|<leader>cl"] = map_callback(function()
+    ["n|<C-c><C-c>"] = map_callback(function()
             require("iron.core").send_line()
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Send line"),
-    ["v|<leader>cl"] = map_callback(function()
+    ["v|<C-c><C-c>"] = map_callback(function()
             require("iron.core").visual_send()
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Visual send"),
-    ["n|<leader>cc"] = map_callback(function()
+    ["n|<C-c><C-m>"] = map_callback(function()
             require("iron.core").run_motion("send_motion")
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Send motion"),
-    ["n|<leader>cp"] = map_callback(function()
+    ["n|<C-c><C-p>"] = map_callback(function()
             require("iron.core").send_paragraph()
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Send paragraph"),
-    ["n|<leader>c<CR>"] = map_callback(function()
+    ["n|<C-c><C-CR>"] = map_callback(function()
             require("iron.core").send(nil, string.char(13))
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Send <CR>"),
-    ["n|<leader>cL"] = map_callback(function()
+    ["n|<C-c><C-l>"] = map_callback(function()
             require("iron.core").send(nil, string.char(12))
         end)
         :with_noremap()
         :with_silent()
         :with_desc("repl: Send clear"),
-    ["n|<leader>cq"] = map_callback(function()
+    ["n|<C-c><C-d>"] = map_callback(function()
             require("iron.core").close_repl()
         end)
         :with_noremap()

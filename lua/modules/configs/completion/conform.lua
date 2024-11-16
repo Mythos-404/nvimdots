@@ -47,9 +47,7 @@ return function()
     -- loader formatter config file
     for _, format_info in ipairs(conform.list_all_formatters()) do
         local ok, custom_handler = pcall(require, "completion.formatters." .. format_info.name)
-        if ok then
-            conform.formatters[format_info.name] = custom_handler
-        end
+        if ok then conform.formatters[format_info.name] = custom_handler end
     end
 
     require("completion.formatting").configure_format_on_save()

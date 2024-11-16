@@ -145,9 +145,7 @@ local plug_map = {
         :with_desc("edit: Close all folds"),
     ["n|zp"] = map_callback(function()
             local winid = require("ufo").peekFoldedLinesUnderCursor()
-            if not winid then
-                vim.lsp.buf.hover()
-            end
+            if not winid then vim.lsp.buf.hover() end
         end)
         :with_silent()
         :with_noremap()

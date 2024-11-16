@@ -69,9 +69,7 @@ return function()
             hl_shortcut = "AlphaShortcut",
         }
 
-        if nil == keybind then
-            keybind = sc_after
-        end
+        if nil == keybind then keybind = sc_after end
         keybind_opts = vim.F.if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
         opts.keymap = { "n", sc_after, keybind, keybind_opts }
 

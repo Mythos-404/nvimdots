@@ -13,6 +13,14 @@ local plug_map = {
         :with_noremap()
         :with_silent()
         :with_desc("tool: Open OSV"),
+
+    -- Plugin: lua-console.nvim
+    ["n|`"] = map_callback(function()
+            require("lua-console").toggle_console()
+        end)
+        :with_noremap()
+        :with_silent()
+        :with_desc("tool: Open lua console"),
 }
 
 bind.nvim_load_mapping(plug_map)

@@ -1,9 +1,7 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/lua_ls.lua
 return {
     on_init = function(client)
-        if not client.config.cmd_cwd:find("nvim") then
-            return
-        end
+        if not client.config.cmd_cwd:find("nvim") then return end
 
         client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             diagnostics = {

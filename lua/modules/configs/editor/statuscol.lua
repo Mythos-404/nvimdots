@@ -7,11 +7,14 @@ return function()
             { sign = { namespace = { "diagnostic/signs" }, auto = true }, click = "v:lua.ScLa" },
             { sign = { name = { "Dap.*" }, auto = true }, click = "v:lua.ScLa" },
             { sign = { namespace = { ".*" }, auto = true } },
-            { text = {
-                function(args)
-                    return (args.relnum == 0) and " " or ""
-                end,
-            }, auto = true },
+            {
+                text = {
+                    function(args)
+                        return (args.relnum == 0) and " " or ""
+                    end,
+                },
+                auto = true,
+            },
             { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
             { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
         },

@@ -129,9 +129,7 @@ return function()
         end,
         abbreviate_path = function(path)
             local home = require("core.global").home
-            if path:find(home, 1, true) == 1 then
-                path = "~" .. path:sub(#home + 1)
-            end
+            if path:find(home, 1, true) == 1 then path = "~" .. path:sub(#home + 1) end
             return path
         end,
         ---Generate <func>`color` for any component
@@ -185,18 +183,10 @@ return function()
                 end
 
                 local symbols = {}
-                if vim.bo.modified then
-                    table.insert(symbols, "[+]")
-                end
-                if vim.bo.modifiable == false then
-                    table.insert(symbols, "[-]")
-                end
-                if vim.bo.readonly == true then
-                    table.insert(symbols, "[R]")
-                end
-                if is_new_file() then
-                    table.insert(symbols, "[N]")
-                end
+                if vim.bo.modified then table.insert(symbols, "[+]") end
+                if vim.bo.modifiable == false then table.insert(symbols, "[-]") end
+                if vim.bo.readonly == true then table.insert(symbols, "[R]") end
+                if is_new_file() then table.insert(symbols, "[N]") end
                 return #symbols > 0 and table.concat(symbols, "") or ""
             end,
             padding = {
@@ -213,9 +203,7 @@ return function()
                 local clients = vim.lsp.get_clients({ buffer = bufnr })
                 local available_servers = vim.iter(clients):fold({}, function(acc, client)
                     local filetypes = client.config.filetypes
-                    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                        table.insert(acc, client.name)
-                    end
+                    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then table.insert(acc, client.name) end
                     return acc
                 end)
                 local is_conform_run = #vim.iter(require("conform").list_formatters_to_run(bufnr))
@@ -252,13 +240,9 @@ return function()
 
                 if vim.bo.filetype == "python" then
                     local venv = os.getenv("CONDA_DEFAULT_ENV")
-                    if venv then
-                        return icons.misc.PyEnv .. env_cleanup(venv)
-                    end
+                    if venv then return icons.misc.PyEnv .. env_cleanup(venv) end
                     venv = os.getenv("VIRTUAL_ENV")
-                    if venv then
-                        return icons.misc.PyEnv .. env_cleanup(venv)
-                    end
+                    if venv then return icons.misc.PyEnv .. env_cleanup(venv) end
                 end
                 return ""
             end,
@@ -268,16 +252,10 @@ return function()
 
         xmake = {
             function()
-                if not vim.g.loaded_xmake then
-                    return ""
-                end
+                if not vim.g.loaded_xmake then return "" end
                 local Info = require("xmake.info")
-                if Info.mode.current == "" then
-                    return "Xmake: Not Build Mode"
-                end
-                if Info.target.current == "" then
-                    return "Xmake: Not Select Target"
-                end
+                if Info.mode.current == "" then return "Xmake: Not Build Mode" end
+                if Info.target.current == "" then return "Xmake: Not Select Target" end
                 return ("%s(%s)"):format(Info.target.current, Info.mode.current)
             end,
 
