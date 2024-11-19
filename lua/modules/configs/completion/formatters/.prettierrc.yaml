@@ -2,7 +2,11 @@ trailingComma: "es5"
 tabWidth: 4
 semi: false
 singleQuote: false
+printWidth: 120
 overrides:
   - files: "*.{json,jsonc,json5}"
     options:
-      trailingComma: "none"
+        trailingComma: none
+  - files: "*.{yaml}"
+    options:
+        tabWidth: 2

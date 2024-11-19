@@ -2,7 +2,12 @@ root = true
 
 [*]
 indent_style = space
+
+[*.lua]
 indent_size = 4
+
+[*.yaml]
+indent_size = 2
 
 [*.scm]
 indent_size = 2
