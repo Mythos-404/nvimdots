@@ -53,7 +53,7 @@ lang["chrisbra/csv.vim"] = {
 lang["Mythos-404/xmake.nvim"] = {
     lazy = true,
     dev = true,
-    event = "BufReadPost xmake.lua",
+    event = "BufReadPost",
     config = require("lang.xmake"),
 }
 lang["Civitasv/cmake-tools.nvim"] = {

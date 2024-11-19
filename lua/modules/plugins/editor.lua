@@ -29,10 +29,6 @@ editor["LunarVim/bigfile.nvim"] = {
     config = require("editor.bigfile"),
     cond = require("core.settings").load_big_files_faster,
 }
-editor["ojroques/nvim-bufdel"] = {
-    lazy = true,
-    cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
-}
 editor["folke/flash.nvim"] = {
     lazy = true,
     event = "VeryLazy",
@@ -94,11 +90,6 @@ editor["monaqa/dial.nvim"] = {
 editor["tpope/vim-sleuth"] = {
     lazy = true,
     event = { "BufNewFile", "BufReadPost", "BufFilePost" },
-}
-editor["mrjones2014/smart-splits.nvim"] = {
-    lazy = true,
-    event = { "CursorHoldI", "CursorHold" },
-    config = require("editor.smart-splits"),
 }
 editor["kevinhwang91/nvim-ufo"] = {
     lazy = true,

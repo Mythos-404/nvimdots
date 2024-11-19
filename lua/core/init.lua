@@ -12,7 +12,7 @@ local createdir = function()
     }
     -- Only check whether cache_dir exists, this would be enough.
     if vim.fn.isdirectory(global.cache_dir) == 0 then
-        vim.fn.mkdir(global.cache_dir --[[ @as string ]], "p")
+        vim.fn.mkdir(global.cache_dir, "p")
         for _, dir in pairs(data_dirs) do
             if vim.fn.isdirectory(dir) == 0 then vim.fn.mkdir(dir, "p") end
         end
@@ -96,7 +96,6 @@ local load_core = function()
     shell_config()
 
     require("core.options")
-    require("core.mapping")
     require("core.event")
     require("core.pack")
     require("keymap")

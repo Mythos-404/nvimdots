@@ -57,6 +57,11 @@ ui["karb94/neoscroll.nvim"] = {
     event = { "CursorHold", "CursorHoldI" },
     config = require("ui.neoscroll"),
 }
+ui["mrjones2014/smart-splits.nvim"] = {
+    lazy = true,
+    event = { "CursorHoldI", "CursorHold" },
+    config = require("ui.smart-splits"),
+}
 ui["folke/todo-comments.nvim"] = {
     lazy = true,
     event = { "CursorHold", "CursorHoldI" },
@@ -75,6 +80,10 @@ ui["echasnovski/mini.icons"] = {
 ui["stevearc/dressing.nvim"] = {
     event = "VeryLazy",
     config = require("ui.dressing"),
+}
+ui["ojroques/nvim-bufdel"] = {
+    lazy = true,
+    cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
 }
 
 return ui
