@@ -111,7 +111,7 @@ local plug_map = {
 
     -- Plugin: dap
     ["n|<F5>"] = map_callback(function()
-            require("dap").continue()
+            _async_compile_and_debug()
         end)
         :with_noremap()
         :with_silent()

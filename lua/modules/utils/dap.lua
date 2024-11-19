@@ -6,7 +6,11 @@ function M.input_args()
 end
 
 function M.input_exec_path()
-    return vim.fn.input('Path to executable (default to "a.out"): ', vim.fn.expand("%:p:h") .. "/a.out", "file")
+    return vim.fn.input(
+        'Path to executable (default to "filename.out"): ',
+        vim.fn.expand("%:p:h") .. "/" .. vim.fn.expand("%:t:r") .. ".out",
+        "file"
+    )
 end
 
 function M.input_file_path()
@@ -24,9 +28,7 @@ end
 return setmetatable({}, {
     __index = function(_, key)
         return function()
-            return function()
-                return M[key]()
-            end
+            return M[key]
         end
     end,
 })
