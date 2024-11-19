@@ -8,8 +8,8 @@
               .
               (string
                 (string_content) @injection.content))
- (#any-of? @_method "vim.split" "vim.gsplit")
- (#set! injection.language "luap"))
+  (#any-of? @_method "vim.split" "vim.gsplit")
+  (#set! injection.language "luap"))
 
 ;; Arbitrary string injections using `--> INJECT: <parser>`
 ;; local exec_lua = [[
@@ -26,6 +26,17 @@
      .
      (comment
        (comment_content) @injection.language))
+    (_
+      (block
+        (assignment_statement
+          (expression_list
+            (function_call
+              (arguments
+                (string
+                  (string_content) @injection.content))))))
+      .
+      (comment
+        (comment_content) @injection.language))
     (_
       (string
         (string_content) @injection.content)
