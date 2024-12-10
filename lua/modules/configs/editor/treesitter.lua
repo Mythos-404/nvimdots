@@ -4,16 +4,14 @@ return vim.schedule_wrap(function()
     vim.api.nvim_set_option_value("foldmethod", "expr", {})
     vim.api.nvim_set_option_value("foldexpr", "nvim_treesitter#foldexpr()", {})
 
-    vim.filetype.add({
-        pattern = {
-            [".*/hypr/.*/.*%.conf"] = "hyprlang",
-            [".*/hypr/.*%.conf"] = "hyprlang",
+    require("nvim-treesitter.parsers").get_parser_configs().caddy = {
+        install_info = {
+            url = "https://github.com/Samonitari/tree-sitter-caddy",
+            files = { "src/parser.c", "src/scanner.c" },
+            branch = "master",
         },
-        extension = {
-            frag = "glsl",
-            vert = "glsl",
-        },
-    })
+        filetype = "caddy",
+    }
 
     require("nvim-treesitter.configs").setup({
         ensure_installed = require("core.settings").treesitter_deps,
