@@ -22,7 +22,7 @@ return function()
             html = { "prettierd", "injected" },
             css = { "prettierd" },
             scss = { "prettierd" },
-            markdown = { "prettierd", "injected" },
+            markdown = { "mdformat" },
             json = { "prettierd" },
             jsonc = { "prettierd" },
 

@@ -1,4 +1,4 @@
-; extends
+;; extends
 
 (function_call
   name: (dot_index_expression) @_method
@@ -8,8 +8,8 @@
               .
               (string
                 (string_content) @injection.content))
-  (#any-of? @_method "vim.split" "vim.gsplit")
-  (#set! injection.language "luap"))
+ (#any-of? @_method "vim.split" "vim.gsplit")
+ (#set! injection.language "luap"))
 
 ;; Arbitrary string injections using `--> INJECT: <parser>`
 ;; local exec_lua = [[
