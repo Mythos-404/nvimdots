@@ -148,6 +148,11 @@ function Lazy:load_lazy()
         dev = {
             path = "~/dev/nvim",
         },
+        rocks = {
+            enabled = true,
+            hererocks = true,
+            root = data_dir .. "lazy-rocks",
+        },
     }
     if is_mac then lazy_settings.concurrency = 20 end
 

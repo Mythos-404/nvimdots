@@ -103,11 +103,6 @@ editor["kevinhwang91/nvim-ufo"] = {
         },
     },
 }
-editor["Vigemus/iron.nvim"] = {
-    lazy = true,
-    event = "VeryLazy",
-    config = require("editor.iron"),
-}
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --

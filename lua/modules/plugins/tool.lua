@@ -82,6 +82,16 @@ tool["mikesmithgh/kitty-scrollback.nvim"] = {
     event = { "User KittyScrollbackLaunch" },
     config = require("tool.kitty-scrollback"),
 }
+tool["Vigemus/iron.nvim"] = {
+    lazy = true,
+    event = "VeryLazy",
+    config = require("tool.iron"),
+}
+tool["3rd/image.nvim"] = {
+    lazy = true,
+    event = "VeryLazy",
+    config = require("tool.image"),
+}
 
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --

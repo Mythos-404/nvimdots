@@ -8,6 +8,11 @@ lang["kevinhwang91/nvim-bqf"] = {
         { "junegunn/fzf", build = ":call fzf#install()" },
     },
 }
+lang["stevearc/quicker.nvim"] = {
+    lazy = true,
+    ft = "qf",
+    config = require("lang.quicker"),
+}
 lang["ray-x/go.nvim"] = {
     lazy = true,
     dependencies = { -- optional packages
@@ -41,10 +46,10 @@ lang["iamcco/markdown-preview.nvim"] = {
     ft = "markdown",
     build = ":call mkdp#util#install()",
 }
-lang["AckslD/nvim-FeMaco.lua"] = {
+lang["MeanderingProgrammer/render-markdown.nvim"] = {
     lazy = true,
     ft = "markdown",
-    config = require("lang.femaco"),
+    config = require("lang.render-markdown"),
 }
 lang["chrisbra/csv.vim"] = {
     lazy = false,
@@ -65,10 +70,6 @@ lang["fabridamicelli/cronex.nvim"] = {
     lazy = true,
     ft = { "yaml", "yml", "tf", "cfg", "config", "conf" },
     config = require("lang.cronex"),
-}
-lang["kchmck/vim-coffee-script"] = {
-    lazy = true,
-    ft = { "coffee" },
 }
 lang["jbyuki/one-small-step-for-vimkind"] = {
     lazy = true,
