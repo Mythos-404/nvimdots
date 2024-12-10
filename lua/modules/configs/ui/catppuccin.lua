@@ -75,7 +75,7 @@ return function()
             mini = true,
             navic = { enabled = false },
             neogit = false,
-            neotest = false,
+            neotest = true,
             neotree = { enabled = false, show_root = true, transparent_panel = false },
             noice = true,
             notify = true,
@@ -172,9 +172,12 @@ return function()
                     },
 
                     -- For treesitter
-                    ["@keyword.return"] = { fg = cp.pink, style = clear },
                     ["@error.c"] = { fg = cp.none, style = clear },
                     ["@error.cpp"] = { fg = cp.none, style = clear },
+                    ["@keyword.return"] = { fg = cp.pink, style = clear },
+
+                    ["@function.test"] = { fg = "#7dc4e4" },
+                    ["@function.method.test"] = { fg = "#7dc4e4" },
                 }
             end,
         },

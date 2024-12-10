@@ -7,5 +7,10 @@ return function()
         use_icons = true, -- Requires nvim-web-devicons
         show_help_hints = true, -- Show hints for how to open the help panel
         watch_index = true, -- Update views and index buffers when the git index changes.
+        view = {
+            merge_tool = {
+                layout = "diff4_mixed",
+            },
+        },
     })
 end

@@ -101,6 +101,7 @@ local load_core = function()
     require("keymap")
 
     vim.api.nvim_set_option_value("background", settings.background, {})
+    vim.highlight.priorities.semantic_tokens = 95
     vim.cmd.colorscheme(settings.colorscheme)
 end
 
