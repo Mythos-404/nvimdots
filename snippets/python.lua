@@ -150,7 +150,7 @@ return {
 
     s(
         { trig = "init", desc = "Class init block" },
-        fmt("def __init__(self{}):{}", {
+        fmt("def __init__(self, {}):{}", {
             i(1),
             d(2, function(args)
                 ---@type string
@@ -159,12 +159,12 @@ return {
 
                 local tab = {}
                 local cnt = 1
-                for arg in (args):gmatch(" ?([^,]?:) ?") do
+                for arg in (args):gmatch(" ?([^,]*:) ?") do
                     if #arg == 0 then goto continue end
 
                     local colon = arg:find(":")
                     if colon then arg = arg:sub(1, colon - 1) end
-                    table.insert(tab, t({ "", indent_line("self.") }))
+                    table.insert(tab, indent_line("self."))
                     table.insert(tab, r(cnt, tostring(cnt), i(nil, arg)))
                     table.insert(tab, t(" = "))
                     table.insert(tab, t(arg))
