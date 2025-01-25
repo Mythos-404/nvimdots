@@ -24,8 +24,8 @@ local builtin_map = {
 bind.nvim_load_mapping(builtin_map)
 
 local plug_map = {
-    -- Plugin: nvim-bufdel
-    ["n|<A-q>"] = map_cr("BufDel"):with_noremap():with_silent():with_desc("buffer: Close current"),
+    -- Plugin: snacks
+    ["n|<A-q>"] = map_callback(Snacks.bufdelete):with_noremap():with_silent():with_desc("buffer: Close current"),
 
     -- Plugin: bufferline.nvim
     ["n|<A-i>"] = map_cr("BufferLineCycleNext"):with_noremap():with_silent():with_desc("buffer: Switch to next"),

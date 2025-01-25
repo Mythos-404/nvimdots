@@ -172,26 +172,40 @@ local plug_map = {
         :with_desc("edit: Preview all folds"),
 
     -- Plugin: refactoring.nvim
-    ["v|<leader>Rt"] = map_cu(":Refactor extract_to_file ")
+    ["v|<leader>Rt"] = map_cu(":Refactor extract_to_file")
         :with_silent()
         :with_noremap()
         :with_desc("refactoring: Extract to file"),
-    ["v|<leader>Rf"] = map_cu(":Refactor extract ")
+    ["v|<leader>Rf"] = map_cu(":Refactor extract")
         :with_silent()
         :with_noremap()
         :with_desc("refactoring: Extract function"),
-    ["v|<leader>Rv"] = map_cu(":Refactor extract_var ")
+    ["v|<leader>Rv"] = map_cu(":Refactor extract_var")
         :with_silent()
         :with_noremap()
         :with_desc("refactoring: Extract variable"),
-    ["n|<leader>Rf"] = map_cu(":Refactor inlien_func ")
+    ["n|<leader>Rf"] = map_cu(":Refactor inlien_func")
         :with_silent()
         :with_noremap()
         :with_desc("refactoring: Inline variable"),
-    ["n|<leader>Rv"] = map_cu(":Refactor inline_var ")
+    ["n|<leader>Rv"] = map_cu(":Refactor inline_var")
         :with_silent()
         :with_noremap()
         :with_desc("refactoring: Inline variable"),
+
+    -- Plugin: snacks.nvim
+    ["n|<leader>S"] = map_callback(Snacks.scratch)
+        :with_silent()
+        :with_noremap()
+        :with_desc("snacks: Toggle scratch buffer"),
+    ["n|<leader>."] = map_callback(Snacks.scratch.select)
+        :with_silent()
+        :with_noremap()
+        :with_desc("snacks: Select scratch buffer"),
+    ["n|<leader>gg"] = map_callback(Snacks.lazygit)
+        :with_noremap()
+        :with_silent()
+        :with_desc("git: Toggle lazygit"),
 }
 
 bind.nvim_load_mapping(plug_map)

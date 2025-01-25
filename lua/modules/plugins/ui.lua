@@ -5,7 +5,7 @@ ui["goolord/alpha-nvim"] = {
     event = "BufWinEnter",
     config = require("ui.alpha"),
 }
-ui["Jint-lzxy/nvim"] = {
+ui["Mythos-404/nvim"] = {
     lazy = false,
     branch = "refactor/syntax-highlighting",
     name = "catppuccin",
@@ -51,11 +51,6 @@ ui["lukas-reineke/indent-blankline.nvim"] = {
     tag = "v3.8.2",
     event = { "CursorHold", "CursorHoldI" },
     config = require("ui.indent-blankline"),
-}
-ui["karb94/neoscroll.nvim"] = {
-    lazy = true,
-    event = { "CursorHold", "CursorHoldI" },
-    config = require("ui.neoscroll"),
 }
 ui["mrjones2014/smart-splits.nvim"] = {
     lazy = true,

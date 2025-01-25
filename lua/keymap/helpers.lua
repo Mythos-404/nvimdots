@@ -20,20 +20,6 @@ _G._flash_esc_or_noh = function()
     state:hide()
 end
 
-local _lazygit = nil
-_G._toggle_lazygit = function()
-    if not vim.fn.executable("lazygit") == 1 then
-        return vim.notify("Command [lazygit] not found!", vim.log.levels.ERROR, { title = "toggleterm.nvim" })
-    end
-    if _lazygit then _lazygit:toggle() end
-    _lazygit = require("toggleterm.terminal").Terminal:new({
-        cmd = "lazygit",
-        direction = "float",
-        close_on_exit = true,
-        hidden = true,
-    })
-end
-
 _G._mini_file_open = function()
     if not MiniFiles.close() then
         local file = vim.api.nvim_buf_get_name(0)

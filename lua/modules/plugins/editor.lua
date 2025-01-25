@@ -24,10 +24,10 @@ editor["altermo/ultimate-autopair.nvim"] = {
     event = { "InsertEnter", "CmdlineEnter" },
     config = require("editor.ultimate-autopair"),
 }
-editor["LunarVim/bigfile.nvim"] = {
+editor["folke/snacks.nvim"] = {
+    priority = 1000,
     lazy = false,
-    config = require("editor.bigfile"),
-    cond = require("core.settings").load_big_files_faster,
+    config = require("editor.snacks"),
 }
 editor["folke/flash.nvim"] = {
     lazy = true,

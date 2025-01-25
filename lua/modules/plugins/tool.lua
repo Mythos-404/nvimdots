@@ -75,13 +75,6 @@ tool["meznaric/key-analyzer.nvim"] = {
     cmd = "KeyAnalyzer",
     config = require("tool.key-analyzer"),
 }
-tool["mikesmithgh/kitty-scrollback.nvim"] = {
-    version = "*",
-    lazy = true,
-    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
-    event = { "User KittyScrollbackLaunch" },
-    config = require("tool.kitty-scrollback"),
-}
 tool["Vigemus/iron.nvim"] = {
     lazy = true,
     event = "VeryLazy",
