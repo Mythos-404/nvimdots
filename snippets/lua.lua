@@ -1,9 +1,4 @@
 ---@diagnostic disable: undefined-global
-
-local function indent_str()
-    return (" "):rep(tonumber(require("modules.utils").get_indent()) --[[ @as number]])
-end
-
 local match_tsnode = {
     query = [[
         [
@@ -104,7 +99,7 @@ return {
         fmt("function {module_name}.{}({})\n{}\nend", {
             i(2, "name"),
             i(3, "args"),
-            sn(0, { t(indent_str()), i(1) }),
+            sn(0, { t("\t"), i(1) }),
             module_name = d(1, function()
                 local m_key_name = vim.iter({
                     get_treesitte_query_parse(
@@ -160,18 +155,16 @@ return {
             matchTSNode = match_tsnode,
         },
         c(1, {
-            fmt("for {}, {} in pairs({}) do\n{}{}\nend", {
+            fmt("for {}, {} in pairs({}) do\n\t{}\nend", {
                 i(1, "k"),
                 i(2, "v"),
                 l(l.LS_TSMATCH),
-                t(indent_str()),
                 i(3),
             }),
-            fmt("for {}, {} in ipairs({}) do\n{}{}\nend", {
+            fmt("for {}, {} in ipairs({}) do\n\t{}\nend", {
                 i(1, "i"),
                 i(2, "v"),
                 l(l.LS_TSMATCH),
-                t(indent_str()),
                 i(3),
             }),
         })
@@ -183,5 +176,5 @@ return {
         reparseBuffer = "live",
         wordTrig = false,
         matchTSNode = match_tsnode,
-    }, fmt("if not {} then\n{}{}\nend", { l(l.LS_TSMATCH), t(indent_str()), i(0) })),
+    }, fmt("if not {} then\n\t{}\nend", { l(l.LS_TSMATCH), i(0) })),
 }

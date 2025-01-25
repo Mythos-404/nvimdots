@@ -1,13 +1,5 @@
 ---@diagnostic disable: undefined-global
 
-local function indent_str()
-    return (" "):rep(tonumber(require("modules.utils").get_indent()) --[[ @as number]])
-end
-
-local function indent_line(end_str)
-    return sn(nil, { t({ "", indent_str() .. end_str }) })
-end
-
 local function build_function_snippet(multiline)
     local function _snippet(args, _, _, user_args)
         if not user_args then
@@ -46,7 +38,7 @@ local function build_function_snippet(multiline)
             choices,
             sn(nil, {
                 i(1),
-                multiline and indent_line("-> ") or t(" -> "),
+                multiline and t({ "", "\t-> " }) or t(" -> "),
                 d(2, wrapper, nil),
             })
         )
@@ -66,19 +58,19 @@ return {
         i(1, "Type"),
         c(2, {
             d(1, function()
-                return indent_line("= ")
+                return t({ "", "\t= " })
             end),
             sn(nil, {
                 t(""),
                 i(1, "a"),
                 d(2, function()
-                    return indent_line("= ")
+                    return t({ "", "\t= " })
                 end),
             }),
         }),
         i(3, "Constructor"),
         d(4, function()
-            return indent_line("= ")
+            return t({ "", "\t= " })
         end),
         i(5, "Constructor"),
         d(
@@ -90,7 +82,7 @@ return {
                             t(""),
                             sn(nil, {
                                 d(1, function()
-                                    return sn(nil, { t({ "", indent_str() .. "| " }) })
+                                    return sn(nil, { t({ "", "\t| " }) })
                                 end),
                                 i(2, "Constructor"),
                                 d(3, adt_constructor_choice),
@@ -130,19 +122,19 @@ return {
         i(1, "Type"),
         c(2, {
             d(1, function()
-                return indent_line("= ")
+                return t({ "", "\t= " })
             end),
             sn(nil, {
                 t(" "),
                 i(1, "a"),
                 d(2, function()
-                    return indent_line("= ")
+                    return t({ "", "\t= " })
                 end),
             }),
         }),
         i(3, "Constructor"),
         d(4, function()
-            return indent_line("{ ")
+            return t({ "", "\t{ " })
         end),
         i(5),
         t(" :: "),
@@ -155,13 +147,13 @@ return {
                             sn(nil, {
                                 i(1),
                                 d(2, function()
-                                    return indent_line("}")
+                                    return t({ "", "\t}" })
                                 end),
                             }),
                             sn(nil, {
                                 i(1),
                                 d(2, function()
-                                    return indent_line(", ")
+                                    return t({ "", "\t, " })
                                 end),
                                 i(3),
                                 t(" :: "),
@@ -177,14 +169,14 @@ return {
             t(""),
             sn(nil, {
                 d(1, function()
-                    return indent_line("deriving (")
+                    return t({ "", "\tderiving (" })
                 end),
                 i(2),
                 t(")"),
             }),
             sn(nil, {
                 d(1, function()
-                    return indent_line("deriving ")
+                    return t({ "", "\tderiving " })
                 end),
                 i(2),
             }),
@@ -198,7 +190,7 @@ return {
         t("class "),
         i(1),
         d(2, function()
-            return sn(nil, { t({ " where", indent_str() }) })
+            return sn(nil, { t(" where\t") })
         end),
     }),
 
@@ -211,7 +203,7 @@ return {
             i(1, "Class"),
             i(2, "Type"),
             d(3, function()
-                return sn(nil, { t({ "where", indent_str() }) })
+                return sn(nil, { t("where\t") })
             end),
         })
     ),
@@ -242,7 +234,7 @@ return {
     }, {
         i(1, "someFunc"),
         d(2, function()
-            return indent_line(":: ")
+            return t({ "", "\t:: " })
         end),
         d(3, build_function_snippet(true), { 1 }),
     }),
