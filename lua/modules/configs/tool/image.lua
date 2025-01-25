@@ -17,10 +17,10 @@ return function()
                 filetypes = { "norg" },
             },
             html = {
-                enabled = true,
+                enabled = false,
             },
             css = {
-                enabled = true,
+                enabled = false,
             },
         },
     })
