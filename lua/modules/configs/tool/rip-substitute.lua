@@ -11,8 +11,8 @@ return function()
         keymaps = { -- normal & visual mode
             confirm = "<CR>",
             abort = "q",
-            prevSubst = "<C-p>",
-            nextSubst = "<C-n>",
+            prevSubstitutionInHistory = "<C-p>",
+            nextSubstitutionInHistory = "<C-n>",
         },
         incrementalPreview = {
             replacementDisplay = "sideBySide", -- "sideBySide"|"overlay"
