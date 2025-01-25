@@ -200,7 +200,7 @@ return function()
             function()
                 local bufnr = vim.api.nvim_get_current_buf()
                 local buf_ft = vim.bo.filetype
-                local clients = vim.lsp.get_clients({ buffer = bufnr })
+                local clients = vim.lsp.get_clients({ bufnr = bufnr })
                 local available_servers = vim.iter(clients):fold({}, function(acc, client)
                     local filetypes = client.config.filetypes
                     if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then table.insert(acc, client.name) end
