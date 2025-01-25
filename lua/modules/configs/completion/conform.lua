@@ -18,7 +18,6 @@ return function()
             javascript = { "prettierd" },
             typescriptreact = { "prettierd" },
             javascriptreact = { "prettierd" },
-            yaml = { "prettierd" },
             html = { "prettierd", "injected" },
             css = { "prettierd" },
             scss = { "prettierd" },
@@ -35,6 +34,11 @@ return function()
             python = { "ruff_format", "ruff_organize_imports", "injected" },
 
             lua = { "stylua", "injected" },
+
+            yaml = { "yamlfmt" },
+
+            glsl = { lsp_format = "fallback" },
+            toml = { lsp_format = "fallback" },
         },
     })
 
