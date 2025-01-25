@@ -84,12 +84,13 @@ end
 function M.format(opts)
     local conform = require("conform")
     local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
-    local clients = vim.iter(conform.list_formatters_to_run(bufnr))
+    local clients, is_lsp_format = conform.list_formatters_to_run(bufnr)
+    clients = vim.iter(clients)
         :filter(function(client)
             return client.name ~= "injected"
         end)
         :totable()
-    if next(clients) == nil then
+    if not is_lsp_format and next(clients) == nil then
         vim.notify(
             "[LSP] Format request failed, no matching language servers.",
             vim.log.levels.WARN,
@@ -133,21 +134,35 @@ function M.format(opts)
         bufnr = bufnr,
         timeout_ms = opts.timeout_ms,
     }, function(err)
+        if is_lsp_format then
+            if err then
+                vim.notify(("[LSP] %s"):format(err), vim.log.levels.ERROR, { title = "LSP Format Error" })
+                return
+            end
+            if format_notify then
+                vim.notify("[LSP] Format successfully!", vim.log.levels.INFO, { title = "LSP Format Success" })
+                return
+            end
+        end
         local client_names = table.concat(
-            vim.iter(clients):fold({}, function(acc, client)
-                table.insert(acc, client.name)
-                return acc
-            end),
+            vim.iter(clients)
+                :map(function(client)
+                    return client.name
+                end)
+                :totable(),
             ", "
         )
-        if format_notify and not err then
+        if err then
+            vim.notify(("[LSP][%s] %s"):format(client_names, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
+            return
+        end
+        if format_notify then
             vim.notify(
                 ("[LSP] Format successfully with [%s]!"):format(client_names),
                 vim.log.levels.INFO,
                 { title = "LSP Format Success" }
             )
-        else
-            vim.notify(("[LSP][%s] %s"):format(client_names, err), vim.log.levels.ERROR, { title = "LSP Format Error" })
+            return
         end
     end)
 end
