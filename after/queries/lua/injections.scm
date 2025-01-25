@@ -51,3 +51,16 @@
       (comment
         (comment_content) @injection.language))]
   (#gsub! @injection.language "^> INJECT: ([%w_]+)$" "%1"))
+
+(_
+  (comment
+    (comment_content) @injection.language)
+  .
+  [
+   (string
+    (string_content) @injection.content)
+   (expression_list
+    (string
+        (string_content) @injection.content))]
+  (#gsub! @injection.language "%s*([%w%p]+)%s*" "%1")
+  (#set! injection.combined))
