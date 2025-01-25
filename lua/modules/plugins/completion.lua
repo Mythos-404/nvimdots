@@ -66,5 +66,19 @@ completion["iguanacucumber/magazine.nvim"] = {
         { "ray-x/cmp-treesitter", commit = "c8e3a74" },
     },
 }
+-- completion["saghen/blink.cmp"] = {
+--     lazy = true,
+--     version = "*",
+--     event = { "InsertEnter", "CmdlineEnter" },
+--     config = require("completion.blink"),
+--     dependencies = {
+--         {
+--             "L3MON4D3/LuaSnip",
+--             build = "make install_jsregexp",
+--             config = require("completion.luasnip"),
+--         },
+--     },
+--     opts_extend = { "sources.completion.enabled_providers" },
+-- }
 
 return completion

@@ -50,6 +50,7 @@ return function()
             alpha = false,
             barbar = false,
             beacon = false,
+            blink_cmp = true,
             cmp = true,
             coc_nvim = false,
             dap = true,
