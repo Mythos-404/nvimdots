@@ -12,6 +12,7 @@ vim.filetype.add({
     extension = {
         frag = "glsl",
         vert = "glsl",
+        mdx = "markdown",
     },
 })
 vim.treesitter.language.register("bash", "dotenv")
