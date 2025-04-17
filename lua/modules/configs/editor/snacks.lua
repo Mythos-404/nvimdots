@@ -5,12 +5,6 @@ return function()
             easing = "linear",
             fps = 150,
         },
-        bigfile = {
-            enabled = require("core.settings").load_big_files_faster,
-            notify = false, -- show notification when big file detected
-            size = 1 * 1024 * 1024, -- 1MB
-            setup = function() end,
-        },
         scroll = {
             enabled = true,
             animate = {

@@ -24,6 +24,14 @@ editor["altermo/ultimate-autopair.nvim"] = {
     event = { "InsertEnter", "CmdlineEnter" },
     config = require("editor.ultimate-autopair"),
 }
+editor["pteroctopus/faster.nvim"] = {
+    lazy = false,
+    cond = require("core.settings").load_big_files_faster,
+}
+editor["ojroques/nvim-bufdel"] = {
+    lazy = true,
+    cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
+}
 editor["folke/snacks.nvim"] = {
     priority = 1000,
     lazy = false,

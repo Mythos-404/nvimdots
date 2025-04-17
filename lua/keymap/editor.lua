@@ -194,7 +194,7 @@ local plug_map = {
         :with_desc("refactoring: Inline variable"),
 
     -- Plugin: snacks.nvim
-    ["n|<leader>S"] = map_callback(Snacks.scratch)
+    ["n|<leader>`"] = map_callback(Snacks.scratch)
         :with_silent()
         :with_noremap()
         :with_desc("snacks: Toggle scratch buffer"),
@@ -203,8 +203,8 @@ local plug_map = {
         :with_noremap()
         :with_desc("snacks: Select scratch buffer"),
     ["n|<leader>gg"] = map_callback(Snacks.lazygit)
-        :with_noremap()
         :with_silent()
+        :with_noremap()
         :with_desc("git: Toggle lazygit"),
 }
 
