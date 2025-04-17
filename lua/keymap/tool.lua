@@ -194,7 +194,7 @@ local plug_map = {
         :with_silent()
         :with_desc("translate: To EN"),
 
-    -- iron.nvim
+    -- Plugin: iron.nvim
     ["n|<C-c><C-f>"] = map_callback(function()
             require("iron.core").send_file()
         end)
@@ -243,6 +243,36 @@ local plug_map = {
         :with_noremap()
         :with_silent()
         :with_desc("repl: Close repl"),
+
+    -- Plugin: overseer.nvim
+    ["n|<leader>ow"] = map_cmd("<Cmd>OverseerToggle<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Task list"),
+    ["n|<leader>oo"] = map_cmd("<Cmd>OverseerRun<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Run task"),
+    ["n|<leader>oq"] = map_cmd("<Cmd>OverseerQuickAction<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Action recent task"),
+    ["n|<leader>oi"] = map_cmd("<Cmd>OverseerInfo<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Overseer Info"),
+    ["n|<leader>ob"] = map_cmd("<Cmd>OverseerBuild<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Task builder"),
+    ["n|<leader>ot"] = map_cmd("<Cmd>OverseerTaskAction<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Task action"),
+    ["n|<leader>oc"] = map_cmd("<Cmd>OverseerClearCache<CR>")
+        :with_noremap()
+        :with_silent()
+        :with_desc("overseer: Clear cache"),
 }
 
 bind.nvim_load_mapping(plug_map)
