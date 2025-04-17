@@ -111,6 +111,11 @@ editor["kevinhwang91/nvim-ufo"] = {
         },
     },
 }
+editor["MagicDuck/grug-far.nvim"] = {
+    lazy = true,
+    cmd = "GrugFar",
+    config = require("editor.grug-far"),
+}
 
 ----------------------------------------------------------------------
 --                  :treesitter related plugins                    --

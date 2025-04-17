@@ -64,6 +64,7 @@ return function()
             gitsigns = true,
             harpoon = false,
             headlines = false,
+            grug_far = true,
             hop = true,
             illuminate = true,
             indent_blankline = { enabled = true, colored_indent_levels = false },

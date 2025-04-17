@@ -206,6 +206,32 @@ local plug_map = {
         :with_silent()
         :with_noremap()
         :with_desc("git: Toggle lazygit"),
+
+    -- Plugin: grug-far
+    ["n|<leader>Ss"] = map_callback(function()
+            require("grug-far").open()
+        end)
+        :with_silent()
+        :with_noremap()
+        :with_desc("editn: Toggle search & replace panel"),
+    ["n|<leader>Sp"] = map_callback(function()
+            require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+        end)
+        :with_silent()
+        :with_noremap()
+        :with_desc("editn: search&replace current word (project)"),
+    ["v|<leader>Sp"] = map_callback(function()
+            require("grug-far").with_visual_selection()
+        end)
+        :with_silent()
+        :with_noremap()
+        :with_desc("edit: search & replace current word (project)"),
+    ["n|<leader>Sf"] = map_callback(function()
+            require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } })
+        end)
+        :with_silent()
+        :with_noremap()
+        :with_desc("editn: search & replace current word (file)"),
 }
 
 bind.nvim_load_mapping(plug_map)
