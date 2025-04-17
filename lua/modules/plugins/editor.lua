@@ -44,10 +44,10 @@ editor["sindrets/diffview.nvim"] = {
     cmd = { "DiffviewOpen", "DiffviewClose" },
     config = require("editor.diffview"),
 }
-editor["tzachar/local-highlight.nvim"] = {
+editor["echasnovski/mini.cursorword"] = {
     lazy = true,
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
-    config = require("editor.local-highlight"),
+    config = require("editor.cursorword"),
 }
 editor["romainl/vim-cool"] = {
     lazy = true,
