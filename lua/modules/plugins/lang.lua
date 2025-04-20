@@ -68,7 +68,7 @@ lang["Civitasv/cmake-tools.nvim"] = {
 }
 lang["fabridamicelli/cronex.nvim"] = {
     lazy = true,
-    ft = { "yaml", "yml", "tf", "cfg", "config", "conf" },
+    ft = { "yaml.ghaction", "yaml", "yml", "tf", "cfg", "config", "conf" },
     config = require("lang.cronex"),
 }
 lang["jbyuki/one-small-step-for-vimkind"] = {
