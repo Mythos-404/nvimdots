@@ -263,6 +263,16 @@ function M.gen_cursorword_hl()
     set_global_hl("MiniCursorwordCurrent", nil)
 end
 
+-- Generate highlight groups for symbol-usage. Existing attributes will NOT be overwritten
+function M.gen_symbol_usage_hl()
+    local colors = M.get_palette()
+    set_global_hl("SymbolUsageRef", colors.blue, M.darken(colors.surface1, 0.7, colors.base), true)
+    set_global_hl("SymbolUsageDef", colors.yellow, M.darken(colors.surface1, 0.7, colors.base), true)
+    set_global_hl("SymbolUsageImpl", colors.mauve, M.darken(colors.surface1, 0.7, colors.base), true)
+    set_global_hl("SymbolUsageContent", colors.subtext0, M.darken(colors.surface1, 0.7, colors.base), true)
+    set_global_hl("SymbolUsageRounding", M.darken(colors.surface1, 0.7, colors.base), nil, true)
+end
+
 ---Convert number (0/1) to boolean
 ---@param value number @The value to check
 ---@return boolean|nil @Returns nil if failed

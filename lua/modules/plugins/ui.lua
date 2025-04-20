@@ -48,7 +48,6 @@ ui["Bekaboo/dropbar.nvim"] = {
 }
 ui["lukas-reineke/indent-blankline.nvim"] = {
     lazy = true,
-    tag = "v3.8.2",
     event = { "CursorHold", "CursorHoldI" },
     config = require("ui.indent-blankline"),
 }
@@ -79,6 +78,11 @@ ui["stevearc/dressing.nvim"] = {
 ui["ojroques/nvim-bufdel"] = {
     lazy = true,
     cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
+}
+ui["Wansmer/symbol-usage.nvim"] = {
+    lazy = true,
+    event = "LspAttach",
+    config = require("ui.symbol-usage"),
 }
 
 return ui
