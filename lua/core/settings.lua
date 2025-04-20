@@ -28,6 +28,10 @@ settings["format_disabled_dirs"] = {
 ---@type table<string, boolean>
 settings["formatter_block_list"] = {}
 
+-- Set it to false if diagnostics underline is annoying.
+---@type boolean
+settings["diagnostics_underline"] = false
+
 -- Set it to false if diagnostics virtual text is annoying.
 -- If disabled, you may browse lsp diagnostics using trouble.nvim (press `gt` to toggle it).
 ---@type boolean

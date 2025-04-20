@@ -1,6 +1,7 @@
 local M = {}
 
 M.setup = function()
+    local diagnostics_underline = require("core.settings").diagnostics_underline
     local diagnostics_virtual_text = require("core.settings").diagnostics_virtual_text
     local diagnostics_virtual_lines = require("core.settings").diagnostics_virtual_lines
     local diagnostics_level = require("core.settings").diagnostics_level
@@ -15,7 +16,7 @@ M.setup = function()
 
     vim.diagnostic.config({
         signs = true,
-        underline = false,
+        underline = diagnostics_underline,
         virtual_text = diagnostics_virtual_text and {
             severity = {
                 min = vim.diagnostic.severity[diagnostics_level],
