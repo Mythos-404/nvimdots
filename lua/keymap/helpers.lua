@@ -28,3 +28,38 @@ _G._mini_file_open = function()
         MiniFiles.reveal_cwd()
     end
 end
+
+_G._toggle_inlayhint = function()
+    local is_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+
+    vim.lsp.inlay_hint.enable(not is_enabled)
+    vim.notify(
+        (is_enabled and "Inlay hint disabled successfully" or "Inlay hint enabled successfully"),
+        vim.log.levels.INFO,
+        { title = "LSP Inlay Hint" }
+    )
+end
+
+_G._toggle_virtualtext = function()
+    local _vt_enabled = require("core.settings").diagnostics_virtual_text
+    if _vt_enabled then
+        local vt_config = not vim.diagnostic.config().virtual_text
+        vim.diagnostic.config({ virtual_text = vt_config })
+        vim.notify(
+            (vt_config and "Virtual text is now displayed" or "Virtual text is now hidden"),
+            vim.log.levels.INFO,
+            { title = "LSP Diagnostic" }
+        )
+    end
+
+    local _vl_enabled = require("core.settings").diagnostics_virtual_lines
+    if _vl_enabled then
+        local vl_config = not vim.diagnostic.config().virtual_lines
+        vim.diagnostic.config({ virtual_lines = vl_config })
+        vim.notify(
+            (vl_config and "Virtual lines is now displayed" or "Virtual lines is now hidden"),
+            vim.log.levels.INFO,
+            { title = "LSP Diagnostic" }
+        )
+    end
+end

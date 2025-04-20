@@ -33,6 +33,11 @@ settings["formatter_block_list"] = {}
 ---@type boolean
 settings["diagnostics_virtual_text"] = true
 
+-- Set it to false if diagnostics virtual lines is annoying.
+-- NOTE: This entry is an alternative form to `diagnostics_virtual_text`.
+---@type boolean
+settings["diagnostics_virtual_lines"] = false
+
 -- Set it to one of the values below if you want to change the visible severity level of lsp diagnostics.
 -- Priority: `Error` > `Warning` > `Information` > `Hint`.
 --  > e.g. if you set this option to `Warning`, only lsp warnings and errors will be shown.

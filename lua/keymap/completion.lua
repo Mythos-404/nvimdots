@@ -66,6 +66,18 @@ function mapping.lsp(buf)
             :with_silent()
             :with_buffer(buf)
             :with_desc("lsp: Show outgoing calls"),
+        ["n|<leader>lv"] = map_callback(function()
+                _toggle_virtualtext()
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("lsp: Toggle virtual text display"),
+        ["n|<leader>lh"] = map_callback(function()
+                _toggle_inlayhint()
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("lsp: Toggle inlay hints display"),
     }
     bind.nvim_load_mapping(map)
 end
