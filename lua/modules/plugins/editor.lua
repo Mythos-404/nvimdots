@@ -143,10 +143,11 @@ editor["nvim-treesitter/nvim-treesitter"] = {
             "ThePrimeagen/refactoring.nvim",
             config = require("editor.refacotring"),
         },
-        -- {
-        --     "hiphish/rainbow-delimiters.nvim",
-        --     config = require("editor.rainbow_delims"),
-        -- },
+        {
+            "hiphish/rainbow-delimiters.nvim",
+            submodules = false,
+            config = require("editor.rainbow_delims"),
+        },
         {
             "brenoprata10/nvim-highlight-colors",
             config = require("editor.highlight-colors"),
