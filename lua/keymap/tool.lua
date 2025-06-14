@@ -102,6 +102,10 @@ local plug_map = {
         :with_noremap()
         :with_silent()
         :with_desc("tool: Miscellaneous"),
+    ["n|<leader>fr"] = map_cr("Telescope resume")
+        :with_noremap()
+        :with_silent()
+        :with_desc("tool: Resume last search"),
 
     -- Plugin: dap
     ["n|<F5>"] = map_callback(function()
@@ -245,14 +249,8 @@ local plug_map = {
         :with_desc("repl: Close repl"),
 
     -- Plugin: overseer.nvim
-    ["n|<leader>ow"] = map_cmd("<Cmd>OverseerToggle<CR>")
-        :with_noremap()
-        :with_silent()
-        :with_desc("overseer: Task list"),
-    ["n|<leader>oo"] = map_cmd("<Cmd>OverseerRun<CR>")
-        :with_noremap()
-        :with_silent()
-        :with_desc("overseer: Run task"),
+    ["n|<leader>ow"] = map_cmd("<Cmd>OverseerToggle<CR>"):with_noremap():with_silent():with_desc("overseer: Task list"),
+    ["n|<leader>oo"] = map_cmd("<Cmd>OverseerRun<CR>"):with_noremap():with_silent():with_desc("overseer: Run task"),
     ["n|<leader>oq"] = map_cmd("<Cmd>OverseerQuickAction<CR>")
         :with_noremap()
         :with_silent()
