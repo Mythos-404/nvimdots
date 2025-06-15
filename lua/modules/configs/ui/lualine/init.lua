@@ -373,6 +373,10 @@ return function()
             },
             lualine_x = {
                 {
+                    require("modules.configs.ui.lualine.components.chat_progress"),
+                    color = utils.gen_hl("yellow", true, true),
+                },
+                {
                     "encoding",
                     show_bomb = true,
                     fmt = string.upper,

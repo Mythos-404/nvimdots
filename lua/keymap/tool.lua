@@ -102,10 +102,7 @@ local plug_map = {
         :with_noremap()
         :with_silent()
         :with_desc("tool: Miscellaneous"),
-    ["n|<leader>fr"] = map_cr("Telescope resume")
-        :with_noremap()
-        :with_silent()
-        :with_desc("tool: Resume last search"),
+    ["n|<leader>fr"] = map_cr("Telescope resume"):with_noremap():with_silent():with_desc("tool: Resume last search"),
 
     -- Plugin: dap
     ["n|<F5>"] = map_callback(function()
@@ -271,6 +268,26 @@ local plug_map = {
         :with_noremap()
         :with_silent()
         :with_desc("overseer: Clear cache"),
+
+    -- Plugin: CodeCompanion
+    ["n|<leader>cs"] = map_callback(function()
+            _select_chat_model()
+        end)
+        :with_noremap()
+        :with_silent()
+        :with_desc("tool: Select Chat Model"),
+    ["nv|<leader>cc"] = map_cr("CodeCompanionChat Toggle")
+        :with_noremap()
+        :with_silent()
+        :with_desc("tool: Toggle CodeCompanion"),
+    ["nv|<leader>ck"] = map_cr("CodeCompanionActions")
+        :with_noremap()
+        :with_silent()
+        :with_desc("tool: CodeCompanion Actions"),
+    ["v|<leader>ca"] = map_cr("CodeCompanionChat Add")
+        :with_noremap()
+        :with_silent()
+        :with_desc("tool: Add selection to CodeCompanion Chat"),
 }
 
 bind.nvim_load_mapping(plug_map)

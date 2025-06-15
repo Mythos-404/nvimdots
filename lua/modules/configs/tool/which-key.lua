@@ -4,6 +4,7 @@ return function()
         misc = require("modules.utils.icons").get("misc"),
         git = require("modules.utils.icons").get("git", true),
         cmp = require("modules.utils.icons").get("cmp", true),
+        aichat = require("modules.utils.icons").get("aichat", true),
     }
 
     require("which-key").setup({
@@ -68,6 +69,7 @@ return function()
             { "<leader>S", mode = "n", group = "Search", icon = icons.ui.Search },
             { "<leader>s", mode = "n", group = "Session", icon = icons.cmp.tmux },
             { "<leader>W", mode = "n", group = "Window", icon = icons.ui.Window },
+            { "<leader>c", mode = "n", group = "Chat", icon = icons.aichat.Chat },
 
             { "<leader>R", mode = "nx", group = "Refactor", icon = "" },
             { "<leader>c", mode = "nx", group = "Repl", icon = "" },

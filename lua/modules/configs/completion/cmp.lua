@@ -30,6 +30,32 @@ return function()
         return (diff < 0)
     end
 
+    local use_copilot = require("core.settings").use_copilot
+    local comparators = {
+        use_copilot == true and require("copilot_cmp.comparators").prioritize or function(_, _) end,
+        use_copilot == true and require("copilot_cmp.comparators").score or function(_, _) end,
+        compare.offset, -- Items closer to cursor will have lower priority
+        compare.exact,
+        function(entry1, entry2)
+            local _, entry1_under = entry1.completion_item.label:find("^_+")
+            local _, entry2_under = entry2.completion_item.label:find("^_+")
+            entry1_under = entry1_under or 0
+            entry2_under = entry2_under or 0
+            if entry1_under > entry2_under then
+                return false
+            elseif entry1_under < entry2_under then
+                return true
+            end
+        end,
+        compare.lsp_scores,
+        compare.sort_text,
+        compare.score,
+        compare.recently_used,
+        compare.kind,
+        compare.length,
+        compare.order,
+    }
+
     local cmp = require("cmp")
     cmp.setup({
         enabled = function()
@@ -50,28 +76,7 @@ return function()
         },
         sorting = {
             priority_weight = 2,
-            comparators = {
-                compare.offset, -- Items closer to cursor will have lower priority
-                compare.exact,
-                function(entry1, entry2)
-                    local _, entry1_under = entry1.completion_item.label:find("^_+")
-                    local _, entry2_under = entry2.completion_item.label:find("^_+")
-                    entry1_under = entry1_under or 0
-                    entry2_under = entry2_under or 0
-                    if entry1_under > entry2_under then
-                        return false
-                    elseif entry1_under < entry2_under then
-                        return true
-                    end
-                end,
-                compare.lsp_scores,
-                compare.sort_text,
-                compare.score,
-                compare.recently_used,
-                compare.kind,
-                compare.length,
-                compare.order,
-            },
+            comparators = comparators,
         },
         formatting = {
             fields = { "abbr", "kind", "menu" },
@@ -84,6 +89,7 @@ return function()
                 )
 
                 vim_item.menu = setmetatable({
+                    copilot = "[CPLT]",
                     buffer = "[BUF]",
                     orgmode = "[ORG]",
                     nvim_lsp = "[LSP]",
@@ -192,6 +198,7 @@ return function()
                     end,
                 },
             },
+            { name = "copilot" },
         },
         experimental = {
             ghost_text = {

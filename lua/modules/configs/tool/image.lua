@@ -1,5 +1,6 @@
 return function()
     if vim.g.neovide then return end
+    if require("core.global").is_windows then return end
     require("image").setup({
         backend = "kitty",
         integrations = {

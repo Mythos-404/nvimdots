@@ -4,6 +4,10 @@ local settings = {}
 ---@type boolean
 settings["use_ssh"] = true
 
+-- Set it to false if you don't use copilot
+---@type boolean
+settings["use_copilot"] = true
+
 -- Set it to false if you want to turn off LSP Inlay Hints
 ---@type boolean
 settings["lsp_inlayhints"] = true
@@ -160,6 +164,32 @@ settings["neovide_config"] = {
     cursor_vfx_particle_lifetime = 1.4,
     cursor_vfx_particle_speed = 20.0,
     cursor_vfx_particle_density = 7.0,
+}
+
+-- Set it to false if you don't use AI chat functionality.
+---@type boolean
+settings["use_chat"] = true
+
+-- Set the language to use for AI chat response here.
+--- @type string
+settings["chat_lang"] = "Chinese"
+
+-- Set environment variable here to read API key for AI chat.
+-- or you can set it to a command that reads the API key from your password manager.
+-- e.g. "cmd:op read op://personal/OpenAI/credential --no-new
+--- @type string
+settings["chat_api_key"] = ("cmd:gpg --batch --quiet --decrypt %s/.api_key.gpg"):format(require("core.global").home)
+
+-- Set the chat models here and use the first entry as default model.
+-- We use `openrouter` as the chat model provider by default (No vested interest).
+-- You need to register an account on openrouter and generate an api key.
+-- We read the api key by reading the env variable: `CODE_COMPANION_KEY`.
+-- All available models can be found here: https://openrouter.ai/models.
+--- @type string[]
+settings["chat_models"] = {
+    -- free models
+    "deepseek/deepseek-chat-v3-0324:free",
+    "deepseek/deepseek-r1-0528:free",
 }
 
 return settings
