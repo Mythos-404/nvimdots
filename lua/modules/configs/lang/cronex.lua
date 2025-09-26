@@ -7,7 +7,7 @@ return function()
             -- examples:
             -- "/path/to/miniconda3/envs/neovim/bin/cronstrue" (point to a conda virtualenv)
             -- "python explainer.py" (assuming you have such a python script available)
-            cmd = { os.getenv("HOME") .. "/.golang/bin/hcron" },
+            cmd = { vim.env.HOME .. "/.golang/bin/hcron" },
             -- Optional arguments to pass to the command
             -- eg: "/path/to/a/go/binary"  (assuming you have a go binary)
             -- args = { "-print-all" }  (assuming the program understands the flag 'print-all')
