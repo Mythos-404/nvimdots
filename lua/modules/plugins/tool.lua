@@ -1,5 +1,6 @@
 local tool = {}
 local is_windows = require("core.global").is_windows
+local settings = require("core.settings")
 
 tool["echasnovski/mini.files"] = {
     lazy = false,
@@ -62,13 +63,6 @@ if not is_windows then
         config = require("tool.sniprun"),
     }
 end
-tool["traduire.nvim"] = {
-    lazy = true,
-    event = "VeryLazy",
-    dev = true,
-    config = true,
-    opt = {},
-}
 tool["meznaric/key-analyzer.nvim"] = {
     lazy = true,
     event = "VeryLazy",
@@ -90,6 +84,16 @@ tool["stevearc/overseer.nvim"] = {
     event = "VeryLazy",
     config = require("tool.overseer"),
 }
+if settings.use_chat then
+    tool["olimorris/codecompanion.nvim"] = {
+        lazy = true,
+        event = "VeryLazy",
+        config = require("tool.codecompanion"),
+        dependencies = {
+            { "ravitemer/codecompanion-history.nvim" },
+        },
+    }
+end
 
 ----------------------------------------------------------------------
 --                        Telescope Plugins                         --

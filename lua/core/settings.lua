@@ -188,8 +188,8 @@ settings["chat_api_key"] = ("cmd:gpg --batch --quiet --decrypt %s/.api_key.gpg")
 --- @type string[]
 settings["chat_models"] = {
     -- free models
-    "deepseek/deepseek-chat-v3-0324:free",
-    "deepseek/deepseek-r1-0528:free",
+    "deepseek-ai/DeepSeek-R1",
+    "deepseek-ai/DeepSeek-V3",
 }
 
 return settings

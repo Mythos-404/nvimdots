@@ -48,7 +48,7 @@ lang["iamcco/markdown-preview.nvim"] = {
 }
 lang["MeanderingProgrammer/render-markdown.nvim"] = {
     lazy = true,
-    ft = "markdown",
+    ft = { "markdown", "codecompanion" },
     config = require("lang.render-markdown"),
 }
 lang["chrisbra/csv.vim"] = {
@@ -57,7 +57,7 @@ lang["chrisbra/csv.vim"] = {
 }
 lang["Mythos-404/xmake.nvim"] = {
     lazy = true,
-    dev = true,
+    dev = false,
     event = "BufReadPost",
     config = require("lang.xmake"),
 }
