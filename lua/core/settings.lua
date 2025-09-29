@@ -140,7 +140,8 @@ settings["treesitter_deps"] = {
 -- NOTE: Currently, only the following options related to the GUI are supported. Other entries will be IGNORED.
 ---@type { font_name: string, font_size: number }
 settings["gui_config"] = {
-    font_name = "IosevkaFromMythos\\_404",
+    -- font_name = "IosevkaFromMythos\\_404",
+    font_name = "Iosevka Nerd Font",
     font_size = 13,
 }
 
@@ -156,6 +157,8 @@ settings["neovide_config"] = {
     cursor_vfx_mode = "pixiedust",
     no_idle = true,
     hide_mouse_when_typing = true,
+    opacity = 0.8,
+    normal_opacity = 0.8,
     fullscreen = false,
     cursor_animation_length = 0.03,
     cursor_trail_length = 0.05,
