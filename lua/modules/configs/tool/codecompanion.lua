@@ -1,54 +1,23 @@
 return function()
-    local icons = { aichat = require("modules.utils.icons").get("aichat", true) }
-    local secret_key = require("core.settings").chat_api_key
     local chat_lang = require("core.settings").chat_lang
-    local models = require("core.settings").chat_models
-    local current_model = models[1]
-    vim.g.current_chat_model = current_model
 
     require("codecompanion").setup({
-        opts = {
-            language = chat_lang,
-        },
         strategies = {
             chat = {
-                adapter = "openrouter",
-                roles = {
-                    llm = function(adapter)
-                        return icons.aichat.Copilot .. "CodeCompanion (" .. adapter.formatted_name .. ")"
-                    end,
-                    user = icons.aichat.Me .. "Me",
-                },
-                keymaps = {
-                    submit = {
-                        modes = { n = "<CR>" },
-                        description = "Submit",
-                        callback = function(chat)
-                            chat:apply_model(current_model)
-                            chat:submit()
-                        end,
-                    },
+                adapter = {
+                    name = "copilot",
+                    model = "claude-sonnet-4",
                 },
             },
             inline = {
-                adapter = "openrouter",
+                adapter = "copilot",
+            },
+            cmd = {
+                adapter = "copilot",
             },
         },
-        adapters = {
-            openrouter = function()
-                return require("codecompanion.adapters").extend("openai_compatible", {
-                    env = {
-                        url = "https://openrouter.ai/api",
-                        api_key = secret_key,
-                        chat_url = "/v1/chat/completions",
-                    },
-                    schema = {
-                        model = {
-                            default = vim.g.current_chat_model,
-                        },
-                    },
-                })
-            end,
+        opts = {
+            language = chat_lang,
         },
         display = {
             diff = {
@@ -59,6 +28,7 @@ return function()
                 provider = "default", -- default|mini_diff
             },
             chat = {
+                show_settings = true,
                 window = {
                     layout = "vertical", -- float|vertical|horizontal|buffer
                     position = "right", -- left|right|top|bottom (nil will default depending on vim.opt.plitright|vim.opt.splitbelow)

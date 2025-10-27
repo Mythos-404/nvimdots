@@ -270,12 +270,6 @@ local plug_map = {
         :with_desc("overseer: Clear cache"),
 
     -- Plugin: CodeCompanion
-    ["n|<leader>cs"] = map_callback(function()
-            _select_chat_model()
-        end)
-        :with_noremap()
-        :with_silent()
-        :with_desc("tool: Select Chat Model"),
     ["nv|<leader>cc"] = map_cr("CodeCompanionChat Toggle")
         :with_noremap()
         :with_silent()
