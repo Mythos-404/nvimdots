@@ -14,21 +14,14 @@ function autocmd.nvim_create_augroups(definitions)
     end
 end
 
--- defer setting LSP-related keymaps till LspAttach
-local mapping = require("keymap.completion")
+-- LSP Inlay Hints（键位由各插件在 :config() 中自行声明）
 vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("LspKeymapLoader", { clear = true }),
+    group = vim.api.nvim_create_augroup("LspInlayHints", { clear = true }),
     callback = function(event)
-        if not _G._debugging then
-            -- LSP Keymaps
-            mapping.lsp(event.buf)
-
-            -- LSP Inlay Hints
-            local inlayhints_enabled = require("core.settings").lsp_inlayhints
-            local client = vim.lsp.get_client_by_id(event.data.client_id)
-            if client and client.server_capabilities.inlayHintProvider ~= nil then
-                vim.lsp.inlay_hint.enable(inlayhints_enabled == true, { bufnr = event.buf })
-            end
+        local inlayhints_enabled = require("core.settings").lsp_inlayhints
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client.server_capabilities.inlayHintProvider ~= nil then
+            vim.lsp.inlay_hint.enable(inlayhints_enabled == true, { bufnr = event.buf })
         end
     end,
 })
@@ -109,11 +102,11 @@ function autocmd.load_autocmds()
                 "*.vim",
                 [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
             },
-            { "BufWritePre", "/tmp/*", "setlocal noundofile" },
+            { "BufWritePre", "/tmp/*",         "setlocal noundofile" },
             { "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
-            { "BufWritePre", "MERGE_MSG", "setlocal noundofile" },
-            { "BufWritePre", "*.tmp", "setlocal noundofile" },
-            { "BufWritePre", "*.bak", "setlocal noundofile" },
+            { "BufWritePre", "MERGE_MSG",      "setlocal noundofile" },
+            { "BufWritePre", "*.tmp",          "setlocal noundofile" },
+            { "BufWritePre", "*.bak",          "setlocal noundofile" },
             -- auto place to last edit
             {
                 "BufReadPost",
@@ -147,11 +140,11 @@ function autocmd.load_autocmds()
             -- Check if file changed when its window is focus, more eager than 'autoread'
             { "FocusGained", "* checktime" },
             -- Equalize window dimensions when resizing vim window
-            { "VimResized", "*", [[tabdo wincmd =]] },
+            { "VimResized",  "*",          [[tabdo wincmd =]] },
         },
         ft = {
-            { "FileType", "*", "setlocal formatoptions-=cro" },
-            { "FileType", "alpha", "setlocal showtabline=0" },
+            { "FileType", "*",        "setlocal formatoptions-=cro" },
+            { "FileType", "alpha",    "setlocal showtabline=0" },
             { "FileType", "markdown", "setlocal wrap" },
             { "FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()" },
             {

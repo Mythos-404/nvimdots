@@ -1,15 +1,18 @@
+---@class map_rhs_options
+---@field noremap boolean
+---@field silent boolean
+---@field expr boolean
+---@field nowait boolean
+---@field callback? function
+---@field desc string
+
 ---@class map_rhs
 ---@field cmd string
----@field options table
----@field options.noremap boolean
----@field options.silent boolean
----@field options.expr boolean
----@field options.nowait boolean
----@field options.callback function
----@field options.desc string
----@field buffer boolean|number
+---@field options map_rhs_options
+---@field buffer false|integer
 local rhs_options = {}
 
+---@return map_rhs
 function rhs_options:new()
     local instance = {
         cmd = "",
@@ -57,7 +60,7 @@ function rhs_options:map_cu(cmd_string)
     return self
 end
 
----@param callback fun():nil
+---@param callback fun():any
 --- Takes a callback that will be called when the key is pressed
 ---@return map_rhs
 function rhs_options:map_callback(callback)
@@ -97,13 +100,23 @@ function rhs_options:with_nowait()
     return self
 end
 
----@param num number
+---@param num integer
 ---@return map_rhs
 function rhs_options:with_buffer(num)
     self.buffer = num
     return self
 end
 
+---@class keymap_bind
+---@field map_cr fun(cmd_string: string): map_rhs
+---@field map_cmd fun(cmd_string: string): map_rhs
+---@field map_cu fun(cmd_string: string): map_rhs
+---@field map_args fun(cmd_string: string): map_rhs
+---@field map_callback fun(callback: fun(): any): map_rhs
+---@field escape_termcode fun(cmd_string: string): string
+---@field nvim_load_mapping fun(mapping: table<string, map_rhs>)
+
+---@type keymap_bind
 local bind = {}
 
 ---@param cmd_string string
@@ -134,7 +147,7 @@ function bind.map_args(cmd_string)
     return ro:map_args(cmd_string)
 end
 
----@param callback fun():nil
+---@param callback fun():any
 ---@return map_rhs
 function bind.map_callback(callback)
     local ro = rhs_options:new()
