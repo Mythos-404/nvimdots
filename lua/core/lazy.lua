@@ -1,9 +1,76 @@
 -- ═══════════════════════════════════════════════════════════════
 -- 插件加载器 (替代 core/pack.lua)
--- 扫描 lua/plugins/**/*.lua → dofile → Plugin:to_spec() → lazy.setup()
+-- 只加载入口文件（辅助配置不扫）：
+--   plugins/<cat>/<name>.lua
+--   plugins/<cat>/<name>/init.lua
+-- → require("plugins....") → Plugin:to_spec() → lazy.setup()
 -- ═══════════════════════════════════════════════════════════════
 
 local M = {}
+
+---Whether this path is a plugin entry (not a helper under a package).
+---Entries:
+---  plugins/<name>.lua
+---  plugins/<cat>/<name>.lua
+---  plugins/<cat>/<name>/init.lua
+---@param file string
+---@return boolean
+local function is_plugin_entry(file)
+    local normalized = file:gsub("\\", "/")
+    local rel = normalized:match("/lua/plugins/(.+)$")
+    if not rel then return false end
+
+    -- plugins/foo.lua
+    if rel:match("^[^/]+%.lua$") then return true end
+    -- plugins/cat/foo.lua
+    if rel:match("^[^/]+/[^/]+%.lua$") then return true end
+    -- plugins/cat/foo/init.lua  (package entry; helpers like foo/servers/x.lua are ignored)
+    if rel:match("^[^/]+/[^/]+/init%.lua$") then return true end
+
+    return false
+end
+
+---Map entry path under lua/plugins/ to a require module name.
+---  .../plugins/editor/flash.lua      → "plugins.editor.flash"
+---  .../plugins/completion/lsp/init.lua → "plugins.completion.lsp"
+---@param file string
+---@return string|nil
+local function path_to_module(file)
+    local normalized = file:gsub("\\", "/")
+    local rel = normalized:match("/lua/(plugins/.+)%.lua$")
+    if not rel then return nil end
+    -- package: plugins/cat/name/init → plugins.cat.name
+    rel = rel:gsub("/init$", "")
+    return (rel:gsub("/", "."))
+end
+
+---@param basename string
+---@return boolean
+local function is_disabled_name(basename)
+    return basename:match("^_")
+        or basename:match("%.lua%.disable$")
+        or basename:match("%.disabled%.lua$")
+end
+
+---Collect plugin entry files only (not recursive helpers).
+---@param plugin_dir string
+---@return string[]
+local function collect_entry_files(plugin_dir)
+    ---@type string[]
+    local files = {}
+    local patterns = {
+        plugin_dir .. "/*.lua", -- plugins/foo.lua
+        plugin_dir .. "/*/*.lua", -- plugins/cat/foo.lua
+        plugin_dir .. "/*/*/init.lua", -- plugins/cat/foo/init.lua
+    }
+    for _, pat in ipairs(patterns) do
+        for _, f in ipairs(vim.fn.glob(pat, true, true)) do
+            table.insert(files, f)
+        end
+    end
+    table.sort(files)
+    return files
+end
 
 function M.setup()
     local global = require("core.global")
@@ -29,26 +96,50 @@ function M.setup()
     end
     vim.opt.rtp:prepend(lazy_path)
 
-    -- 2) 扫描 plugins 目录
-    local plugin_dir = global.vim_path .. "/lua/plugins"
-    local files = vim.fn.glob(plugin_dir .. "/**/*.lua", true, true)
-    table.sort(files)
+    -- 2) 只加载入口 → 命名模块 require
+    local plugin_dir = global.plugins_dir
+    local files = collect_entry_files(plugin_dir)
     local specs = {}
+    ---@type table<string, string>  modname → first file (detect dup flash.lua + flash/init.lua)
+    local seen = {}
 
     for _, file in ipairs(files) do
         local basename = vim.fn.fnamemodify(file, ":t")
-        -- Disabled plugin files use the repository convention: foo.lua.disable.
-        if basename:match("^_") or basename:match("%.lua%.disable$") or basename:match("%.disabled%.lua$") then
+        local parent = vim.fn.fnamemodify(file, ":h:t")
+
+        -- Disabled: _foo.lua / foo.disabled.lua / package dir _foo/
+        if is_disabled_name(basename) or (basename == "init.lua" and parent:match("^_")) then
             goto continue
         end
 
-        local ok, plugin = pcall(dofile, file)
+        if not is_plugin_entry(file) then
+            goto continue
+        end
+
+        local modname = path_to_module(file)
+        if not modname then
+            vim.notify(("Cannot map plugin path to module: %s"):format(file), vim.log.levels.ERROR)
+            goto continue
+        end
+
+        if seen[modname] then
+            vim.notify(
+                ("Duplicate plugin module %s:\n  %s\n  %s"):format(modname, seen[modname], file),
+                vim.log.levels.ERROR
+            )
+            goto continue
+        end
+        seen[modname] = file
+
+        -- Fresh load each bootstrap (avoids stale package.loaded after :source)
+        package.loaded[modname] = nil
+        local ok, plugin = pcall(require, modname)
         if not ok then
-            vim.notify(("Failed to load plugin spec %s:\n%s"):format(file, plugin), vim.log.levels.ERROR)
+            vim.notify(("Failed to load plugin spec %s (%s):\n%s"):format(modname, file, plugin), vim.log.levels.ERROR)
         elseif type(plugin) == "table" and plugin.to_spec then
             table.insert(specs, plugin:to_spec())
         else
-            vim.notify(("Plugin spec %s did not return a Plugin instance"):format(file), vim.log.levels.WARN)
+            vim.notify(("Plugin spec %s did not return a Plugin instance"):format(modname), vim.log.levels.WARN)
         end
 
         ::continue::

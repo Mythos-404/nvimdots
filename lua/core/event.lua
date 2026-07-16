@@ -1,34 +1,37 @@
--- Now use `<A-o>` or `<A-1>` to back to the `dotstutor`.
-local autocmd = {}
+local event = {}
 
-function autocmd.nvim_create_augroups(definitions)
-    for group_name, definition in pairs(definitions) do
-        -- Prepend an underscore to avoid name clashes
-        vim.api.nvim_command("augroup _" .. group_name)
-        vim.api.nvim_command("autocmd!")
-        for _, def in ipairs(definition) do
-            local command = table.concat((vim.iter({ "autocmd", def }):flatten(math.huge):totable()), " ")
-            vim.api.nvim_command(command)
-        end
-        vim.api.nvim_command("augroup END")
-    end
+---@param group string
+---@param opts table
+local function autocmd(group, opts)
+    local ev = opts.event
+    opts.event = nil
+    local clear = opts.clear
+    if clear == nil then clear = true end
+    opts.clear = nil
+    opts.group = vim.api.nvim_create_augroup(group, { clear = clear })
+    vim.api.nvim_create_autocmd(ev, opts)
 end
 
--- LSP Inlay Hints（键位由各插件在 :config() 中自行声明）
-vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("LspInlayHints", { clear = true }),
-    callback = function(event)
+local function is_special_ui_ft()
+    local ft = vim.bo.filetype
+    return ft:match("^dashboard") or ft:match("^clap_") or vim.wo.previewwindow
+end
+
+-- LSP Inlay Hints（键位由各插件 local_keys / lazy_keys 声明）
+autocmd("LspInlayHints", {
+    event = "LspAttach",
+    callback = function(ev)
         local inlayhints_enabled = require("core.settings").lsp_inlayhints
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
         if client and client.server_capabilities.inlayHintProvider ~= nil then
-            vim.lsp.inlay_hint.enable(inlayhints_enabled == true, { bufnr = event.buf })
+            vim.lsp.inlay_hint.enable(inlayhints_enabled == true, { bufnr = ev.buf })
         end
     end,
 })
 
--- auto close NvimTree
-vim.api.nvim_create_autocmd("BufEnter", {
-    group = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true }),
+-- auto close NvimTree when it is the last window
+autocmd("NvimTreeClose", {
+    event = "BufEnter",
     pattern = "NvimTree_*",
     callback = function()
         local layout = vim.api.nvim_call_function("winlayout", {})
@@ -37,13 +40,14 @@ vim.api.nvim_create_autocmd("BufEnter", {
             and vim.bo[vim.api.nvim_win_get_buf(layout[2])].filetype == "NvimTree"
             and layout[3] == nil
         then
-            vim.api.nvim_command([[confirm quit]])
+            vim.cmd("confirm quit")
         end
     end,
 })
 
 -- auto close some filetype with <q>
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("QuickClose", {
+    event = "FileType",
     pattern = {
         "qf",
         "help",
@@ -59,20 +63,15 @@ vim.api.nvim_create_autocmd("FileType", {
         "tsplayground",
         "PlenaryTestPopup",
     },
-    callback = function(event)
-        vim.bo[event.buf].buflisted = false
-        vim.api.nvim_buf_set_keymap(event.buf, "n", "q", "<Cmd>close<CR>", { silent = true })
+    callback = function(ev)
+        vim.bo[ev.buf].buflisted = false
+        vim.keymap.set("n", "q", "<Cmd>close<CR>", { buffer = ev.buf, silent = true })
     end,
 })
 
-vim.api.nvim_create_autocmd("ModeChanged", {
-    pattern = {
-        "V:n",
-        "n:V",
-        "v:n",
-        "n:v",
-    },
-    group = vim.api.nvim_create_augroup("user/keep_yank_position", { clear = true }),
+autocmd("KeepYankPosition", {
+    event = "ModeChanged",
+    pattern = { "V:n", "n:V", "v:n", "n:v" },
     callback = function(ev)
         local match = ev.match
         if vim.tbl_contains({ "n:V", "n:v" }, match) then
@@ -87,82 +86,107 @@ vim.api.nvim_create_autocmd("ModeChanged", {
     end,
 })
 
-function autocmd.load_autocmds()
-    local definitions = {
-        lazy = {},
-        bufs = {
-            -- Reload vim config automatically
-            {
-                "BufWritePost",
-                [[$VIM_PATH/{*.vim,*.yaml,vimrc} nested source $MYVIMRC | redraw]],
-            },
-            -- Reload Vim script automatically if setlocal autoread
-            {
-                "BufWritePost,FileWritePost",
-                "*.vim",
-                [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]],
-            },
-            { "BufWritePre", "/tmp/*",         "setlocal noundofile" },
-            { "BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile" },
-            { "BufWritePre", "MERGE_MSG",      "setlocal noundofile" },
-            { "BufWritePre", "*.tmp",          "setlocal noundofile" },
-            { "BufWritePre", "*.bak",          "setlocal noundofile" },
-            -- auto place to last edit
-            {
-                "BufReadPost",
-                "*",
-                [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]],
-            },
-            -- Auto toggle fcitx5
-            -- {"InsertLeave", "* :silent", "!fcitx5-remote -c"},
-            -- {"BufCreate", "*", ":silent !fcitx5-remote -c"},
-            -- {"BufEnter", "*", ":silent !fcitx5-remote -c "},
-            -- {"BufLeave", "*", ":silent !fcitx5-remote -c "}
-        },
-        wins = {
-            -- Highlight current line only on focused window
-            {
-                "WinEnter,BufEnter,InsertLeave",
-                "*",
-                [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
-            },
-            {
-                "WinLeave,BufLeave,InsertEnter",
-                "*",
-                [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
-            },
-            -- Attempt to write shada when leaving nvim
-            {
-                "VimLeave",
-                "*",
-                [[if has('nvim') | wshada | else | wviminfo! | endif]],
-            },
-            -- Check if file changed when its window is focus, more eager than 'autoread'
-            { "FocusGained", "* checktime" },
-            -- Equalize window dimensions when resizing vim window
-            { "VimResized",  "*",          [[tabdo wincmd =]] },
-        },
-        ft = {
-            { "FileType", "*",        "setlocal formatoptions-=cro" },
-            { "FileType", "alpha",    "setlocal showtabline=0" },
-            { "FileType", "markdown", "setlocal wrap" },
-            { "FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()" },
-            {
-                "FileType",
-                "c,cpp",
-                "nnoremap <leader>h :ClangdSwitchSourceHeaderVSplit<CR>",
-            },
-        },
-        yank = {
-            {
-                "TextYankPost",
-                "*",
-                [[silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=300})]],
-            },
-        },
-    }
+-- Jump to last edit position
+autocmd("LastEdit", {
+    event = "BufReadPost",
+    callback = function(ev)
+        local mark = vim.api.nvim_buf_get_mark(ev.buf, '"')
+        local line_count = vim.api.nvim_buf_line_count(ev.buf)
+        if mark[1] > 0 and mark[1] <= line_count then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
+    end,
+})
 
-    autocmd.nvim_create_augroups(definitions)
-end
+-- Disable undofile for temp / vcs messages
+autocmd("NoUndoTemp", {
+    event = "BufWritePre",
+    pattern = { "/tmp/*", "COMMIT_EDITMSG", "MERGE_MSG", "*.tmp", "*.bak" },
+    callback = function()
+        vim.opt_local.undofile = false
+    end,
+})
 
-autocmd.load_autocmds()
+-- Cursorline only in focused window
+autocmd("CursorLineFocus", {
+    event = { "WinEnter", "BufEnter", "InsertLeave" },
+    callback = function()
+        if not vim.wo.cursorline and not is_special_ui_ft() then
+            vim.wo.cursorline = true
+        end
+    end,
+})
+
+autocmd("CursorLineBlur", {
+    event = { "WinLeave", "BufLeave", "InsertEnter" },
+    callback = function()
+        if vim.wo.cursorline and not is_special_ui_ft() then
+            vim.wo.cursorline = false
+        end
+    end,
+})
+
+autocmd("CheckTime", {
+    event = "FocusGained",
+    command = "checktime",
+})
+
+autocmd("EqualWindows", {
+    event = "VimResized",
+    callback = function()
+        vim.cmd("tabdo wincmd =")
+    end,
+})
+
+autocmd("FormatOptions", {
+    event = "FileType",
+    callback = function()
+        vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+    end,
+})
+
+autocmd("AlphaTabline", {
+    event = "FileType",
+    pattern = "alpha",
+    callback = function()
+        vim.opt_local.showtabline = 0
+    end,
+})
+
+autocmd("MarkdownWrap", {
+    event = "FileType",
+    pattern = "markdown",
+    callback = function()
+        vim.opt_local.wrap = true
+    end,
+})
+
+autocmd("DapReplComplete", {
+    event = "FileType",
+    pattern = "dap-repl",
+    callback = function()
+        pcall(function()
+            require("dap.ext.autocompl").attach()
+        end)
+    end,
+})
+
+autocmd("ClangdHeader", {
+    event = "FileType",
+    pattern = { "c", "cpp" },
+    callback = function(ev)
+        vim.keymap.set("n", "<leader>h", "<Cmd>ClangdSwitchSourceHeaderVSplit<CR>", {
+            buffer = ev.buf,
+            desc = "clangd: Switch source/header",
+        })
+    end,
+})
+
+autocmd("YankHighlight", {
+    event = "TextYankPost",
+    callback = function()
+        vim.highlight.on_yank({ higroup = "IncSearch", timeout = 300 })
+    end,
+})
+
+return event

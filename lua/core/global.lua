@@ -10,7 +10,7 @@ function global:load_variables()
     self.vim_path = realpath(vim.fn.stdpath("config")) --[[ @as string]]
     self.data_dir = ("%s/site/"):format(vim.fn.stdpath("data"))
     self.cache_dir = vim.fn.stdpath("cache") --[[ @as string]]
-    self.modules_dir = self.vim_path .. "/modules"
+    self.plugins_dir = self.vim_path .. "/lua/plugins"
     self.home = self.is_windows and vim.env.USERPROFILE or vim.env.HOME
 end
 

@@ -132,12 +132,13 @@ end
 ---@param global_flag string
 ---@param mapping table<string, map_rhs>
 function M.amend(cond, global_flag, mapping)
+    local parse_key = require("keymap.bind").parse_key
     for key, value in pairs(mapping) do
-        local modes, keymap = key:match("([^|]*)|?(.*)")
         if type(value) == "table" then
+            local parsed = parse_key(key)
             local rhs = value.cmd
             local options = value.options
-            modes_amend(cond, vim.split(modes, ""), keymap, function(fallback)
+            modes_amend(cond, parsed.modes, parsed.lhs, function(fallback)
                 if _G[global_flag] then
                     local fmode = options.noremap and "in" or "im"
                     vim.api.nvim_feedkeys(termcodes(rhs), fmode, false)

@@ -1,5 +1,6 @@
----@diagnostic disable: undefined-global
-_G._command_panel = function()
+local M = {}
+
+function M.command_panel()
     require("telescope.builtin").keymaps({
         lhs_filter = function(lhs)
             return not string.find(lhs, "Þ")
@@ -12,7 +13,7 @@ _G._command_panel = function()
     })
 end
 
-_G._flash_esc_or_noh = function()
+function M.flash_esc_or_noh()
     local flash_active, state = pcall(function()
         return require("flash.plugins.char").state
     end)
@@ -20,7 +21,7 @@ _G._flash_esc_or_noh = function()
     state:hide()
 end
 
-_G._mini_file_open = function()
+function M.mini_file_open()
     if not MiniFiles.close() then
         local file = vim.api.nvim_buf_get_name(0)
         local file_exists = vim.fn.filereadable(file) ~= 0
@@ -29,7 +30,7 @@ _G._mini_file_open = function()
     end
 end
 
-_G._toggle_inlayhint = function()
+function M.toggle_inlayhint()
     local is_enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
 
     vim.lsp.inlay_hint.enable(not is_enabled)
@@ -40,7 +41,7 @@ _G._toggle_inlayhint = function()
     )
 end
 
-_G._toggle_virtualtext = function()
+function M.toggle_virtualtext()
     local _vt_enabled = require("core.settings").diagnostics_virtual_text
     if _vt_enabled then
         local vt_config = not vim.diagnostic.config().virtual_text
@@ -63,3 +64,12 @@ _G._toggle_virtualtext = function()
         )
     end
 end
+
+-- Back-compat for any remaining _G callers during migration
+_G._command_panel = M.command_panel
+_G._flash_esc_or_noh = M.flash_esc_or_noh
+_G._mini_file_open = M.mini_file_open
+_G._toggle_inlayhint = M.toggle_inlayhint
+_G._toggle_virtualtext = M.toggle_virtualtext
+
+return M

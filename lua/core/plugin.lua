@@ -1,6 +1,16 @@
 -- ═══════════════════════════════════════════════════════════════
 -- Plugin 基类
 -- 每个插件 = 一个 Plugin 实例 = 声明 + 配置 + 键位
+--
+-- Recipes:
+-- 1) 纯 opts + lazy keys (flash)
+--    Plugin:new("user/repo"):on("VeryLazy"):opts({...}):lazy_keys({ ["n|s"] = map_callback(...):with_desc("...") })
+-- 2) buffer-local keys
+--    :local_keys("LspAttach", { ["n|K"] = map_cr(...):with_desc("...") })
+--    :local_keys({ option = "on_attach" }, function(ctx, bind) return { ... } end)
+-- 3) 多步初始化
+--    优先 :opts；模块名不同用 :setup(fn)；必须完全自控时才用 :config(fn)
+--    键位仍走 :lazy_keys / :local_keys，不要在 config 里手搓映射
 -- ═══════════════════════════════════════════════════════════════
 
 ---@alias PluginKeyMap table<string, map_rhs>
@@ -38,6 +48,13 @@
 ---@field opts? table|function
 ---@field keys? LazyKeySpec[]
 ---@field config? PluginConfig
+---@field version? string|boolean
+---@field branch? string
+---@field pin? boolean
+---@field dir? string
+---@field dev? boolean
+---@field optional? boolean
+---@field colorscheme? string|string[]
 
 ---@class PluginLocalKeySource
 ---@field event? string|string[]
@@ -81,6 +98,14 @@
 ---@field _cond? PluginPredicate
 ---@field _config? PluginConfig
 ---@field _setup? PluginSetup
+---@field _version? string|boolean
+---@field _branch? string
+---@field _pin? boolean
+---@field _dir? string
+---@field _dev? boolean
+---@field _optional? boolean
+---@field _colorscheme? string|string[]
+---@field _raw? table
 local Plugin = {}
 Plugin.__index = Plugin
 
@@ -100,6 +125,7 @@ function Plugin:new(repo)
         _opts_set = false,
         _keys = {},
         _local_keys = {},
+        _raw = nil,
     }, self)
     return plugin
 end
@@ -142,7 +168,7 @@ function Plugin:ft(...)
     return self
 end
 
----@param dep string|table
+---@param dep string|table|Plugin
 ---@return Plugin
 function Plugin:dep(dep)
     if self._deps == nil then self._deps = {} end
@@ -199,8 +225,70 @@ function Plugin:cond(value)
     return self
 end
 
+---@param value string|boolean
+---@return Plugin
+function Plugin:version(value)
+    self._version = value
+    return self
+end
+
+---@param value string
+---@return Plugin
+function Plugin:branch(value)
+    self._branch = value
+    return self
+end
+
+---@param value boolean
+---@return Plugin
+function Plugin:pin(value)
+    self._pin = value
+    return self
+end
+
+---@param value string
+---@return Plugin
+function Plugin:dir(value)
+    self._dir = value
+    return self
+end
+
+---@param value boolean
+---@return Plugin
+function Plugin:dev(value)
+    self._dev = value
+    return self
+end
+
+---@param value boolean
+---@return Plugin
+function Plugin:optional(value)
+    self._optional = value
+    return self
+end
+
+---@param value string|string[]
+---@return Plugin
+function Plugin:colorscheme(value)
+    self._colorscheme = value
+    return self
+end
+
+---Merge raw lazy.nvim fields into the final spec (wins last).
+---@param tbl table
+---@return Plugin
+function Plugin:raw(tbl)
+    if type(tbl) ~= "table" then
+        error(("Plugin:raw expects a table, got %s"):format(type(tbl)))
+    end
+    self._raw = vim.tbl_deep_extend("force", self._raw or {}, tbl)
+    return self
+end
+
 --------------------------------------------------------------------------------
 -- 配置
+-- 优先 :opts；模块名不同用 :setup；多步/完全自控才用 :config
+-- :setup 与 :config 互斥
 --------------------------------------------------------------------------------
 
 ---@param t PluginOpts
@@ -215,6 +303,9 @@ end
 ---@param fn PluginConfig
 ---@return Plugin
 function Plugin:config(fn)
+    if self._setup then
+        error(("Plugin %s: :setup and :config are mutually exclusive"):format(self.repo))
+    end
     self._config = fn
     return self
 end
@@ -223,6 +314,9 @@ end
 ---@param fn PluginSetup
 ---@return Plugin
 function Plugin:setup(fn)
+    if self._config then
+        error(("Plugin %s: :setup and :config are mutually exclusive"):format(self.repo))
+    end
     self._setup = fn
     return self
 end
@@ -235,7 +329,12 @@ end
 ---@param map PluginKeyMap
 ---@return Plugin
 function Plugin:lazy_keys(map)
-    self._keys = vim.tbl_deep_extend("force", self._keys, map)
+    if type(map) ~= "table" then
+        error(("Plugin:lazy_keys expects a table, got %s"):format(type(map)))
+    end
+    for key, builder in pairs(map) do
+        self._keys[key] = builder
+    end
     return self
 end
 
@@ -272,19 +371,8 @@ end
 ---@return LazyKeySpec[]
 local function normalize_keys(lhs_key, builder, opts)
     opts = opts or {}
-    if type(lhs_key) ~= "string" then
-        error(("Plugin key must be a string like 'mode|lhs', got %s"):format(type(lhs_key)))
-    end
-
-    local modes_str, lhs = lhs_key:match("^([^|]+)|(.+)$")
-    if not modes_str or modes_str == "" or not lhs or lhs == "" then
-        error(("Invalid plugin key %q, expected 'mode|lhs'"):format(lhs_key))
-    end
-    for mode_char in modes_str:gmatch(".") do
-        if not mode_char:match("[nvsxoictl!]") then
-            error(("Invalid mode %q in plugin key %q"):format(mode_char, lhs_key))
-        end
-    end
+    local bind = require("keymap.bind")
+    local parsed = bind.parse_key(lhs_key)
 
     if type(builder) ~= "table" or type(builder.options) ~= "table" then
         error(("Invalid key builder for %q, expected keymap.bind map_* result"):format(lhs_key))
@@ -294,9 +382,11 @@ local function normalize_keys(lhs_key, builder, opts)
         error(("Plugin:lazy_keys(%q) cannot use buffer-local mappings; use Plugin:local_keys() instead"):format(lhs_key))
     end
 
-    local rhs = (builder.cmd and builder.cmd ~= "")
-        and builder.cmd
-        or builder.options.callback
+    -- Prefer callback when present (map_callback); otherwise use cmd string.
+    local rhs = builder.options.callback
+    if rhs == nil and builder.cmd and builder.cmd ~= "" then
+        rhs = builder.cmd
+    end
     if rhs == nil then
         error(("Invalid key builder for %q, missing rhs command or callback"):format(lhs_key))
     end
@@ -306,7 +396,6 @@ local function normalize_keys(lhs_key, builder, opts)
 
     local desc = builder.options.desc
 
-    -- 构建 base opts (不含 mode，因为每个 mode 不同)
     local base_opts = {}
     if desc and desc ~= "" then base_opts.desc = desc end
     if builder.options.noremap then base_opts.noremap = true end
@@ -314,12 +403,11 @@ local function normalize_keys(lhs_key, builder, opts)
     if builder.options.expr then base_opts.expr = true end
     if builder.options.nowait then base_opts.nowait = true end
 
-    -- 拆分多模式键位 (如 "nv|ga" → n 和 v 各一个条目)
     ---@type LazyKeySpec[]
     local entries = {}
-    for mode_char in modes_str:gmatch(".") do
+    for _, mode_char in ipairs(parsed.modes) do
         ---@type LazyKeySpec
-        local entry = vim.tbl_extend("keep", { lhs, rhs, mode = mode_char }, base_opts)
+        local entry = vim.tbl_extend("keep", { parsed.lhs, rhs, mode = mode_char }, base_opts)
         table.insert(entries, entry)
     end
     return entries
@@ -403,13 +491,13 @@ local function compose_init(plugin, user_init, local_key_specs)
     return function(lazy_plugin)
         if user_init then user_init(lazy_plugin) end
 
-        for _, item in ipairs(local_key_specs) do
+        for idx, item in ipairs(local_key_specs) do
             local source = normalize_local_key_source(item.source)
             if source.event then
                 vim.api.nvim_create_autocmd(source.event, {
                     group = vim.api.nvim_create_augroup(("PluginLocalKeys_%s_%d"):format(
                         (plugin.repo:gsub("[^%w_]", "_")),
-                        _
+                        idx
                     ), { clear = true }),
                     pattern = source.pattern,
                     callback = function(ev)
@@ -452,10 +540,28 @@ local function merge_on_attach(plugin, opts, local_key_specs)
     end
 end
 
+---@param deps table[]
+---@return table[]
+local function expand_deps(deps)
+    local out = {}
+    for _, dep in ipairs(deps) do
+        if type(dep) == "table" and type(dep.to_spec) == "function" then
+            table.insert(out, dep:to_spec())
+        else
+            table.insert(out, dep)
+        end
+    end
+    return out
+end
+
 ---构建 lazy.nvim 兼容的 spec 表
 ---@return LazyPluginSpec
 function Plugin:to_spec()
     local self = self
+
+    if self._setup and self._config then
+        error(("Plugin %s: :setup and :config are mutually exclusive"):format(self.repo))
+    end
 
     ---@type PluginLocalKeyItem[]
     local autocmd_local_keys = {}
@@ -472,7 +578,6 @@ function Plugin:to_spec()
         end
     end
 
-    -- 转换 _keys → lazy.nvim keys 格式
     ---@type LazyKeySpec[]
     local lazy_keys = {}
     for lhs_key, builder in pairs(self._keys) do
@@ -481,7 +586,6 @@ function Plugin:to_spec()
         end
     end
 
-    -- ═══ 构建 spec —— 只添加有值的字段，不用 pairs 清理 ═══
     ---@type LazyPluginSpec
     local spec = { self.repo }
 
@@ -490,6 +594,13 @@ function Plugin:to_spec()
     if self._main ~= nil then spec.main = self._main end
     if self._priority ~= nil then spec.priority = self._priority end
     if self._build ~= nil then spec.build = self._build end
+    if self._version ~= nil then spec.version = self._version end
+    if self._branch ~= nil then spec.branch = self._branch end
+    if self._pin ~= nil then spec.pin = self._pin end
+    if self._dir ~= nil then spec.dir = self._dir end
+    if self._dev ~= nil then spec.dev = self._dev end
+    if self._optional ~= nil then spec.optional = self._optional end
+    if self._colorscheme ~= nil then spec.colorscheme = self._colorscheme end
     if self._init ~= nil or #autocmd_local_keys > 0 then
         spec.init = compose_init(self, self._init, autocmd_local_keys)
     end
@@ -498,7 +609,9 @@ function Plugin:to_spec()
     if self._event ~= nil then spec.event = self._event end
     if self._cmd ~= nil then spec.cmd = self._cmd end
     if self._ft ~= nil then spec.ft = self._ft end
-    if self._deps and next(self._deps) then spec.dependencies = self._deps end
+    if self._deps and next(self._deps) then
+        spec.dependencies = expand_deps(self._deps)
+    end
     if self._opts_set or #option_local_keys > 0 then
         spec.opts = self._opts or {}
         if #option_local_keys > 0 then
@@ -523,6 +636,13 @@ function Plugin:to_spec()
     elseif self._config then
         spec.config = function(plugin, opts)
             self._config(plugin, opts)
+        end
+    end
+
+    if self._raw then
+        spec = vim.tbl_deep_extend("force", spec, self._raw)
+        if not spec[1] then
+            spec[1] = self.repo
         end
     end
 

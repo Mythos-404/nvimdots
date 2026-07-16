@@ -96,10 +96,10 @@ local load_core = function()
     shell_config()
 
     require("core.options")
-    require("keymap.helpers")    -- _G 辅助函数 (被 builtin + plugin 键位引用)
-    require("core.keymaps")      -- builtin 键位 (不依赖插件)
-    require("core.event")        -- 全局自动命令
-    require("core.lazy").setup() -- 插件加载 (声明 + 配置 + 键位)
+    require("keymap.helpers") -- keymap helpers (module + _G compat)
+    require("core.keymaps") -- builtin keymaps (plugin-free)
+    require("core.event") -- global autocmds
+    require("core.lazy").setup() -- Plugin DSL → lazy.nvim
 
     vim.api.nvim_set_option_value("background", settings.background, {})
     vim.highlight.priorities.semantic_tokens = 95

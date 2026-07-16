@@ -17,8 +17,8 @@ function rhs_options:new()
     local instance = {
         cmd = "",
         options = {
-            noremap = false,
-            silent = false,
+            noremap = true,
+            silent = true,
             expr = false,
             nowait = false,
             callback = nil,
@@ -61,7 +61,7 @@ function rhs_options:map_cu(cmd_string)
 end
 
 ---@param callback fun():any
---- Takes a callback that will be called when the key is pressed
+---Takes a callback that will be called when the key is pressed
 ---@return map_rhs
 function rhs_options:map_callback(callback)
     self.cmd = ""
@@ -75,6 +75,12 @@ function rhs_options:with_silent()
     return self
 end
 
+---@return map_rhs
+function rhs_options:with_noisy()
+    self.options.silent = false
+    return self
+end
+
 ---@param description_string string
 ---@return map_rhs
 function rhs_options:with_desc(description_string)
@@ -85,6 +91,12 @@ end
 ---@return map_rhs
 function rhs_options:with_noremap()
     self.options.noremap = true
+    return self
+end
+
+---@return map_rhs
+function rhs_options:with_remap()
+    self.options.noremap = false
     return self
 end
 
@@ -107,6 +119,10 @@ function rhs_options:with_buffer(num)
     return self
 end
 
+---@class ParsedKey
+---@field modes string[]
+---@field lhs string
+
 ---@class keymap_bind
 ---@field map_cr fun(cmd_string: string): map_rhs
 ---@field map_cmd fun(cmd_string: string): map_rhs
@@ -114,6 +130,7 @@ end
 ---@field map_args fun(cmd_string: string): map_rhs
 ---@field map_callback fun(callback: fun(): any): map_rhs
 ---@field escape_termcode fun(cmd_string: string): string
+---@field parse_key fun(key: string): ParsedKey
 ---@field nvim_load_mapping fun(mapping: table<string, map_rhs>)
 
 ---@type keymap_bind
@@ -160,21 +177,74 @@ function bind.escape_termcode(cmd_string)
     return vim.api.nvim_replace_termcodes(cmd_string, true, true, true)
 end
 
+---Parse `"mode|lhs"` keys. Modes may be multi-char, e.g. `"nv|ga"`, `"ox|ih"`.
+---@param key string
+---@return ParsedKey
+function bind.parse_key(key)
+    if type(key) ~= "string" then
+        error(("Plugin key must be a string like 'mode|lhs', got %s"):format(type(key)))
+    end
+
+    local modes_str, lhs = key:match("^([^|]+)|(.+)$")
+    if not modes_str or modes_str == "" or not lhs or lhs == "" then
+        error(("Invalid plugin key %q, expected 'mode|lhs'"):format(key))
+    end
+
+    ---@type string[]
+    local modes = {}
+    for mode_char in modes_str:gmatch(".") do
+        if not mode_char:match("[nvsxoictl!]") then
+            error(("Invalid mode %q in plugin key %q"):format(mode_char, key))
+        end
+        table.insert(modes, mode_char)
+    end
+
+    return { modes = modes, lhs = lhs }
+end
+
+---@param builder map_rhs
+---@return string|function
+local function resolve_rhs(builder)
+    if builder.options.callback ~= nil then
+        return builder.options.callback
+    end
+    if builder.cmd and builder.cmd ~= "" then
+        return builder.cmd
+    end
+    error("Invalid key builder: missing rhs command or callback")
+end
+
+---@param builder map_rhs
+---@return table
+local function build_set_opts(builder)
+    local opts = {
+        noremap = builder.options.noremap and true or false,
+        silent = builder.options.silent and true or false,
+        expr = builder.options.expr and true or false,
+        nowait = builder.options.nowait and true or false,
+    }
+    if builder.options.desc and builder.options.desc ~= "" then
+        opts.desc = builder.options.desc
+    end
+    if builder.buffer and type(builder.buffer) == "number" then
+        opts.buffer = builder.buffer
+    end
+    return opts
+end
+
 ---@param mapping table<string, map_rhs>
 function bind.nvim_load_mapping(mapping)
     for key, value in pairs(mapping) do
-        local modes, keymap = key:match("([^|]*)|?(.*)")
-        if type(value) == "table" then
-            for _, mode in ipairs(vim.split(modes, "")) do
-                local rhs = value.cmd
-                local options = value.options
-                local buf = value.buffer
-                if buf and type(buf) == "number" then
-                    vim.api.nvim_buf_set_keymap(buf, mode, keymap, rhs, options)
-                else
-                    vim.api.nvim_set_keymap(mode, keymap, rhs, options)
-                end
-            end
+        if type(value) ~= "table" or type(value.options) ~= "table" then
+            error(("Invalid key builder for %q, expected keymap.bind map_* result"):format(tostring(key)))
+        end
+
+        local parsed = bind.parse_key(key)
+        local rhs = resolve_rhs(value)
+        local opts = build_set_opts(value)
+
+        for _, mode in ipairs(parsed.modes) do
+            vim.keymap.set(mode, parsed.lhs, rhs, opts)
         end
     end
 end
