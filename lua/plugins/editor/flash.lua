@@ -1,12 +1,7 @@
--- ═══════════════════════════════════════════════════════════════
--- 插件: folke/flash.nvim
--- Recipe: 纯 opts + lazy_keys
--- ═══════════════════════════════════════════════════════════════
-
 local Plugin = require("core.plugin")
 local map_callback = require("keymap.bind").map_callback
 
-local P = Plugin:new("folke/flash.nvim")
+return Plugin:new("folke/flash.nvim")
     :on("VeryLazy")
     :opts({
         labels = "asdfghjklqwertyuiopzxcvbnm",
@@ -40,5 +35,3 @@ local P = Plugin:new("folke/flash.nvim")
         ["x|R"] = map_callback(function() require("flash").treesitter_search() end)
             :with_desc("flash: TS Search"),
     })
-
-return P
