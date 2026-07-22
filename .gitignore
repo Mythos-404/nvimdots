@@ -1,0 +1,13 @@
+# Runtime / local noise
+nvim.log
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Local tooling overrides (machine-specific paths)
+# Keep committed .luarc.json only if paths are portable; otherwise copy from example.
