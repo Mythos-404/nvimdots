@@ -4,9 +4,33 @@ local settings = {}
 ---@type boolean
 settings["use_ssh"] = true
 
--- Set it to false if you don't use copilot
+-- Set it to false if you don't use AI chat functionality.
 ---@type boolean
-settings["use_copilot"] = true
+settings["use_chat"] = true
+
+-- Set the language to use for AI chat response here.
+--- @type string
+settings["chat_lang"] = "Chinese"
+
+-- Default secret source for AI adapters. Set this to an environment variable
+-- Examples:
+--   "AI_API_KEY"
+-- Recommended way of setting this environment variable, e.g.:
+-- export AI_API_KEY=$(rbw get --field "API key" opencode\ go)
+---@type string
+settings["ai_api_key"] = "AI_API_KEY"
+
+-- Shared AI adapters for CodeCompanion and OpenAI-compatible edit prediction.
+-- Adapter `api_key` is optional; when omitted, `ai_api_key` is used.
+---@type table<string, table>
+settings["ai_adapters"] = {
+
+}
+
+-- Default CodeCompanion adapter. Must be a key in `ai_adapters`.
+-- The hyphenated key `codecompanion-adapter` is also accepted in user settings.
+---@type string
+settings["codecompanion_adapter"] = "openrouter"
 
 -- Set it to false if you want to turn off LSP Inlay Hints
 ---@type boolean
@@ -104,8 +128,8 @@ settings["lsp_deps"] = {
 ---@type string[]
 settings["dap_deps"] = {
     "codelldb", -- C-Family
-    "delve", -- Go
-    "python", -- Python (debugpy)
+    "delve",    -- Go
+    "python",   -- Python (debugpy)
 }
 
 -- Set the Treesitter parsers that will be installed during bootstrap here.
@@ -168,13 +192,5 @@ settings["neovide_config"] = {
     cursor_vfx_particle_speed = 20.0,
     cursor_vfx_particle_density = 7.0,
 }
-
--- Set it to false if you don't use AI chat functionality.
----@type boolean
-settings["use_chat"] = true
-
--- Set the language to use for AI chat response here.
---- @type string
-settings["chat_lang"] = "Chinese"
 
 return settings

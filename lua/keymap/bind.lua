@@ -134,6 +134,7 @@ end
 ---@field nvim_load_mapping fun(mapping: table<string, map_rhs>)
 
 ---@type keymap_bind
+---@diagnostic disable-next-line: missing-fields
 local bind = {}
 
 ---@param cmd_string string

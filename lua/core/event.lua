@@ -17,7 +17,7 @@ local function is_special_ui_ft()
     return ft:match("^dashboard") or ft:match("^clap_") or vim.wo.previewwindow
 end
 
--- LSP Inlay Hints（键位由各插件 local_keys / lazy_keys 声明）
+-- LSP Inlay Hints
 autocmd("LspInlayHints", {
     event = "LspAttach",
     callback = function(ev)
@@ -25,22 +25,6 @@ autocmd("LspInlayHints", {
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         if client and client.server_capabilities.inlayHintProvider ~= nil then
             vim.lsp.inlay_hint.enable(inlayhints_enabled == true, { bufnr = ev.buf })
-        end
-    end,
-})
-
--- auto close NvimTree when it is the last window
-autocmd("NvimTreeClose", {
-    event = "BufEnter",
-    pattern = "NvimTree_*",
-    callback = function()
-        local layout = vim.api.nvim_call_function("winlayout", {})
-        if
-            layout[1] == "leaf"
-            and vim.bo[vim.api.nvim_win_get_buf(layout[2])].filetype == "NvimTree"
-            and layout[3] == nil
-        then
-            vim.cmd("confirm quit")
         end
     end,
 })

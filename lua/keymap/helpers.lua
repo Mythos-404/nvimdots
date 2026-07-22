@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 local M = {}
 
 function M.command_panel()
@@ -19,15 +20,6 @@ function M.flash_esc_or_noh()
     end)
     if not (flash_active and state) then return pcall(vim.cmd.noh) end
     state:hide()
-end
-
-function M.mini_file_open()
-    if not MiniFiles.close() then
-        local file = vim.api.nvim_buf_get_name(0)
-        local file_exists = vim.fn.filereadable(file) ~= 0
-        MiniFiles.open(file_exists and file or nil)
-        MiniFiles.reveal_cwd()
-    end
 end
 
 function M.toggle_inlayhint()
@@ -65,11 +57,34 @@ function M.toggle_virtualtext()
     end
 end
 
--- Back-compat for any remaining _G callers during migration
-_G._command_panel = M.command_panel
-_G._flash_esc_or_noh = M.flash_esc_or_noh
-_G._mini_file_open = M.mini_file_open
-_G._toggle_inlayhint = M.toggle_inlayhint
-_G._toggle_virtualtext = M.toggle_virtualtext
+M.select_chat_model = function()
+    local actions = require("telescope.actions")
+    local action_state = require("telescope.actions.state")
+    local finder = require("telescope.finders")
+    local pickers = require("telescope.pickers")
+    local type = require("telescope.themes").get_dropdown()
+    local conf = require("telescope.config").values
+    local ai = require("utils.ai")
+    local models = ai.get_codecompanion_models()
+    local current_model = vim.g.current_chat_model or ai.get_codecompanion_default_model()
+
+    pickers
+        .new(type, {
+            prompt_title = "(CodeCompanion) Select Model",
+            finder = finder.new_table({ results = models }),
+            sorter = conf.generic_sorter(type),
+            attach_mappings = function(bufnr)
+                actions.select_default:replace(function()
+                    actions.close(bufnr)
+                    current_model = action_state.get_selected_entry()[1]
+                    vim.g.current_chat_model = current_model
+                    vim.notify("Model selected: " .. current_model, vim.log.levels.INFO, { title = "CodeCompanion" })
+                end)
+
+                return true
+            end,
+        })
+        :find()
+end
 
 return M

@@ -1,18 +1,3 @@
--- ═══════════════════════════════════════════════════════════════
--- Plugin 基类
--- 每个插件 = 一个 Plugin 实例 = 声明 + 配置 + 键位
---
--- Recipes:
--- 1) 纯 opts + lazy keys (flash)
---    Plugin:new("user/repo"):on("VeryLazy"):opts({...}):lazy_keys({ ["n|s"] = map_callback(...):with_desc("...") })
--- 2) buffer-local keys
---    :local_keys("LspAttach", { ["n|K"] = map_cr(...):with_desc("...") })
---    :local_keys({ option = "on_attach" }, function(ctx, bind) return { ... } end)
--- 3) 多步初始化
---    优先 :opts；模块名不同用 :setup(fn)；必须完全自控时才用 :config(fn)
---    键位仍走 :lazy_keys / :local_keys，不要在 config 里手搓映射
--- ═══════════════════════════════════════════════════════════════
-
 ---@alias PluginKeyMap table<string, map_rhs>
 ---@alias PluginOpts table|fun(plugin: LazyPluginSpec, opts: table|nil): table|nil
 ---@alias PluginConfig fun(plugin: LazyPluginSpec, opts: table|nil)
@@ -86,7 +71,7 @@
 ---@field _opts_set boolean
 ---@field _keys PluginKeyMap
 ---@field _local_keys PluginLocalKeyItem[]
----@field _event? string|string[]
+---@field _event? string[]
 ---@field _cmd? string[]
 ---@field _ft? string[]
 ---@field _main? string
@@ -109,10 +94,6 @@
 local Plugin = {}
 Plugin.__index = Plugin
 
---------------------------------------------------------------------------------
--- 构造
---------------------------------------------------------------------------------
-
 ---@param repo string
 ---@return Plugin
 function Plugin:new(repo)
@@ -130,14 +111,10 @@ function Plugin:new(repo)
     return plugin
 end
 
---------------------------------------------------------------------------------
--- 懒加载声明
---------------------------------------------------------------------------------
-
----@param ev string|string[]
+---@param ... string
 ---@return Plugin
-function Plugin:on(ev)
-    self._event = ev
+function Plugin:on(...)
+    self._event = { ... }
     return self
 end
 
@@ -285,12 +262,6 @@ function Plugin:raw(tbl)
     return self
 end
 
---------------------------------------------------------------------------------
--- 配置
--- 优先 :opts；模块名不同用 :setup；多步/完全自控才用 :config
--- :setup 与 :config 互斥
---------------------------------------------------------------------------------
-
 ---@param t PluginOpts
 ---@return Plugin
 function Plugin:opts(t)
@@ -299,7 +270,6 @@ function Plugin:opts(t)
     return self
 end
 
----自定义配置函数 (完全控制初始化流程，跳过默认的 require+setup)
 ---@param fn PluginConfig
 ---@return Plugin
 function Plugin:config(fn)
@@ -310,7 +280,6 @@ function Plugin:config(fn)
     return self
 end
 
----自定义 setup 函数 (替代默认 require(name).setup(opts))
 ---@param fn PluginSetup
 ---@return Plugin
 function Plugin:setup(fn)
@@ -321,11 +290,6 @@ function Plugin:setup(fn)
     return self
 end
 
---------------------------------------------------------------------------------
--- 键位 (你的 "mode|lhs" 格式，完全保留)
---------------------------------------------------------------------------------
-
----注册全局 lazy-loading 键位
 ---@param map PluginKeyMap
 ---@return Plugin
 function Plugin:lazy_keys(map)
@@ -338,11 +302,6 @@ function Plugin:lazy_keys(map)
     return self
 end
 
----注册 buffer-local 键位。
----source:
----  "LspAttach" / "FileType" / ...       -> autocmd 事件
----  { event = "...", pattern = ... }      -> autocmd 事件 + pattern
----  { option = "on_attach" }              -> 注入 opts.on_attach(buf)
 ---@param source string|PluginLocalKeySource
 ---@param map_or_factory PluginLocalKeySpec
 ---@return Plugin
@@ -359,12 +318,6 @@ function Plugin:local_keys(source, map_or_factory)
     return self
 end
 
---------------------------------------------------------------------------------
--- 构建 lazy.nvim spec
---------------------------------------------------------------------------------
-
----将 rhs_options 实例转换为 lazy.nvim 的 keys 条目
----lazy.nvim 格式: { lhs, rhs, mode = "n", desc = "...", ... }
 ---@param lhs_key string  "mode|lhs"
 ---@param builder map_rhs
 ---@param opts NormalizeKeyOpts|nil
@@ -383,6 +336,7 @@ local function normalize_keys(lhs_key, builder, opts)
     end
 
     -- Prefer callback when present (map_callback); otherwise use cmd string.
+    ---@type string|function
     local rhs = builder.options.callback
     if rhs == nil and builder.cmd and builder.cmd ~= "" then
         rhs = builder.cmd
@@ -532,7 +486,7 @@ local function merge_on_attach(plugin, opts, local_key_specs)
         for _, item in ipairs(local_key_specs) do
             load_local_key_map(item.map, {
                 plugin = plugin,
-                source = item.source,
+                source = item.source --[[ @as PluginLocalKeySource ]],
                 args = args,
                 buf = buf,
             })
@@ -613,17 +567,18 @@ function Plugin:to_spec()
         spec.dependencies = expand_deps(self._deps)
     end
     if self._opts_set or #option_local_keys > 0 then
-        spec.opts = self._opts or {}
+        spec.opts = self._opts
         if #option_local_keys > 0 then
-            if type(spec.opts) == "function" then
-                local user_opts = spec.opts
+            local user_opts = spec.opts
+            if type(user_opts) == "function" then
                 spec.opts = function(plugin, opts)
                     local resolved = user_opts(plugin, opts) or opts or {}
                     merge_on_attach(self, resolved, option_local_keys)
                     return resolved
                 end
             else
-                merge_on_attach(self, spec.opts, option_local_keys)
+                ---@cast user_opts table
+                merge_on_attach(self, user_opts, option_local_keys)
             end
         end
     end
