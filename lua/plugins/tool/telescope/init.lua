@@ -1,5 +1,6 @@
 local Plugin = require("core.plugin")
 
+local icons = { ui = require("utils.icons").get("ui", true) }
 
 return Plugin:new("nvim-telescope/telescope.nvim")
     :lazy(true)
@@ -8,16 +9,18 @@ return Plugin:new("nvim-telescope/telescope.nvim")
     :dep("jvgrootveld/telescope-zoxide")
     :dep("debugloop/telescope-undo.nvim")
     :dep("fdschmidt93/telescope-egrepify.nvim")
+    :dep("nvim-telescope/telescope-frecency.nvim")
     :dep(Plugin:new("FabianWirth/search.nvim"):opts(require("plugins.tool.telescope.search")))
     :dep(Plugin:new("Mythos-404/project.nvim")
+        :name("project_nvim")
         :on("CursorHold", "CursorHoldI")
         :opts(require("plugins.tool.telescope.project")))
     :dep(Plugin:new("nvim-telescope/telescope-fzf-native.nvim")
         :build("cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install"))
     :config(function(plugin, opts)
-        local icons = { ui = require("utils.icons").get("ui", true) }
+        local telescope = require("telescope")
 
-        require("telescope").setup({
+        telescope.setup({
             defaults = {
                 vimgrep_arguments = {
                     "rg",
@@ -155,15 +158,26 @@ return Plugin:new("nvim-telescope/telescope.nvim")
             },
         })
 
-        require("telescope").load_extension("frecency")
-        require("telescope").load_extension("fzf")
-        require("telescope").load_extension("egrepify")
-        -- require("telescope").load_extension("notify")
-        require("telescope").load_extension("projects")
-        require("telescope").load_extension("undo")
-        require("telescope").load_extension("zoxide")
-        require("telescope").load_extension("persisted")
-        require("telescope").load_extension("aerial")
-        require("telescope").load_extension("advanced_git_search")
-        -- require("telescope").load_extension("xmake")
+        local function load_ext(name)
+            local ok, _ = pcall(telescope.load_extension, name)
+            if ok then return end
+
+            vim.notify(
+                ("Failed to load extension %q"):format(name),
+                vim.log.levels.WARN,
+                { title = "Telescope Extension" }
+            )
+        end
+
+
+        load_ext("frecency")
+        load_ext("fzf")
+        load_ext("egrepify")
+        load_ext("projects")
+        load_ext("undo")
+        load_ext("zoxide")
+        load_ext("persisted")
+        load_ext("aerial")
+        load_ext("advanced_git_search")
+        load_ext("xmake")
     end)
