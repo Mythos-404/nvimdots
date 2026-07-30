@@ -35,6 +35,8 @@ return Plugin:new("folke/which-key.nvim")
             },
         },
         win = {
+            border = "none",
+            padding = { 1, 2 },
             wo = { winblend = 0 },
         },
         expand = 1,
@@ -76,8 +78,8 @@ return Plugin:new("folke/which-key.nvim")
             { "<leader>c", mode = "n", group = "Chat", icon = icons.aichat.Chat },
 
             { "<leader>R", mode = "nx", group = "Refactor", icon = "" },
-            { "<leader>c", mode = "nx", group = "Repl", icon = "" },
-            { "<leader>r", mode = "nx", icon = icons.misc.CodeRunAll },
+            { "<C-c>", mode = "nx", group = "Repl", icon = "" },
+            { "<leader>r", mode = "nx", group = "Code Run", icon = icons.misc.CodeRunAll },
 
             { "<leader>o", mode = "n", icon = icons.ui.Pencil },
         },

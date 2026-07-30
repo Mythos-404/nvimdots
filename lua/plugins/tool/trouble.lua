@@ -6,7 +6,7 @@ local icons = {
 }
 
 
-return Plugin:new("folke/which-key.nvim")
+return Plugin:new("folke/trouble.nvim")
     :lazy(true)
     :cmd("Trouble", "TroubleToggle", "TroubleRefresh")
     :opts({
