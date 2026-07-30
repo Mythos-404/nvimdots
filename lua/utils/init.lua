@@ -273,6 +273,16 @@ function M.gen_symbol_usage_hl()
     set_global_hl("SymbolUsageRounding", M.darken(colors.surface1, 0.7, colors.base), nil, true)
 end
 
+---Get LSP capabilities merged with blink.cmp capabilities.
+---@return lsp.ClientCapabilities
+function M.get_lsp_capabilities()
+    return vim.tbl_deep_extend(
+        "force",
+        vim.lsp.protocol.make_client_capabilities(),
+        require("blink.cmp").get_lsp_capabilities({}, false)
+    )
+end
+
 ---Setup and enable a language server in one call.
 ---@param server string @Name of the language server
 ---@param config ?vim.lsp.Config @Optional config to apply
