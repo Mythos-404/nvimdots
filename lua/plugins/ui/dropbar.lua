@@ -10,8 +10,6 @@ local icons = {
 
 return Plugin:new("Bekaboo/dropbar.nvim")
     :lazy(false)
-    :dep(Plugin:new("nvim-telescope/telescope-fzf-native.nvim")
-        :build("cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install"))
     :config(function(plugin, opts)
         local utils = require("dropbar.utils")
         local sources = require("dropbar.sources")
