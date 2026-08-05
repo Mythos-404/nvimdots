@@ -1,6 +1,12 @@
+---@diagnostic disable: undefined-field, different-requires
 local Plugin = require("core.plugin")
 
 local icons = { ui = require("utils.icons").get("ui", true) }
+
+local helpers = require("keymap.helpers")
+local map_cr = require("keymap.bind").map_cr
+local map_cu = require("keymap.bind").map_cu
+local map_callback = require("keymap.bind").map_callback
 
 return Plugin:new("nvim-telescope/telescope.nvim")
     :lazy(true)
@@ -15,9 +21,14 @@ return Plugin:new("nvim-telescope/telescope.nvim")
         :name("project_nvim")
         :on("CursorHold", "CursorHoldI")
         :opts(require("plugins.tool.telescope.project")))
+    :dep(Plugin:new("aaronhallaert/advanced-git-search.nvim")
+        -- to show diff splits and open commits in browser
+        :dep("tpope/vim-fugitive")
+        -- to open commits in browser with fugitive
+        :dep("tpope/vim-rhubarb"))
     :dep(Plugin:new("nvim-telescope/telescope-fzf-native.nvim")
         :build("cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install"))
-    :config(function(plugin, opts)
+    :config(function()
         local telescope = require("telescope")
 
         telescope.setup({
@@ -177,7 +188,49 @@ return Plugin:new("nvim-telescope/telescope.nvim")
         load_ext("undo")
         load_ext("zoxide")
         load_ext("persisted")
-        load_ext("aerial")
         load_ext("advanced_git_search")
         load_ext("xmake")
     end)
+    :lazy_keys({
+        ["n|<C-A-p>"] = map_callback(function()
+                helpers.command_panel()
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Toggle command panel"),
+        ["n|<leader>ff"] = map_callback(function()
+                require("search").open({ collection = "file" })
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Find files"),
+        ["n|<leader>fp"] = map_callback(function()
+                require("search").open({ collection = "pattern" })
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Find patterns"),
+        ["v|<leader>fs"] = map_cu("Telescope grep_string")
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Find word under cursor"),
+        ["n|<leader>fg"] = map_callback(function()
+                require("search").open({ collection = "git" })
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Locate Git objects"),
+        ["n|<leader>fd"] = map_callback(function()
+                require("search").open({ collection = "dossier" })
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Retrieve dossiers"),
+        ["n|<leader>fm"] = map_callback(function()
+                require("search").open({ collection = "misc" })
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Miscellaneous"),
+        ["n|<leader>fr"] = map_cr("Telescope resume"):with_noremap():with_silent():with_desc("tool: Resume last search"),
+    })
