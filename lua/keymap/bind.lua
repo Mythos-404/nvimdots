@@ -131,6 +131,7 @@ end
 ---@field map_callback fun(callback: fun(): any): map_rhs
 ---@field escape_termcode fun(cmd_string: string): string
 ---@field parse_key fun(key: string): ParsedKey
+---@field builder_to_keymap fun(builder: map_rhs, context?: string): { rhs: string|function, opts: table }
 ---@field nvim_load_mapping fun(mapping: table<string, map_rhs>)
 
 ---@type keymap_bind
@@ -203,21 +204,31 @@ function bind.parse_key(key)
     return { modes = modes, lhs = lhs }
 end
 
+---Resolve a key builder into its rhs and `vim.keymap.set` options.
+---Shared by `nvim_load_mapping` and `Plugin:lazy_keys` so both paths
+---validate and convert builders identically.
 ---@param builder map_rhs
----@return string|function
-local function resolve_rhs(builder)
-    if builder.options.callback ~= nil then
-        return builder.options.callback
+---@param context? string  Used in error messages, e.g. the "mode|lhs" key.
+---@return { rhs: string|function, opts: table }
+function bind.builder_to_keymap(builder, context)
+    context = context or "?"
+    if type(builder) ~= "table" or type(builder.options) ~= "table" then
+        error(("Invalid key builder for %q, expected keymap.bind map_* result"):format(context))
     end
-    if builder.cmd and builder.cmd ~= "" then
-        return builder.cmd
-    end
-    error("Invalid key builder: missing rhs command or callback")
-end
 
----@param builder map_rhs
----@return table
-local function build_set_opts(builder)
+    -- Prefer callback when present (map_callback); otherwise use cmd string.
+    local rhs
+    if builder.options.callback ~= nil then
+        rhs = builder.options.callback
+    elseif builder.cmd and builder.cmd ~= "" then
+        rhs = builder.cmd
+    else
+        error(("Invalid key builder for %q, missing rhs command or callback"):format(context))
+    end
+    if type(rhs) ~= "string" and type(rhs) ~= "function" then
+        error(("Invalid rhs for %q, expected string or function"):format(context))
+    end
+
     local opts = {
         noremap = builder.options.noremap and true or false,
         silent = builder.options.silent and true or false,
@@ -230,22 +241,17 @@ local function build_set_opts(builder)
     if builder.buffer and type(builder.buffer) == "number" then
         opts.buffer = builder.buffer
     end
-    return opts
+    return { rhs = rhs, opts = opts }
 end
 
 ---@param mapping table<string, map_rhs>
 function bind.nvim_load_mapping(mapping)
     for key, value in pairs(mapping) do
-        if type(value) ~= "table" or type(value.options) ~= "table" then
-            error(("Invalid key builder for %q, expected keymap.bind map_* result"):format(tostring(key)))
-        end
-
         local parsed = bind.parse_key(key)
-        local rhs = resolve_rhs(value)
-        local opts = build_set_opts(value)
+        local resolved = bind.builder_to_keymap(value, key)
 
         for _, mode in ipairs(parsed.modes) do
-            vim.keymap.set(mode, parsed.lhs, rhs, opts)
+            vim.keymap.set(mode, parsed.lhs, resolved.rhs, resolved.opts)
         end
     end
 end
