@@ -29,7 +29,12 @@ return Plugin:new("nvimdev/lspsaga.nvim")
         return {
             ["n|<leader>li"] = bind.map_cr("LspInfo"):with_silent():with_desc("lsp: Info"),
             ["n|<leader>lr"] = bind.map_cr("LspRestart"):with_silent():with_desc("lsp: Restart"),
-            ["n|go"] = bind.map_cr("Lspsaga outline"):with_silent():with_desc("lsp: Toggle outline"),
+            ["n|go"] = bind.map_cr("Trouble symbols toggle win.position=right")
+                :with_silent()
+                :with_desc("lsp: Toggle outline"),
+            ["n|gto"] = bind.map_callback(function()
+                require("keymap.helpers").picker("lsp_document_symbols")
+            end):with_silent():with_desc("lsp: Toggle outline in Telescope"),
             ["n|g["] = bind.map_cr("Lspsaga diagnostic_jump_prev"):with_silent():with_desc("lsp: Prev diagnostic"),
             ["n|g]"] = bind.map_cr("Lspsaga diagnostic_jump_next"):with_silent():with_desc("lsp: Next diagnostic"),
             ["n|<leader>lx"] = bind.map_cr("Lspsaga show_line_diagnostics ++unfocus")
@@ -40,10 +45,22 @@ return Plugin:new("nvimdev/lspsaga.nvim")
             ["n|gR"] = bind.map_cr("Lspsaga rename ++project"):with_silent():with_desc("lsp: Rename in project range"),
             ["n|K"] = bind.map_cr("Lspsaga hover_doc"):with_silent():with_desc("lsp: Show doc"),
             ["nv|ga"] = bind.map_cr("Lspsaga code_action"):with_silent():with_desc("lsp: Code action"),
-            ["n|gd"] = bind.map_cr("Lspsaga finder"):with_silent():with_desc("lsp: Find definitions & references"),
+            ["n|gd"] = bind.map_cr("Lspsaga peek_definition"):with_silent():with_desc("lsp: Preview definition"),
             ["n|gD"] = bind.map_cr("Lspsaga goto_definition"):with_silent():with_desc("lsp: Goto definition"),
-            ["n|gh"] = bind.map_callback(vim.lsp.buf.references):with_desc("lsp: Show reference"),
-            ["n|gm"] = bind.map_callback(vim.lsp.buf.implementation):with_desc("lsp: Show implementation"),
+            ["n|gh"] = bind.map_callback(function()
+                require("keymap.helpers").picker("lsp_references")
+            end)
+                :with_noremap()
+                :with_nowait()
+                :with_silent()
+                :with_desc("lsp: Show reference"),
+            ["n|gm"] = bind.map_callback(function()
+                require("keymap.helpers").picker("lsp_implementations")
+            end)
+                :with_noremap()
+                :with_nowait()
+                :with_silent()
+                :with_desc("lsp: Show implementation"),
             ["n|gci"] = bind.map_cr("Lspsaga incoming_calls"):with_silent():with_desc("lsp: Show incoming calls"),
             ["n|gco"] = bind.map_cr("Lspsaga outgoing_calls"):with_silent():with_desc("lsp: Show outgoing calls"),
         }

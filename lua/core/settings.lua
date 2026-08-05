@@ -115,6 +115,19 @@ settings["background"] = "dark"
 ---@type string
 settings["external_browser"] = "chrome-cli open"
 
+-- Set the search backend here.
+-- `telescope` is fine for most use cases.
+-- `fzf` is faster for large repos but needs the `fzf` binary in $PATH.
+-- If missing, errors are expected until the binary is installed.
+---@type "telescope"|"fzf"
+settings["search_backend"] = "fzf"
+
+-- Prompt position shared by telescope and fzf-lua.
+-- Kept here (instead of reading telescope.config at runtime) so both backends
+-- agree even when telescope has not been loaded yet.
+---@type "top"|"bottom"
+settings["search_prompt_position"] = "top"
+
 -- Set the language servers that will be installed during bootstrap here.
 -- check the below link for all the supported LSPs:
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations

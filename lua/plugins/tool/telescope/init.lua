@@ -5,7 +5,6 @@ local icons = { ui = require("utils.icons").get("ui", true) }
 
 local helpers = require("keymap.helpers")
 local map_cr = require("keymap.bind").map_cr
-local map_cu = require("keymap.bind").map_cu
 local map_callback = require("keymap.bind").map_callback
 
 return Plugin:new("nvim-telescope/telescope.nvim")
@@ -54,7 +53,7 @@ return Plugin:new("nvim-telescope/telescope.nvim")
                 file_ignore_patterns = { ".git/", ".cache", "build/", "%.class", "%.pdf", "%.mkv", "%.mp4", "%.zip" },
                 layout_config = {
                     horizontal = {
-                        prompt_position = "top",
+                        prompt_position = require("core.settings").search_prompt_position,
                         preview_width = 0.55,
                         results_width = 0.8,
                     },
@@ -210,7 +209,25 @@ return Plugin:new("nvim-telescope/telescope.nvim")
             :with_noremap()
             :with_silent()
             :with_desc("tool: Find patterns"),
-        ["v|<leader>fs"] = map_cu("Telescope grep_string")
+        ["v|<leader>fs"] = map_callback(function()
+                local is_config = vim.uv.cwd() == require("core.global").vim_path
+                if require("core.settings").search_backend == "fzf" then
+                    require("fzf-lua").grep_project({
+                        search = require("fzf-lua.utils").get_visual_selection(),
+                        rg_opts = "--column --line-number --no-heading --color=always --smart-case"
+                            .. (is_config and " --no-ignore --hidden --glob '!.git/*'" or ""),
+                        fzf_opts = {
+                            ["--layout"] = require("core.settings").search_prompt_position == "top"
+                                and "reverse"
+                                or "default",
+                        },
+                    })
+                else
+                    require("telescope.builtin").grep_string(
+                        is_config and { additional_args = { "--no-ignore" } } or {}
+                    )
+                end
+            end)
             :with_noremap()
             :with_silent()
             :with_desc("tool: Find word under cursor"),
@@ -233,4 +250,12 @@ return Plugin:new("nvim-telescope/telescope.nvim")
             :with_silent()
             :with_desc("tool: Miscellaneous"),
         ["n|<leader>fr"] = map_cr("Telescope resume"):with_noremap():with_silent():with_desc("tool: Resume last search"),
+        ["n|<leader>fR"] = map_callback(function()
+                if require("core.settings").search_backend == "fzf" then
+                    require("fzf-lua").resume()
+                end
+            end)
+            :with_noremap()
+            :with_silent()
+            :with_desc("tool: Resume last fzf search"),
     })

@@ -57,6 +57,17 @@ function M.toggle_virtualtext()
     end
 end
 
+function M.picker(method, tele_opts)
+    local fzf_opts = { ["--layout"] = require("core.settings").search_prompt_position == "top" and "reverse" or "default" }
+    if require("core.settings").search_backend == "fzf" then
+        require("fzf-lua")[method]({
+            fzf_opts = fzf_opts,
+        })
+    else
+        require("telescope.builtin")[method](tele_opts)
+    end
+end
+
 M.select_chat_model = function()
     local actions = require("telescope.actions")
     local action_state = require("telescope.actions.state")
