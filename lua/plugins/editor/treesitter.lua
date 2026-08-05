@@ -141,6 +141,17 @@ return Plugin:new("nvim-treesitter/nvim-treesitter")
                 "terminal",
             },
         }))
+    :dep(Plugin:new("nvim-treesitter/nvim-treesitter-context")
+        :opts({
+            enable = true,
+            line_numbers = true,
+            max_lines = 3,
+            min_window_height = 0,
+            multiline_threshold = 20,
+            trim_scope = "outer",
+            mode = "cursor",
+            zindex = 50,
+        }))
     :dep(Plugin:new("JoosepAlviste/nvim-ts-context-commentstring")
         :config(function(plugin, opts)
             vim.g.skip_ts_context_commentstring_module = true
