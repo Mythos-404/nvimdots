@@ -65,6 +65,7 @@ return Plugin:new("Mythos-404/nvim")
             dropbar = { enabled = true, color_mode = true },
             fern = false,
             fidget = true,
+            fzf = true,
             flash = true,
             gitgutter = false,
             gitsigns = true,
