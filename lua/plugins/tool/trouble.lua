@@ -5,7 +5,6 @@ local icons = {
     ui = require("utils.icons").get("ui", true),
 }
 
-
 return Plugin:new("folke/trouble.nvim")
     :lazy(true)
     :cmd("Trouble", "TroubleToggle", "TroubleRefresh")
@@ -42,8 +41,7 @@ return Plugin:new("folke/trouble.nvim")
         },
     })
     :lazy_keys({
-        ["n|gt"] = map_cr("Trouble diagnostics toggle"):with_desc(
-            "lsp: Toggle trouble list"),
+        ["n|gt"] = map_cr("Trouble diagnostics toggle"):with_desc("lsp: Toggle trouble list"),
         ["n|<leader>lw"] = map_cr("Trouble diagnostics toggle")
             :with_desc("lsp: Show workspace diagnostics"),
         ["n|<leader>lp"] = map_cr("Trouble project_diagnostics toggle")

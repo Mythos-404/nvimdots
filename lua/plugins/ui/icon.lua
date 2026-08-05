@@ -1,6 +1,5 @@
 local Plugin = require("core.plugin")
 
-
 return Plugin:new("nvim-mini/mini.icons")
     :version(false)
     :config(function(plugin, opts)
