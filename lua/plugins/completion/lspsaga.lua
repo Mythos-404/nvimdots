@@ -25,7 +25,30 @@ end
 return Plugin:new("nvimdev/lspsaga.nvim")
     :lazy(true)
     :on("LspAttach")
-    :config(function(plugin, opts)
+    :local_keys({ event = "LspAttach" }, function(_, bind)
+        return {
+            ["n|<leader>li"] = bind.map_cr("LspInfo"):with_silent():with_desc("lsp: Info"),
+            ["n|<leader>lr"] = bind.map_cr("LspRestart"):with_silent():with_desc("lsp: Restart"),
+            ["n|go"] = bind.map_cr("Lspsaga outline"):with_silent():with_desc("lsp: Toggle outline"),
+            ["n|g["] = bind.map_cr("Lspsaga diagnostic_jump_prev"):with_silent():with_desc("lsp: Prev diagnostic"),
+            ["n|g]"] = bind.map_cr("Lspsaga diagnostic_jump_next"):with_silent():with_desc("lsp: Next diagnostic"),
+            ["n|<leader>lx"] = bind.map_cr("Lspsaga show_line_diagnostics ++unfocus")
+                :with_silent()
+                :with_desc("lsp: Line diagnostic"),
+            ["n|gs"] = bind.map_callback(vim.lsp.buf.signature_help):with_desc("lsp: Signature help"),
+            ["n|gr"] = bind.map_cr("Lspsaga rename"):with_silent():with_desc("lsp: Rename in file range"),
+            ["n|gR"] = bind.map_cr("Lspsaga rename ++project"):with_silent():with_desc("lsp: Rename in project range"),
+            ["n|K"] = bind.map_cr("Lspsaga hover_doc"):with_silent():with_desc("lsp: Show doc"),
+            ["nv|ga"] = bind.map_cr("Lspsaga code_action"):with_silent():with_desc("lsp: Code action"),
+            ["n|gd"] = bind.map_cr("Lspsaga finder"):with_silent():with_desc("lsp: Find definitions & references"),
+            ["n|gD"] = bind.map_cr("Lspsaga goto_definition"):with_silent():with_desc("lsp: Goto definition"),
+            ["n|gh"] = bind.map_callback(vim.lsp.buf.references):with_desc("lsp: Show reference"),
+            ["n|gm"] = bind.map_callback(vim.lsp.buf.implementation):with_desc("lsp: Show implementation"),
+            ["n|gci"] = bind.map_cr("Lspsaga incoming_calls"):with_silent():with_desc("lsp: Show incoming calls"),
+            ["n|gco"] = bind.map_cr("Lspsaga outgoing_calls"):with_silent():with_desc("lsp: Show outgoing calls"),
+        }
+    end)
+    :config(function()
         require("utils").gen_lspkind_hl()
         set_sidebar_icons()
 
