@@ -194,20 +194,14 @@ return Plugin:new("nvim-telescope/telescope.nvim")
         ["n|<C-A-p>"] = map_callback(function()
                 helpers.command_panel()
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Toggle command panel"),
         ["n|<leader>ff"] = map_callback(function()
                 require("search").open({ collection = "file" })
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Find files"),
         ["n|<leader>fp"] = map_callback(function()
                 require("search").open({ collection = "pattern" })
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Find patterns"),
         ["v|<leader>fs"] = map_callback(function()
                 local is_config = vim.uv.cwd() == require("core.global").vim_path
@@ -228,34 +222,24 @@ return Plugin:new("nvim-telescope/telescope.nvim")
                     )
                 end
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Find word under cursor"),
         ["n|<leader>fg"] = map_callback(function()
                 require("search").open({ collection = "git" })
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Locate Git objects"),
         ["n|<leader>fd"] = map_callback(function()
                 require("search").open({ collection = "dossier" })
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Retrieve dossiers"),
         ["n|<leader>fm"] = map_callback(function()
                 require("search").open({ collection = "misc" })
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Miscellaneous"),
-        ["n|<leader>fr"] = map_cr("Telescope resume"):with_noremap():with_silent():with_desc("tool: Resume last search"),
+        ["n|<leader>fr"] = map_cr("Telescope resume"):with_desc("tool: Resume last search"),
         ["n|<leader>fR"] = map_callback(function()
                 if require("core.settings").search_backend == "fzf" then
                     require("fzf-lua").resume()
                 end
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("tool: Resume last fzf search"),
     })

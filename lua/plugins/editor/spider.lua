@@ -6,15 +6,9 @@ return Plugin:new("chrisgrieser/nvim-spider")
     :on("VeryLazy")
     :lazy_keys({
         ["nox|w"] = map_cmd("<Cmd>lua require('spider').motion('w', { skipInsignificantPunctuation = false })<CR>")
-            :with_noremap()
-            :with_silent()
             :with_desc("Spider-w"),
         ["nox|e"] = map_cmd("<Cmd>lua require('spider').motion('e', { skipInsignificantPunctuation = false })<CR>")
-            :with_noremap()
-            :with_silent()
             :with_desc("Spider-w"),
         ["nox|b"] = map_cmd("<Cmd>lua require('spider').motion('b')<CR>")
-            :with_noremap()
-            :with_silent()
             :with_desc("Spider-w"),
     })

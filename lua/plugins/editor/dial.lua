@@ -71,8 +71,8 @@ return Plugin:new("monaqa/dial.nvim")
         end),
         ["n|<A-C-a>"] = map_cmd(
             [[<Cmd>lua require"dial.command".select_augend_normal("extra")<CR><Cmd>let &opfunc="dial#operator#increment_normal"<CR>g@<Cmd>lua require("dial.command").textobj()<CR>]] --> INJECT: lua
-        ):with_noremap(),
+        ),
         ["n|<A-C-x>"] = map_cmd(
             [[<Cmd>lua require"dial.command".select_augend_normal("extra")<CR><Cmd>let &opfunc="dial#operator#decrement_normal"<CR>g@<Cmd>lua require("dial.command").textobj()<CR>]] --> INJECT: lua
-        ):with_noremap(),
+        ),
     })

@@ -144,7 +144,5 @@ return Plugin:new("nvim-mini/mini.files")
                     MiniFiles.reveal_cwd()
                 end
             end)
-            :with_noremap()
-            :with_silent()
             :with_desc("files: Toggle"),
     })
