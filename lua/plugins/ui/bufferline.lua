@@ -6,8 +6,8 @@ local icons = { ui = require("utils.icons").get("ui") }
 local opts = {
     options = {
         number = nil,
-        close_command = "lua Snacks.bufdelete(%d)",
-        right_mouse_command = "lua Snacks.bufdelete(%d)",
+        close_command = "lua require('keymap.helpers').bufdelete(%d)",
+        right_mouse_command = "lua require('keymap.helpers').bufdelete(%d)",
         modified_icon = icons.ui.Modified,
         buffer_close_icon = icons.ui.Close,
         left_trunc_marker = icons.ui.Left,

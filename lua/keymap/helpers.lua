@@ -14,6 +14,47 @@ function M.command_panel()
     })
 end
 
+---Delete a buffer without disrupting the window layout.
+---When it is the last listed buffer, quit Neovim instead of leaving
+---an empty scratch buffer behind (nvim-bufdel style behavior).
+---@param buf? integer
+function M.bufdelete(buf)
+    buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
+    if not vim.api.nvim_buf_is_valid(buf) then
+        return
+    end
+
+    local listed = vim.tbl_filter(function(b)
+        return vim.bo[b].buflisted
+    end, vim.api.nvim_list_bufs())
+
+    if vim.tbl_contains(listed, buf) and #listed <= 1 then
+        local discard = false
+        if vim.bo[buf].modified then
+            local ok, choice = pcall(
+                vim.fn.confirm,
+                ("Save changes to %q?"):format(vim.fn.bufname(buf)),
+                "&Yes\n&No\n&Cancel"
+            )
+            if not ok or choice == 0 or choice == 3 then
+                return
+            elseif choice == 1 then
+                vim.api.nvim_buf_call(buf, vim.cmd.write)
+            else
+                discard = true
+            end
+        end
+
+        if discard then
+            vim.cmd("bdelete! " .. buf)
+        end
+        vim.cmd("confirm qall")
+        return
+    end
+
+    require("snacks").bufdelete(buf)
+end
+
 function M.flash_esc_or_noh()
     local flash_active, state = pcall(function()
         return require("flash.plugins.char").state
