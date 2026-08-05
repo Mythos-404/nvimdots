@@ -52,8 +52,6 @@ local edit_keys = {
         end)
         :with_desc("edit: Clear search highlight"),
     ["n|<leader>o"] = map_cr("setlocal spell! spelllang=en_us"):with_desc("edit: Toggle spell check"),
-    -- 格式化
-    ["n|<A-f>"] = map_cmd("<Cmd>FormatToggle<CR>"):with_desc("formatter: Toggle format on save"),
     -- 通用 LSP 开关（不依赖特定插件）
     ["n|<leader>lv"] = map_callback(function()
             helpers.toggle_virtualtext()

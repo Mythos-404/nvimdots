@@ -48,7 +48,6 @@ end
 ---@return boolean
 local function is_disabled_name(basename)
     return basename:match("^_")
-        or basename:match("%.lua%.disable$")
         or basename:match("%.disabled%.lua$")
 end
 
@@ -159,7 +158,7 @@ function M.setup()
 
     require("lazy").setup(specs, {
         root = data_dir .. "lazy",
-        concurrency = 1,
+        concurrency = 4,
         git = {
             timeout = 300,
             url_format = clone_prefix,

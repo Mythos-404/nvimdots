@@ -97,6 +97,9 @@ Plugin.__index = Plugin
 ---@param repo string
 ---@return Plugin
 function Plugin:new(repo)
+    if type(repo) ~= "string" or repo == "" then
+        error(("Plugin:new expects a non-empty repo string, got %s"):format(type(repo)))
+    end
     ---@type Plugin
     local plugin = setmetatable({
         repo = repo,
@@ -111,10 +114,42 @@ function Plugin:new(repo)
     return plugin
 end
 
----@param ... string
+---Merge trigger values (varargs or a single table) into `current`, deduplicated.
+---Rejects empty/invalid values so a plugin can never end up with `event = {}`.
+---@param current string[]|nil
+---@param ... string|string[]
+---@return string[]
+local function merge_trigger_values(current, ...)
+    local args = { ... }
+    if #args == 1 and type(args[1]) == "table" then
+        args = args[1]
+    end
+
+    local seen = {}
+    local out = {}
+    local function add(value)
+        if type(value) ~= "string" or value == "" then
+            error(("Invalid trigger value %s, expected non-empty string"):format(vim.inspect(value)))
+        end
+        if not seen[value] then
+            seen[value] = true
+            table.insert(out, value)
+        end
+    end
+    for _, value in ipairs(current or {}) do add(value) end
+    for _, value in ipairs(args) do add(value) end
+    if #out == 0 then
+        error("At least one trigger value is required")
+    end
+    return out
+end
+
+---Append one or more lazy-loading events (varargs or a single table).
+---Calls accumulate and deduplicate; an empty call is an error.
+---@param ... string|string[]
 ---@return Plugin
 function Plugin:on(...)
-    self._event = { ... }
+    self._event = merge_trigger_values(self._event, ...)
     return self
 end
 
@@ -131,23 +166,34 @@ function Plugin:start()
     return self
 end
 
----@param ... string
+---Append one or more lazy-loading commands (varargs or a single table).
+---Calls accumulate and deduplicate; an empty call is an error.
+---@param ... string|string[]
 ---@return Plugin
 function Plugin:cmd(...)
-    self._cmd = { ... }
+    self._cmd = merge_trigger_values(self._cmd, ...)
     return self
 end
 
----@param ... string
+---Append one or more lazy-loading filetypes (varargs or a single table).
+---Calls accumulate and deduplicate; an empty call is an error.
+---@param ... string|string[]
 ---@return Plugin
 function Plugin:ft(...)
-    self._ft = { ... }
+    self._ft = merge_trigger_values(self._ft, ...)
     return self
 end
 
 ---@param dep string|table|Plugin
 ---@return Plugin
 function Plugin:dep(dep)
+    if type(dep) == "string" then
+        if dep == "" then
+            error("Plugin:dep expects a non-empty repo string")
+        end
+    elseif type(dep) ~= "table" then
+        error(("Plugin:dep expects a repo string or a spec/Plugin table, got %s"):format(type(dep)))
+    end
     if self._deps == nil then self._deps = {} end
     table.insert(self._deps, dep)
     return self
@@ -262,9 +308,12 @@ function Plugin:raw(tbl)
     return self
 end
 
----@param t PluginOpts
+---@param t PluginOpts|nil
 ---@return Plugin
 function Plugin:opts(t)
+    if t ~= nil and type(t) ~= "table" and type(t) ~= "function" then
+        error(("Plugin:opts expects a table, function or nil, got %s"):format(type(t)))
+    end
     self._opts = t
     self._opts_set = true
     return self
@@ -335,27 +384,20 @@ local function normalize_keys(lhs_key, builder, opts)
         error(("Plugin:lazy_keys(%q) cannot use buffer-local mappings; use Plugin:local_keys() instead"):format(lhs_key))
     end
 
-    -- Prefer callback when present (map_callback); otherwise use cmd string.
-    ---@type string|function
-    local rhs = builder.options.callback
-    if rhs == nil and builder.cmd and builder.cmd ~= "" then
-        rhs = builder.cmd
-    end
-    if rhs == nil then
-        error(("Invalid key builder for %q, missing rhs command or callback"):format(lhs_key))
-    end
-    if type(rhs) ~= "string" and type(rhs) ~= "function" then
-        error(("Invalid rhs for %q, expected string or function"):format(lhs_key))
-    end
+    local resolved = bind.builder_to_keymap(builder, lhs_key)
+    local rhs = resolved.rhs
+    local key_opts = resolved.opts
 
-    local desc = builder.options.desc
-
-    local base_opts = {}
-    if desc and desc ~= "" then base_opts.desc = desc end
-    if builder.options.noremap then base_opts.noremap = true end
-    if builder.options.silent then base_opts.silent = true end
-    if builder.options.expr then base_opts.expr = true end
-    if builder.options.nowait then base_opts.nowait = true end
+    -- Always emit booleans explicitly so neither lazy.nvim nor
+    -- vim.keymap.set can silently apply a different default.
+    ---@type LazyKeySpec
+    local base_opts = {
+        noremap = key_opts.noremap,
+        silent = key_opts.silent,
+        expr = key_opts.expr,
+        nowait = key_opts.nowait,
+    }
+    if key_opts.desc then base_opts.desc = key_opts.desc end
 
     ---@type LazyKeySpec[]
     local entries = {}
@@ -434,7 +476,7 @@ end
 ---@return integer|nil
 local function get_attach_buffer(args)
     if type(args) ~= "table" then return args end
-    return args.buf or args.bufnr or args.buffer or args[1]
+    return args.buf or args.bufnr or args.buffer
 end
 
 ---@param plugin Plugin
@@ -478,7 +520,10 @@ local function merge_on_attach(plugin, opts, local_key_specs)
         if original_on_attach then original_on_attach(...) end
 
         local args = { ... }
-        local buf = get_attach_buffer(args[1]) or get_attach_buffer(args[2])
+        local buf = get_attach_buffer(args[1])
+        if type(buf) ~= "number" then
+            buf = get_attach_buffer(args[2])
+        end
         if type(buf) ~= "number" then
             error(("Plugin:local_keys({ option = 'on_attach' }) for %s could not resolve bufnr"):format(plugin.repo))
         end
@@ -569,6 +614,10 @@ function Plugin:to_spec()
     if self._opts_set or #option_local_keys > 0 then
         spec.opts = self._opts
         if #option_local_keys > 0 then
+            if spec.opts == nil then
+                -- local_keys({ option = "on_attach" }) needs an opts table to wrap on_attach in
+                spec.opts = {}
+            end
             local user_opts = spec.opts
             if type(user_opts) == "function" then
                 spec.opts = function(plugin, opts)
