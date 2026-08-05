@@ -21,10 +21,4 @@ function M.get_env()
     return variables
 end
 
-return setmetatable({}, {
-    __index = function(_, key)
-        return function()
-            return M[key]
-        end
-    end,
-})
+return M
