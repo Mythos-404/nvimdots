@@ -24,13 +24,20 @@ settings["ai_api_key"] = "AI_API_KEY"
 -- Adapter `api_key` is optional; when omitted, `ai_api_key` is used.
 ---@type table<string, table>
 settings["ai_adapters"] = {
-
+    deepseek = {
+        type = "builtin",
+        adapter = "deepseek",
+        name = "DeepSeek",
+        api_key = "DEEPSEEK_API_KEY",
+        models = { "deepseek-v4-pro", "deepseek-v4-flash" },
+        default_model = "deepseek-v4-flash",
+    }
 }
 
 -- Default CodeCompanion adapter. Must be a key in `ai_adapters`.
 -- The hyphenated key `codecompanion-adapter` is also accepted in user settings.
 ---@type string
-settings["codecompanion_adapter"] = "openrouter"
+settings["codecompanion_adapter"] = "deepseek"
 
 -- Set it to false if you want to turn off LSP Inlay Hints
 ---@type boolean
@@ -38,11 +45,11 @@ settings["lsp_inlayhints"] = true
 
 -- Set it to false if there is no need to format on save.
 ---@type boolean
-settings["format_on_save"] = true
+settings["format_on_save"] = false
 
 -- Set it to false if the notification after formatting is annoying.
 ---@type boolean
-settings["format_notify"] = false
+settings["format_notify"] = true
 
 -- Set the format disabled directories here, files under these dirs won't be formatted on save.
 --- NOTE: Directories may contain regular expressions (grammar: vim). |regexp|
@@ -89,7 +96,7 @@ settings["load_big_files_faster"] = true
 settings["palette_overwrite"] = {}
 
 -- Set the colorscheme to use here.
--- Available values are: `catppuccin`, `catppuccin-latte`, `catppucin-mocha`, `catppuccin-frappe`, `catppuccin-macchiato`.
+-- Available values are: `catppuccin`, `catppuccin-latte`, `catppuccin-mocha`, `catppuccin-frappe`, `catppuccin-macchiato`.
 ---@type string
 settings["colorscheme"] = "catppuccin"
 
@@ -164,7 +171,6 @@ settings["treesitter_deps"] = {
 -- NOTE: Currently, only the following options related to the GUI are supported. Other entries will be IGNORED.
 ---@type { font_name: string, font_size: number }
 settings["gui_config"] = {
-    -- font_name = "IosevkaFromMythos\\_404",
     font_name = "Iosevka Nerd Font",
     font_size = 13,
 }
