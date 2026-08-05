@@ -1,8 +1,9 @@
 local Plugin = require("core.plugin")
 local map_callback = require("keymap.bind").map_callback
 
-return Plugin:new("folke/flash.nvim")
+return Plugin:new("pedro757/flash.nvim")
     :on("VeryLazy")
+    :branch("fix/neovim-0.13-search-state")
     :opts({
         labels = "asdfghjklqwertyuiopzxcvbnm",
         label = {
@@ -22,9 +23,9 @@ return Plugin:new("folke/flash.nvim")
         },
     })
     :lazy_keys({
-        ["n|s"] = map_callback(function() require("flash").jump() end)
+        ["nv|s"] = map_callback(function() require("flash").jump() end)
             :with_desc("flash: Jump"),
-        ["n|S"] = map_callback(function() require("flash").treesitter() end)
+        ["nv|S"] = map_callback(function() require("flash").treesitter() end)
             :with_desc("flash: Treesitter"),
         ["o|r"] = map_callback(function() require("flash").remote() end)
             :with_desc("flash: Remote"),
@@ -34,4 +35,6 @@ return Plugin:new("folke/flash.nvim")
             :with_desc("flash: TS Search"),
         ["x|R"] = map_callback(function() require("flash").treesitter_search() end)
             :with_desc("flash: TS Search"),
+        ["c|<c-s>"] = map_callback(function() require("flash").toggle() end)
+            :with_desc("flash: Toggle search"),
     })

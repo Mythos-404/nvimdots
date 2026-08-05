@@ -18,7 +18,7 @@ return Plugin:new("folke/snacks.nvim")
         image        = { enabled = true },
         input        = { enabled = true },
     })
-    :init(function(plugin)
+    :init(function()
         _G.dd = function(...)
             Snacks.debug.inspect(...)
         end
