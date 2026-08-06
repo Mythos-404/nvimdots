@@ -133,6 +133,7 @@ return Plugin:new("nvim-treesitter/nvim-treesitter")
                 "Outline",
                 "TelescopePrompt",
                 "toggleterm",
+                "snacks_terminal",
                 "undotree",
             },
             exclude_buftypes = {

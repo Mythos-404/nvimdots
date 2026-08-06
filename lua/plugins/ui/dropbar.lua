@@ -51,6 +51,15 @@ return Plugin:new("Bekaboo/dropbar.nvim")
                 terminal = {
                     name = function(buf)
                         local name = vim.api.nvim_buf_get_name(buf)
+                        local snacks_term = vim.b[buf].snacks_terminal
+                        if snacks_term and snacks_term.cmd then
+                            local cmd = type(snacks_term.cmd) == "table"
+                                    and table.concat(snacks_term.cmd, " ")
+                                or snacks_term.cmd
+                            if cmd ~= "" then
+                                return cmd
+                            end
+                        end
                         local ok, toggleterm = pcall(require, "toggleterm.terminal")
                         local term = ok and select(2, toggleterm.identify(name))
                         -- Trying to "snag" a display name from toggleterm

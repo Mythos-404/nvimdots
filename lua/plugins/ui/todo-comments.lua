@@ -46,6 +46,7 @@ return Plugin:new("folke/todo-comments.nvim")
                 "qf",
                 "TelescopePrompt",
                 "toggleterm",
+                "snacks_terminal",
                 "undotree",
             },
         },

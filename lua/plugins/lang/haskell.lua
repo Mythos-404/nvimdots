@@ -6,7 +6,7 @@ return Plugin:new("mrcjkb/haskell-tools.nvim")
         vim.g.haskell_tools = {
             tools = {
                 repl = {
-                    handler = "toggleterm",
+                    handler = "builtin",
                     auto_focus = true,
                 },
                 definition = {
@@ -15,4 +15,3 @@ return Plugin:new("mrcjkb/haskell-tools.nvim")
             },
         }
     end)
-

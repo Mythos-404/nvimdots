@@ -8,6 +8,6 @@ return Plugin:new("Civitasv/cmake-tools.nvim")
             name = "quickfix",
         },
         cmake_runner = {
-            name = "toggleterm",
+            name = "terminal",
         },
     })

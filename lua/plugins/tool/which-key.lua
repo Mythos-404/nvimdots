@@ -6,6 +6,7 @@ local icons = {
     git = require("utils.icons").get("git", true),
     cmp = require("utils.icons").get("cmp", true),
     aichat = require("utils.icons").get("aichat", true),
+    kind = require("utils.icons").get("kind", true),
 }
 
 return Plugin:new("folke/which-key.nvim")
@@ -76,6 +77,7 @@ return Plugin:new("folke/which-key.nvim")
             { "<leader>s", mode = "n", group = "Session", icon = icons.cmp.tmux },
             { "<leader>W", mode = "n", group = "Window", icon = icons.ui.Window },
             { "<leader>c", mode = "n", group = "Chat", icon = icons.aichat.Chat },
+            { "<leader>t", mode = "n", group = "Terminal", icon = icons.kind.Terminal },
 
             { "<leader>R", mode = "nx", group = "Refactor", icon = "" },
             { "<C-c>", mode = "nx", group = "Repl", icon = "" },

@@ -45,6 +45,7 @@ return Plugin:new("rachartier/tiny-inline-diagnostic.nvim")
             "qf",
             "TelescopePrompt",
             "toggleterm",
+            "snacks_terminal",
             "undotree",
             "vimwiki",
         },

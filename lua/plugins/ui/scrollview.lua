@@ -21,6 +21,7 @@ return Plugin:new("dstein64/nvim-scrollview")
             "Outline",
             "TelescopePrompt",
             "toggleterm",
+            "snacks_terminal",
             "undotree",
         },
     })
