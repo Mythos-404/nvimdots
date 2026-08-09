@@ -46,8 +46,18 @@ return Plugin:new("saghen/blink.cmp")
                 end
                 return {}
             end,
+            keymap = {
+                preset = "none",
+                ["<Tab>"] = { "select_next", "fallback" },
+                ["<S-Tab>"] = { "select_prev", "fallback" },
+                ["<C-n>"] = { "select_next", "fallback" },
+                ["<C-p>"] = { "select_prev", "fallback" },
+                ["<C-y>"] = { "select_and_accept", "fallback" },
+                ["<C-e>"] = { "cancel", "fallback" },
+                ["<CR>"] = { "accept_and_enter", "fallback" },
+            },
             completion = {
-                list = { selection = { preselect = true, auto_insert = true } },
+                list = { selection = { preselect = false, auto_insert = true } },
                 menu = {
                     auto_show = true,
                     draw = {
@@ -146,7 +156,7 @@ return Plugin:new("saghen/blink.cmp")
                     },
                 },
             },
-            ghost_text = { enabled = false },
+            ghost_text = { enabled = true },
             list = {
                 max_items = 120,
                 selection = { preselect = false, auto_insert = false },
