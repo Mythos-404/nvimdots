@@ -553,7 +553,7 @@ local function expand_deps(deps)
     return out
 end
 
----构建 lazy.nvim 兼容的 spec 表
+---Creating a spec table compatible with lazy.nvim
 ---@return LazyPluginSpec
 function Plugin:to_spec()
     local self = self

@@ -1,9 +1,3 @@
--- ═══════════════════════════════════════════════════════════════
--- Builtin 键位 (不依赖任何插件)
--- 来源: keymap/editor.lua (builtin_map) + keymap/ui.lua (builtin_map)
---       + keymap/init.lua (lazy 管理键位)
--- ═══════════════════════════════════════════════════════════════
-
 local bind = require("keymap.bind")
 local map_cr = bind.map_cr
 local map_cu = bind.map_cu
@@ -13,24 +7,20 @@ local helpers = require("keymap.helpers")
 
 local builtin_map = {}
 
---------------------------------------------------------------------------------
--- § 编辑
---------------------------------------------------------------------------------
-
 local edit_keys = {
-    -- 保存 & 退出
+    -- Save & Exit
     ["n|<C-s>"] = map_cu("write"):with_desc("edit: Save file"),
     ["n|<C-q>"] = map_cr("wq"):with_desc("edit: Save file and quit"),
     ["n|<A-S-q>"] = map_cr("q!"):with_desc("edit: Force quit"),
 
-    -- 插入模式
+    -- Insert Mode
     ["i|<C-u>"] = map_cmd("<C-G>u<C-U>"):with_desc("edit: Delete previous block"),
     ["i|<C-b>"] = map_cmd("<Left>"):with_desc("edit: Move cursor to left"),
     ["i|<C-a>"] = map_cmd("<ESC>^i"):with_desc("edit: Move cursor to line start"),
     ["i|<C-s>"] = map_cmd("<Esc>:w<CR>"):with_desc("edit: Save file"),
     ["i|<C-q>"] = map_cmd("<Esc>:wq<CR>"):with_desc("edit: Save file and quit"),
 
-    -- 命令模式
+    -- Command Mode
     ["c|<C-b>"] = map_cmd("<Left>"):with_desc("edit: Left"),
     ["c|<C-f>"] = map_cmd("<Right>"):with_desc("edit: Right"),
     ["c|<C-a>"] = map_cmd("<Home>"):with_desc("edit: Home"),
@@ -40,7 +30,7 @@ local edit_keys = {
     ["c|<C-t>"] = map_cmd([[<C-R>=expand("%:p:h") . "/" <CR>]])
         :with_desc("edit: Complete path of current file"),
 
-    -- 编辑增强
+    -- Editorial Enhancements
     ["n|Y"] = map_cmd("y$"):with_desc("edit: Yank text to EOL"),
     ["n|D"] = map_cmd("d$"):with_desc("edit: Delete text to EOL"),
     ["n|n"] = map_cmd("nzzzv"):with_desc("edit: Next search result"),
@@ -52,7 +42,8 @@ local edit_keys = {
         end)
         :with_desc("edit: Clear search highlight"),
     ["n|<leader>o"] = map_cr("setlocal spell! spelllang=en_us"):with_desc("edit: Toggle spell check"),
-    -- 通用 LSP 开关（不依赖特定插件）
+
+    -- Generic LSP Switch
     ["n|<leader>lv"] = map_callback(function()
             helpers.toggle_virtualtext()
         end)
@@ -67,15 +58,11 @@ for k, v in pairs(edit_keys) do
     builtin_map[k] = v
 end
 
---------------------------------------------------------------------------------
--- § 窗口 & Tab
---------------------------------------------------------------------------------
-
 local ui_keys = {
     -- Buffer
     ["n|<leader>bn"] = map_cu("enew"):with_desc("buffer: New"),
 
-    -- 终端窗口导航
+    -- Terminal Windows Navigation
     ["t|<C-w>h"] = map_cmd("<Cmd>wincmd h<CR>"):with_desc("window: Focus left"),
     ["t|<C-w>l"] = map_cmd("<Cmd>wincmd l<CR>"):with_desc("window: Focus right"),
     ["t|<C-w>j"] = map_cmd("<Cmd>wincmd j<CR>"):with_desc("window: Focus down"),
@@ -91,10 +78,6 @@ local ui_keys = {
 for k, v in pairs(ui_keys) do
     builtin_map[k] = v
 end
-
---------------------------------------------------------------------------------
--- § lazy.nvim 管理
---------------------------------------------------------------------------------
 
 local lazy_keys = {
     ["n|<leader>ph"] = map_cr("Lazy"):with_nowait():with_desc("package: Show"),
@@ -112,9 +95,5 @@ local lazy_keys = {
 for k, v in pairs(lazy_keys) do
     builtin_map[k] = v
 end
-
---------------------------------------------------------------------------------
--- 注册
---------------------------------------------------------------------------------
 
 bind.nvim_load_mapping(builtin_map)

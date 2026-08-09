@@ -103,7 +103,6 @@ return Plugin:new("folke/snacks.nvim")
             end)
             :with_desc("git: Toggle lazygit"),
 
-        -- 终端 (Snacks.terminal)
         ["n|<C-\\>"] = map_callback(function()
                 terminal_toggle({ position = "bottom", height = 0.3 }, 1)
             end)

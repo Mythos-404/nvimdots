@@ -5,7 +5,6 @@ local settings = require("core.settings")
 local icons = { dap = require("utils.icons").get("dap") }
 local colors = require("utils.init").get_palette()
 
--- 调试会话开始时打开 dapui，并在被调试的 buffer 里临时挂上 K 求值
 local function debug_init_cb()
     _G._debugging = true
     _G._debugging_buf = vim.api.nvim_get_current_buf()
@@ -32,7 +31,6 @@ dap.listeners.before.event_terminated["dapui_config"] = debug_terminate_cb
 dap.listeners.before.event_exited["dapui_config"] = debug_terminate_cb
 dap.listeners.before.disconnect["dapui_config"] = debug_terminate_cb
 
--- catppuccin 已集成 dap，这里只覆盖 DapStopped 的行高亮
 vim.api.nvim_set_hl(0, "DapStopped", { fg = colors.green })
 
 vim.fn.sign_define("DapBreakpoint", {
@@ -71,7 +69,6 @@ local function mason_dap_handler(config)
     local dap_name = config.name
     local ok, custom_handler = pcall(require, "plugins.tool.dap.clients." .. dap_name)
     if not ok then
-        -- 没有自定义 client 定义时使用 mason-nvim-dap 的默认配置
         require("mason-nvim-dap").default_setup(config)
         return
     elseif type(custom_handler) == "function" then

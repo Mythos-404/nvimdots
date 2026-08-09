@@ -1,11 +1,3 @@
--- ═══════════════════════════════════════════════════════════════
--- 插件加载器 (替代 core/pack.lua)
--- 只加载入口文件（辅助配置不扫）：
---   plugins/<cat>/<name>.lua
---   plugins/<cat>/<name>/init.lua
--- → require("plugins....") → Plugin:to_spec() → lazy.setup()
--- ═══════════════════════════════════════════════════════════════
-
 local M = {}
 
 ---Whether this path is a plugin entry (not a helper under a package).
@@ -79,7 +71,6 @@ function M.setup()
     local data_dir = global.data_dir
     local use_ssh = settings.use_ssh
 
-    -- 1) 引导 lazy.nvim
     local lazy_path = data_dir .. "lazy/lazy.nvim"
     if not vim.uv.fs_stat(lazy_path) then
         local lazy_repo = use_ssh
@@ -95,7 +86,6 @@ function M.setup()
     end
     vim.opt.rtp:prepend(lazy_path)
 
-    -- 2) 只加载入口 → 命名模块 require
     local plugin_dir = global.plugins_dir
     local files = collect_entry_files(plugin_dir)
     local specs = {}
@@ -145,7 +135,6 @@ function M.setup()
     end
 
 
-    -- 3) lazy.nvim 配置
     local icons = {
         kind = icons_mod.get("kind"),
         documents = icons_mod.get("documents"),
@@ -158,7 +147,7 @@ function M.setup()
 
     require("lazy").setup(specs, {
         root = data_dir .. "lazy",
-        concurrency = 4,
+        concurrency = vim.uv.available_parallelism() / 2,
         git = {
             timeout = 300,
             url_format = clone_prefix,

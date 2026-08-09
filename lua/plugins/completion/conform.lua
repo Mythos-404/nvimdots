@@ -55,10 +55,8 @@ end
 local function format_on_save(bufnr)
     if format_disabled(bufnr) then return end
     local args = { timeout_ms = 500, lsp_format = "fallback" }
-    if not settings.format_notify then
-        return args
-    end
-    -- 错误提示由 conform 自带的 notify_on_error 处理，这里只补成功提示
+    if not settings.format_notify then return args end
+
     return args, function(err)
         if not err then
             vim.notify("[Formatter] Format on save successful", vim.log.levels.INFO, { title = "Format Success" })
