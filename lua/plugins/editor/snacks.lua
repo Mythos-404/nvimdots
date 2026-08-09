@@ -3,6 +3,14 @@ local Plugin = require("core.plugin")
 
 local map_callback = require("keymap.bind").map_callback
 
+-- Snacks spawns the shell directly and ignores shellcmdflag, so terminals
+-- reuse the PowerShell setup by simple concatenation.
+-- `-NoExit` keeps the session interactive after the `-Command` script runs.
+local terminal_shell = vim.o.shell
+if vim.fn.has("win32") == 1 and vim.o.shellcmdflag ~= "" then
+    terminal_shell = vim.o.shell .. " -NoExit " .. vim.o.shellcmdflag
+end
+
 local FLOAT_WIN = {
     position = "float",
     height = 0.6,
@@ -29,11 +37,17 @@ local function terminal_switch(win, count)
     if vim.bo[buf].buftype == "terminal" then
         for _, term in ipairs(require("snacks").terminal.list()) do
             if term.buf == buf then
+                local term_id = vim.b[buf].snacks_terminal and vim.b[buf].snacks_terminal.id
+                if term_id == count then
+                    -- Same layout: just close it (toggleterm behavior)
+                    term:hide()
+                    return
+                end
                 term:hide()
             end
         end
     end
-    terminal_toggle(win, count)
+    require("snacks").terminal.focus(nil, { win = win, count = count })
 end
 
 return Plugin:new("folke/snacks.nvim")
@@ -55,10 +69,9 @@ return Plugin:new("folke/snacks.nvim")
         indent       = { enabled = true },
         input        = { enabled = true },
         terminal     = {
+            shell = terminal_shell,
             win = {
                 style = "terminal",
-                position = "bottom",
-                height = 0.3,
             },
         },
     })
