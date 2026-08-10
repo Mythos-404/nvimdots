@@ -3,6 +3,24 @@ local Plugin = require("core.plugin")
 
 local map_callback = require("keymap.bind").map_callback
 
+local icons = {
+    ui = require("utils.icons").get("ui", true),
+    documents = require("utils.icons").get("documents", true),
+    git = require("utils.icons").get("git", true),
+}
+
+local avatar_file = vim.fn.stdpath("config") .. "/assets/avatar.png"
+local avatar_w, avatar_h = 60, 25
+local avatar_cmd = vim.fn.executable("ascii-image-converter") == 1
+        and ("ascii-image-converter -d "
+            .. avatar_w
+            .. ","
+            .. avatar_h
+            .. " -C -b "
+            .. vim.fn.shellescape(avatar_file)
+            .. "; sleep .1")
+    or nil
+
 -- Snacks spawns the shell directly and ignores shellcmdflag, so terminals
 -- reuse the PowerShell setup by simple concatenation.
 -- `-NoExit` keeps the session interactive after the `-Command` script runs.
@@ -63,7 +81,102 @@ return Plugin:new("folke/snacks.nvim")
         quicker      = { enabled = true },
         statuscolumn = { enabled = true },
         scroll       = { enabled = true },
-        dashboard    = { enabled = true },
+        dashboard    = {
+            enabled = true,
+            preset = {
+                pick = require("keymap.helpers").picker,
+                keys = {
+                    {
+                        icon = icons.documents.FileFind .. " ",
+                        key = "f",
+                        desc = "Find File",
+                        action = "<leader>ff",
+                    },
+                    {
+                        icon = icons.ui.List .. " ",
+                        key = "p",
+                        desc = "Find Patterns",
+                        action = "<leader>fp",
+                    },
+                    {
+                        icon = icons.git.Git .. " ",
+                        key = "g",
+                        desc = "Git Objects",
+                        action = "<leader>fg",
+                    },
+                    {
+                        icon = icons.ui.Project .. " ",
+                        key = "d",
+                        desc = "Dossiers",
+                        action = "<leader>fd",
+                    },
+                    {
+                        icon = icons.documents.Files .. " ",
+                        key = "r",
+                        desc = "Recent Files",
+                        action = ":lua Snacks.dashboard.pick('oldfiles')",
+                    },
+                    {
+                        icon = icons.ui.History .. " ",
+                        key = "s",
+                        desc = "Restore Session",
+                        section = "session",
+                    },
+                    {
+                        icon = icons.ui.Gear .. " ",
+                        key = "c",
+                        desc = "Config",
+                        action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+                    },
+                    {
+                        icon = icons.ui.Package .. " ",
+                        key = "L",
+                        desc = "Lazy",
+                        action = ":Lazy",
+                        enabled = function() return package.loaded.lazy ~= nil end,
+                    },
+                    {
+                        icon = icons.ui.SignOut .. " ",
+                        key = "q",
+                        desc = "Quit",
+                        action = ":qa",
+                    },
+                },
+            },
+            sections = {
+                {
+                    section = "terminal",
+                    enabled = function()
+                        return avatar_cmd ~= nil and vim.fn.filereadable(avatar_file) == 1
+                    end,
+                    cmd = avatar_cmd,
+                    width = avatar_w,
+                    height = avatar_h,
+                    padding = 1,
+                },
+                {
+                    pane = 2,
+                    { section = "keys", gap = 1, padding = 1 },
+                    {
+                        icon = icons.documents.Files .. " ",
+                        title = "Recent Files",
+                        section = "recent_files",
+                        limit = 4,
+                        indent = 2,
+                        padding = 1,
+                    },
+                    {
+                        icon = icons.ui.Project .. " ",
+                        title = "Projects",
+                        section = "projects",
+                        limit = 4,
+                        indent = 2,
+                        padding = 1,
+                    },
+                    { section = "startup" },
+                },
+            },
+        },
         notifier     = { enabled = true },
         image        = { enabled = true },
         indent       = { enabled = true },
@@ -98,6 +211,10 @@ return Plugin:new("folke/snacks.nvim")
                 require("keymap.helpers").bufdelete()
             end)
             :with_desc("buffer: Close current"),
+        ["n|<leader>dd"] = map_callback(function()
+                Snacks.dashboard.open()
+            end)
+            :with_desc("dashboard: Open"),
         ["n|<leader>gg"] = map_callback(function()
                 Snacks.lazygit()
             end)
