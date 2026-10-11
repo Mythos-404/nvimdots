@@ -208,6 +208,8 @@ in
           pkgs.pkg-config
           pkgs.rustc
           pkgs.yarn
+          pkgs.nodejs
+          pkgs.xmake
         ]
         ++ optionals cfg.withHaskell [
           (pkgs.writeShellApplication {
