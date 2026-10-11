@@ -146,6 +146,7 @@ in
         "nvim/after".source = ../../after;
         "nvim/plugin".source = ../../plugin;
         "nvim/snippets".source = ../../snippets;
+        "nvim/assets".source = ../../assets;
       }
       // optionalAttrs cfg.bindLazyLock {
         "nvim/lazy-lock.json".source = ../../lazy-lock.json;
@@ -185,17 +186,27 @@ in
         extraPackages = [
           # Dependent packages used by default plugins
           pkgs.tree-sitter
+          pkgs.fzf
+          pkgs.fd
+          # Runtime helpers for mason.nvim (download/extract)
+          pkgs.unzip
+          pkgs.wget
+          # UI helpers (snacks dashboard avatar / image)
+          pkgs.ascii-image-converter
+          pkgs.imagemagick
         ]
         ++ optionals cfg.withBuildTools [
           pkgs.cargo
           pkgs.clang
           pkgs.cmake
+          pkgs.curl
           pkgs.gcc
           pkgs.gnumake
           pkgs.go
           pkgs.luaPackages.luarocks
           pkgs.ninja
           pkgs.pkg-config
+          pkgs.rustc
           pkgs.yarn
         ]
         ++ optionals cfg.withHaskell [
