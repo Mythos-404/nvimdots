@@ -31,7 +31,7 @@ settings["ai_adapters"] = {
         api_key = "DEEPSEEK_API_KEY",
         models = { "deepseek-v4-pro", "deepseek-v4-flash" },
         default_model = "deepseek-v4-flash",
-    }
+    },
 }
 
 -- Default CodeCompanion adapter. Must be a key in `ai_adapters`.
@@ -128,7 +128,12 @@ settings["search_backend"] = "fzf"
 ---@type "top"|"bottom"
 settings["search_prompt_position"] = "top"
 
--- Set the language servers that will be installed during bootstrap here.
+-- Tool installation backend. NixOS uses the launch environment; other systems use Mason.
+-- NVIMDOTS_TOOL_BACKEND overrides this setting (use "system" in non-NixOS devShells).
+---@type "auto"|"system"|"mason"
+settings["tool_backend"] = "auto"
+
+-- Language servers to configure; installed automatically only with the Mason backend.
 -- check the below link for all the supported LSPs:
 -- https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations
 ---@type string[]
@@ -142,15 +147,31 @@ settings["lsp_deps"] = {
     "gopls",
 }
 
--- Set the Debug Adapter Protocol (DAP) clients that will be installed and configured during bootstrap here.
+-- DAP clients to configure; installed automatically only with the Mason backend.
 -- Check the below link for all supported DAPs:
 -- https://github.com/jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
 ---@type string[]
 settings["dap_deps"] = {
     "codelldb", -- C-Family
-    "delve",    -- Go
-    "python",   -- Python (debugpy)
+    "delve", -- Go
+    "python", -- Python (debugpy)
 }
+
+-- Mason package names for external formatters and linters. System mode uses PATH.
+-- awk, just and rustfmt must be supplied by the system or language toolchain.
+---@type string[]
+settings["formatter_deps"] = {
+    "shfmt",
+    "clang-format",
+    "prettierd",
+    "goimports",
+    "gofumpt",
+    "ruff",
+    "stylua",
+    "yamlfmt",
+}
+---@type string[]
+settings["lint_deps"] = { "actionlint", "shellcheck" }
 
 -- Set the Treesitter parsers that will be installed during bootstrap here.
 -- Check the below link for all supported languages:

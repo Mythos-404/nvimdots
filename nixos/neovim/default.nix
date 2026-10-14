@@ -44,11 +44,11 @@ in
         setBuildEnv = mkEnableOption ''
           Sets environment variables that resolve build dependencies as required by `mason.nvim` and `nvim-treesitter`
           Environment variables are only visible to `nvim` and have no effect on any parent sessions.
-          Required for NixOS.
+          Optional for language tools supplied by project devShells; may still be needed for plugin builds.
         '';
         withBuildTools = mkEnableOption ''
           Include basic build tools like `gcc` and `pkg-config`.
-          Required for NixOS.
+          Enable when plugins need to compile native dependencies.
         '';
         withHaskell = mkEnableOption ''
           Enable the Haskell compiler. Set to `true` to
