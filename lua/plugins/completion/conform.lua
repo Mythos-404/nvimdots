@@ -1,5 +1,6 @@
 local Plugin = require("core.plugin")
 local settings = require("core.settings")
+local tools = require("core.tools")
 local map_cmd = require("keymap.bind").map_cmd
 local map_callback = require("keymap.bind").map_callback
 
@@ -57,11 +58,12 @@ local function format_on_save(bufnr)
     local args = { timeout_ms = 500, lsp_format = "fallback" }
     if not settings.format_notify then return args end
 
-    return args, function(err)
-        if not err then
-            vim.notify("[Formatter] Format on save successful", vim.log.levels.INFO, { title = "Format Success" })
+    return args,
+        function(err)
+            if not err then
+                vim.notify("[Formatter] Format on save successful", vim.log.levels.INFO, { title = "Format Success" })
+            end
         end
-    end
 end
 
 local function toggle_filetype_formatter(ft)
@@ -82,22 +84,16 @@ end
 local function load_formatter_overrides()
     local dir = require("core.global").vim_path .. "/lua/plugins/completion/formatters"
     local ok, handle = pcall(vim.uv.fs_scandir, dir)
-    if not ok or not handle then
-        return {}
-    end
+    if not ok or not handle then return {} end
 
     local overrides = {}
     while true do
         local name, entry_type = vim.uv.fs_scandir_next(handle)
-        if not name then
-            break
-        end
+        if not name then break end
         if entry_type == "file" and name:match("%.lua$") then
             local mod = name:gsub("%.lua$", "")
             local loaded, handler = pcall(require, "plugins.completion.formatters." .. mod)
-            if loaded then
-                overrides[mod] = handler
-            end
+            if loaded then overrides[mod] = handler end
         end
     end
     return overrides
@@ -107,30 +103,46 @@ return Plugin:new("stevearc/conform.nvim")
     :lazy(true)
     :on("VeryLazy")
     :lazy_keys({
-        ["n|<A-f>"] = map_cmd("<Cmd>FormatToggle<CR>")
-            :with_desc("formatter: Toggle format on save"),
-        ["n|<leader>lf"] = map_cmd("<Cmd>Format<CR>")
-            :with_desc("formatter: Format buffer"),
+        ["n|<A-f>"] = map_cmd("<Cmd>FormatToggle<CR>"):with_desc("formatter: Toggle format on save"),
+        ["n|<leader>lf"] = map_cmd("<Cmd>Format<CR>"):with_desc("formatter: Format buffer"),
         ["n|<leader>lt"] = map_callback(function()
-                toggle_filetype_formatter()
-            end)
-            :with_desc("formatter: Toggle formatter for filetype"),
+            toggle_filetype_formatter()
+        end):with_desc("formatter: Toggle formatter for filetype"),
     })
     :config(function()
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
         local conform = require("conform")
+        local formatters = load_formatter_overrides()
+        -- Resolve system tools from PATH, including prettierd (whose builtin
+        -- normally searches node_modules first). Keep builtin arguments/options.
+        if not tools.use_mason() then
+            for _, names in pairs(formatters_by_ft) do
+                for _, name in ipairs(names) do
+                    if name ~= "injected" then
+                        local builtin = require("conform.formatters." .. name)
+                        local command = name == "prettierd" and "prettierd" or builtin.command
+                        if type(command) == "string" then
+                            formatters[name] = vim.tbl_extend("force", formatters[name] or {}, {
+                                command = function()
+                                    return tools.executable(command) or command
+                                end,
+                            })
+                        end
+                    end
+                end
+            end
+        end
         conform.setup({
             formatters_by_ft = formatters_by_ft,
             formatters = vim.tbl_extend("force", {
-                    injected = {
-                        options = {
-                            ignore_errors = true,
-                        },
+                injected = {
+                    options = {
+                        ignore_errors = true,
                     },
                 },
-                load_formatter_overrides()
-            ),
+            }, formatters),
+            notify_no_formatters = tools.use_mason(),
             format_on_save = settings.format_on_save and format_on_save or nil,
         })
 
