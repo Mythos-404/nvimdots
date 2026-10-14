@@ -145,6 +145,7 @@ settings["lsp_deps"] = {
     "lua_ls",
     "basedpyright",
     "gopls",
+    "nixd"
 }
 
 -- DAP clients to configure; installed automatically only with the Mason backend.
@@ -161,6 +162,7 @@ settings["dap_deps"] = {
 -- awk, just and rustfmt must be supplied by the system or language toolchain.
 ---@type string[]
 settings["formatter_deps"] = {
+    "alejandra",
     "shfmt",
     "clang-format",
     "prettierd",

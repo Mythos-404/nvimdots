@@ -34,7 +34,7 @@
               fzf
               tree-sitter
               just
-              nixfmt
+              alejandra
 
               # Language servers (HTML and JSON share vscode-langservers-extracted)
               bash-language-server

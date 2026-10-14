@@ -14,9 +14,6 @@ local function is_xmake_project(bufnr)
 end
 
 return Plugin:new("Mythos-404/xmake.nvim")
-    :enabled(function()
-        return vim.fn.executable("xmake") == 1
-    end)
     :lazy(true)
     :on("BufReadPost")
     :opts({
