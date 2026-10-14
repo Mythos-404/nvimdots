@@ -4,15 +4,19 @@ return function()
     local utils = require("utils.dap")
     local is_windows = require("core.global").is_windows
 
-    dap.adapters.codelldb = {
-        type = "server",
-        port = "${port}",
-        executable = {
-            command = vim.fn.exepath("codelldb"),
-            args = { "--port", "${port}" },
-            detached = is_windows and false or true,
-        },
-    }
+    dap.adapters.codelldb = function(callback)
+        local command = require("core.tools").executable("codelldb")
+        if not command then return end
+        callback({
+            type = "server",
+            port = "${port}",
+            executable = {
+                command = command,
+                args = { "--port", "${port}" },
+                detached = not is_windows,
+            },
+        })
+    end
     dap.configurations.c = {
         {
             name = "Debug",

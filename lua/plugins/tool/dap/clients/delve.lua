@@ -3,28 +3,21 @@ return function()
     local dap = require("dap")
     local utils = require("utils.dap")
 
-    if not require("mason-registry").is_installed("go-debug-adapter") then
-        vim.notify(
-            "Automatically installing `go-debug-adapter` for go debugging",
-            vim.log.levels.INFO,
-            { title = "nvim-dap" }
-        )
-
-        local go_dbg = require("mason-registry").get_package("go-debug-adapter")
-        go_dbg:install():once(
-            "closed",
-            vim.schedule_wrap(function()
-                if go_dbg:is_installed() then
-                    vim.notify("Successfully installed `go-debug-adapter`", vim.log.levels.INFO, { title = "nvim-dap" })
-                end
-            end)
-        )
+    dap.adapters.go = function(callback)
+        local command = require("core.tools").executable("dlv")
+        if not command then return end
+        callback({
+            type = "server",
+            port = "${port}",
+            executable = {
+                command = command,
+                args = { "dap", "-l", "127.0.0.1:${port}" },
+                detached = not require("core.global").is_windows,
+            },
+        })
     end
-
-    dap.adapters.go = {
-        type = "executable",
-        command = vim.fn.exepath("go-debug-adapter"),
-    }
+    -- VS Code's Go launch configurations use "go"; Mason also exposes "delve".
+    dap.adapters.delve = dap.adapters.go
     dap.configurations.go = {
         {
             type = "go",
@@ -35,7 +28,6 @@ return function()
                 return utils.input_file_path()
             end,
             console = "integratedTerminal",
-            dlvToolPath = vim.fn.exepath("dlv"),
             showLog = true,
             showRegisters = true,
             stopOnEntry = false,
@@ -52,7 +44,6 @@ return function()
                 return utils.input_args()
             end,
             console = "integratedTerminal",
-            dlvToolPath = vim.fn.exepath("dlv"),
             showLog = true,
             showRegisters = true,
             stopOnEntry = false,
@@ -69,7 +60,6 @@ return function()
                 return utils.input_args()
             end,
             console = "integratedTerminal",
-            dlvToolPath = vim.fn.exepath("dlv"),
             mode = "exec",
             showLog = true,
             showRegisters = true,
@@ -84,7 +74,6 @@ return function()
                 return utils.input_file_path()
             end,
             console = "integratedTerminal",
-            dlvToolPath = vim.fn.exepath("dlv"),
             mode = "test",
             showLog = true,
             showRegisters = true,
@@ -97,7 +86,6 @@ return function()
             cwd = "${workspaceFolder}",
             program = "./${relativeFileDirname}",
             console = "integratedTerminal",
-            dlvToolPath = vim.fn.exepath("dlv"),
             mode = "test",
             showLog = true,
             showRegisters = true,

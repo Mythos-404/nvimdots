@@ -17,9 +17,7 @@ end
 local function debug_terminate_cb()
     if _G._debugging then
         local buf = _G._debugging_buf
-        if buf and vim.api.nvim_buf_is_valid(buf) then
-            pcall(vim.keymap.del, "n", "K", { buffer = buf })
-        end
+        if buf and vim.api.nvim_buf_is_valid(buf) then pcall(vim.keymap.del, "n", "K", { buffer = buf }) end
         _G._debugging = false
         _G._debugging_buf = nil
         dapui.close()
@@ -85,8 +83,19 @@ local function mason_dap_handler(config)
     end
 end
 
-require("mason-nvim-dap").setup({
-    ensure_installed = settings.dap_deps,
-    automatic_installation = true,
-    handlers = { mason_dap_handler },
-})
+if require("core.tools").use_mason() then
+    require("mason-nvim-dap").setup({
+        ensure_installed = settings.dap_deps,
+        automatic_installation = true,
+        handlers = { mason_dap_handler },
+    })
+else
+    for _, name in ipairs(settings.dap_deps) do
+        local ok, handler = pcall(require, "plugins.tool.dap.clients." .. name)
+        if ok and type(handler) == "function" then
+            handler()
+        else
+            vim.notify("No system DAP configuration for " .. name, vim.log.levels.WARN, { title = "nvim-dap" })
+        end
+    end
+end

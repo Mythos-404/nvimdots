@@ -6,6 +6,7 @@ local icons = {
 }
 
 return Plugin:new("mason-org/mason.nvim")
+    :enabled(require("core.tools").use_mason())
     :lazy(true)
     :cmd("Mason", "MasonInstall", "MasonUninstall", "MasonUpdate", "MasonLog")
     :opts({
